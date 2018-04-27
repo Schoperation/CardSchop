@@ -2,6 +2,7 @@ package main.java.schoperation.cardschop.core;
 
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.util.DiscordException;
 
 public class BotMain {
@@ -12,7 +13,8 @@ public class BotMain {
     // Main
     public static void main(String args[])
     {
-        //System.out.println(bot.getApplicationClientID());
+        EventDispatcher dispatcher = bot.getDispatcher();
+        dispatcher.registerListener(new BotListener());
     }
 
     public static IDiscordClient createClient(String token, boolean login)
