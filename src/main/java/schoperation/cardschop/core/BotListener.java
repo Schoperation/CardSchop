@@ -15,6 +15,7 @@ public class BotListener {
     @EventSubscriber
     public void onMessageEvent(MessageReceivedEvent event)
     {
+        // Is this a command we should recognize?
         if (event.getMessage().getContent().toLowerCase().startsWith(prefix))
             CommandProcessor.processCommand(event.getMessage(), prefix);
     }
