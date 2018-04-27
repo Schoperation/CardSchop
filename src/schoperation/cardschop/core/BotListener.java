@@ -10,7 +10,7 @@ public class BotListener {
      */
 
     // The holy prefix. Whoop de freaking do.
-    public static String prefix = new String("&");
+    public static final String prefix = new String("&");
 
     @EventSubscriber
     public void onMessageEvent(MessageReceivedEvent event)

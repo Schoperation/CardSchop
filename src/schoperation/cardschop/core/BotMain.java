@@ -11,9 +11,6 @@ public class BotMain {
     // The bot itself. The token is hidden. Because fuck you. You'll probably figure it out somehow.
     public static final IDiscordClient bot = createClient(Token.t, true);
 
-    // temp
-    public static final Deck deck = new Deck();
-
     // Main
     public static void main(String args[])
     {

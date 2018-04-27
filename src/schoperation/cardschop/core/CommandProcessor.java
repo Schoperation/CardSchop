@@ -21,14 +21,14 @@ public class CommandProcessor {
         // Soon make a command class/interface/whatever
         if (command[0].equals("showdeck"))
         {
-            channel.sendMessage("Deck: ");
-            channel.sendMessage(BotMain.deck.getCardsToString());
+            //channel.sendMessage("Deck: ");
+            //channel.sendMessage(Objs.deck.getCardsToString());
         }
 
         else if (command[0].equals("shuffledeck"))
         {
-            BotMain.deck.shuffle();
-            channel.sendMessage("Shuffled deck.");
+            //BotMain.deck.shuffle();
+            //channel.sendMessage("Shuffled deck.");
         }
     }
 }
