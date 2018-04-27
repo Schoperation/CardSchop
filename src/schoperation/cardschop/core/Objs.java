@@ -2,6 +2,8 @@ package schoperation.cardschop.core;
 
 import schoperation.cardschop.card.Deck;
 import schoperation.cardschop.card.Table;
+import schoperation.cardschop.command.CreateTableCommand;
+import schoperation.cardschop.command.ICommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +15,11 @@ public class Objs {
      */
 
     // Tables. These will have their own player lists, and any user can join a table, adding them to the list.
-    public static final List<Table> tables = new ArrayList<>();
+    public static final List<Table> TABLES = new ArrayList<>();
 
     // Commands
+    public static final ICommand COMMANDS[] = {
 
+            new CreateTableCommand()
+    };
 }

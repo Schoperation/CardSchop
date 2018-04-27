@@ -35,13 +35,12 @@ public class Table {
     // Its pot
     private int pot;
 
-    Table(String n, IChannel c)
+    public Table(String n, IChannel c)
     {
         this.name = n;
         this.channel = c;
-        this.message = this.channel.sendMessage("");
+        this.message = this.channel.sendMessage("table is this message yay");
         this.deck = new Deck();
-        Objs.tables.add(this);
     }
 
     public Player getDealer()

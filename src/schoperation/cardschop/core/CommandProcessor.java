@@ -1,5 +1,7 @@
 package schoperation.cardschop.core;
 
+import schoperation.cardschop.command.CreateTableCommand;
+import schoperation.cardschop.command.ICommand;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
@@ -19,16 +21,23 @@ public class CommandProcessor {
         String[] command = message.getContent().toLowerCase().replaceFirst(prefix, "").split(" ");
 
         // Soon make a command class/interface/whatever
-        if (command[0].equals("showdeck"))
+        for (ICommand cmd : Objs.COMMANDS)
         {
-            //channel.sendMessage("Deck: ");
-            //channel.sendMessage(Objs.deck.getCardsToString());
-        }
+            //channel.sendMessage("current command: " + cmd.getCommand());
 
-        else if (command[0].equals("shuffledeck"))
-        {
-            //BotMain.deck.shuffle();
-            //channel.sendMessage("Shuffled deck.");
+            // Does the message line up with that command? Execute it.
+            if (command[0].equals(cmd.getCommand()))
+            {
+                // Check for arguments
+                if (command.length == 4)
+                    cmd.execute(sender, channel, guild, command[1], command[2], command[3]);
+                else if (command.length == 3)
+                    cmd.execute(sender, channel, guild, command[1], command[2], "blank");
+                else if (command.length == 2)
+                    cmd.execute(sender, channel, guild, command[1], "blank", "blank");
+                else
+                    cmd.execute(sender, channel, guild, "blank", "blank", "blank");
+            }
         }
     }
 }
