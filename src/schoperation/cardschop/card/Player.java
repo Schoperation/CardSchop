@@ -23,7 +23,7 @@ public class Player {
     // Chips (soon tm)
     private int chips;
 
-    Player(IUser u, Table t)
+    public Player(IUser u, Table t)
     {
         this.user = u;
         this.table = t;

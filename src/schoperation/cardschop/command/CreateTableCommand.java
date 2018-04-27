@@ -15,7 +15,6 @@ public class CreateTableCommand implements ICommand {
      */
 
     private String command = "createtable";
-    private String[] args = new String[3];
 
     @Override
     public String getCommand()
@@ -24,7 +23,8 @@ public class CreateTableCommand implements ICommand {
     }
 
     @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3) {
+    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    {
 
         // Add a table to the list of tables.
         if (arg1.equals("blank"))

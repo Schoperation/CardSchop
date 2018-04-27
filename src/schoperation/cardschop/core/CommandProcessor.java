@@ -1,6 +1,5 @@
 package schoperation.cardschop.core;
 
-import schoperation.cardschop.command.CreateTableCommand;
 import schoperation.cardschop.command.ICommand;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
@@ -20,11 +19,12 @@ public class CommandProcessor {
         // Split up the message
         String[] command = message.getContent().toLowerCase().replaceFirst(prefix, "").split(" ");
 
+        // Delete command
+        //message.delete();
+
         // Soon make a command class/interface/whatever
         for (ICommand cmd : Objs.COMMANDS)
         {
-            //channel.sendMessage("current command: " + cmd.getCommand());
-
             // Does the message line up with that command? Execute it.
             if (command[0].equals(cmd.getCommand()))
             {
