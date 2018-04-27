@@ -1,4 +1,4 @@
-package main.java.schoperation.cardschop.card;
+package schoperation.cardschop.card;
 
 public class Card {
 
@@ -41,7 +41,7 @@ public class Card {
     }
 
     // Returns a string that can be printed out.
-    public String toPrinted()
+    public String getString()
     {
         StringBuilder sb = new StringBuilder();
 
