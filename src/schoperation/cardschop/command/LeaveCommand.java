@@ -3,6 +3,7 @@ package schoperation.cardschop.command;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.core.Objs;
+import schoperation.cardschop.core.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -27,26 +28,22 @@ public class LeaveCommand implements ICommand {
     public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
     {
         // Make sure they are part of a table
-        for (Table table : Objs.TABLES)
+        if (Utils.isPartOfTable(sender))
         {
-            for (Player player : table.getPlayers())
-            {
-                // Is this the player?
-                if (player.getUser() == sender)
-                {
-                    // Good. Put their cards back into the deck, and get them outta there.
-                    if (player.getNumOfCards() != 0)
-                    {
-                        table.getDeck().getCards().addAll(player.getHand());
-                        player.emptyHand();
-                    }
+            // Good. Put their cards back into the deck, and get them outta there.
+            Player player = Utils.getPlayerClass(sender);
 
-                    table.getPlayers().remove(player);
-                    channel.sendMessage(sender.getDisplayName(guild) + " has left the table.");
-                    return;
-                }
+            if (player.getNumOfCards() != 0)
+            {
+                player.getTable().getDeck().getCards().addAll(player.getHand());
+                player.emptyHand();
             }
+
+            player.getTable().getPlayers().remove(player);
+            channel.sendMessage(sender.getDisplayName(guild) + " has left the table.");
+            return;
         }
+
 
         channel.sendMessage("Could not remove you from the table. Are you even part of one?");
         return;
