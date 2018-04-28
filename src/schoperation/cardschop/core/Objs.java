@@ -21,6 +21,12 @@ public class Objs {
             new CreateTableCommand(),
             new JoinCommand(),
             new LeaveCommand(),
-            new SetDealerCommand()
+            new SetDealerCommand(),
+            new DealCommand(),
+            new CollectCommand(),
+            new ShuffleCommand(),
+            new RevealCommand(),
+            new SeeCommand()
+
     };
 }

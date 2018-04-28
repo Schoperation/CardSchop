@@ -1,12 +1,10 @@
 package schoperation.cardschop.card;
 
-import schoperation.cardschop.core.Objs;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Table {
 
@@ -84,37 +82,20 @@ public class Table {
      */
     public void dealCards(int perPlayer, int atATime, boolean dealerGetsCards, Player player)
     {
-        // Is this player the dealer? If not, screw it.
-        if (!player.equals(this.dealer))
-        {
-            this.channel.sendMessage("Sorry, you are not the dealer. Try &setdealer.");
-            return;
-        }
-
         // So this player is the dealer.
-        // Pick a random player to test against.
-        Player tested;
-        Random random = new Random();
-
-        if (dealerGetsCards)
-            tested = player;
-        else
-        {
-            int randint = random.nextInt(this.players.size());
-            tested = this.players.get(randint);
-            while (tested.equals(player))
-            {
-                randint = random.nextInt(this.players.size());
-                tested = this.players.get(randint);
-            }
-        }
-
         // Go through each player and give them atATime cards, assuming that doesn't go over perPlayer.
         // If perPlayer cards is not reached by all players, do another round.
         // If perPlayer is 0, just keep going until all cards are dealt.
+        if (perPlayer == 0)
+            perPlayer = 52;
+
         int i;
-        while (tested.getNumOfCards() < perPlayer && !this.deck.getCards().isEmpty())
+        int numCards = 0;
+        boolean alreadyCounted = false;
+        while (numCards < perPlayer && !this.deck.getCards().isEmpty())
         {
+            alreadyCounted = false;
+
             // Go through each player
             for (Player p : this.players)
             {
@@ -125,10 +106,21 @@ public class Table {
                 {
                     for (i = 0; i < atATime; i++)
                     {
-                        Card card = this.deck.getCards().remove(this.deck.getNumberOfCards());
+                        Card card;
+
+                        if (this.deck.getCards().isEmpty())
+                            break;
+                        else
+                            card = this.deck.getCards().remove(this.deck.getNumberOfCards() - 1);
+
                         p.addCard(card);
+
+                        if (!alreadyCounted)
+                            numCards++;
                     }
                 }
+
+                alreadyCounted = true;
             }
         }
     }
@@ -136,26 +128,15 @@ public class Table {
     /*
         Collects every player's cards (and from the table) and returns them to the deck.
      */
-    public void collectCards(Player player)
+    public void collectCards()
     {
-        // Is this player the dealer? If not, screw it.
-        if (!player.equals(this.dealer))
+        // Go through each player, append their hands into the deck, then clear their hand.
+        for (Player player : this.players)
         {
-            this.channel.sendMessage("Sorry, you are not the dealer. Try &setdealer.");
-            return;
-        }
-
-        // This IS the dealer.
-        // Go through each player, copy their hands to a temp list, clear their hands, and add the temp to the deck.
-        List<Card> temp;
-        for (Player p : this.players)
-        {
-            if (p.getNumOfCards() != 0)
+            if (player.getNumOfCards() != 0)
             {
-                temp = p.getHand();
-                p.emptyHand();
-
-                this.deck.getCards().addAll(temp);
+                this.deck.getCards().addAll(player.getHand());
+                player.emptyHand();
             }
         }
     }

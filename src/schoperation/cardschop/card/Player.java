@@ -3,6 +3,7 @@ package schoperation.cardschop.card;
 import sx.blah.discord.handle.obj.IUser;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Player {
@@ -75,5 +76,27 @@ public class Player {
     {
         this.hand.remove(this.hand.size() - 1);
         return;
+    }
+
+    // Returns a string showing off the hand.
+    public String handToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Card> iterator = this.hand.iterator();
+        int i = 1;
+
+        while (iterator.hasNext())
+        {
+            // Index number
+            sb.append("[" + i + "] ");
+
+            Card card = iterator.next();
+            sb.append(card.getString());
+            sb.append("\n");
+
+            i++;
+        }
+
+        return sb.toString();
     }
 }

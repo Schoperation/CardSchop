@@ -44,7 +44,6 @@ public class SetDealerCommand implements ICommand {
                 // Find the other player in the table.
                 // First, get the actual user.
                 arg1 = arg1.replaceAll("[<>@!]", "");
-                //Utils.isValidString()
                 IUser userFromString = guild.getUserByID(Long.parseLong(arg1));
 
                 for (Player p : player.getTable().getPlayers())
