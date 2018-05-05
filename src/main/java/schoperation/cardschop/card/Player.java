@@ -81,7 +81,7 @@ public class Player {
     // Remove specified card (index)
     public void removeCard(int index)
     {
-        this.hand.remove(index - 1);
+        this.hand.remove(index);
         return;
     }
 

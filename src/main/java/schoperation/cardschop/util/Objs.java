@@ -25,6 +25,7 @@ public class Objs {
             new DealCommand(),
             new CollectCommand(),
             new ShuffleCommand(),
+            new GiveCommand(),
             new RevealCommand(),
             new SeeCommand()
 
