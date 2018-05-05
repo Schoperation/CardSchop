@@ -39,6 +39,7 @@ public class CollectCommand implements ICommand {
             {
                 player.getTable().collectCards();
                 channel.sendMessage("The dealer collected everyone's cards.");
+                player.getTable().update(guild);
                 return;
             }
             else

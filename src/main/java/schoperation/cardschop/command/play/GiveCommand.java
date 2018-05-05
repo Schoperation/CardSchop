@@ -81,6 +81,7 @@ public class GiveCommand implements ICommand {
                     givingPlayer.removeCard(cardInt);
                     receivingPlayer.addCard(card);
                     channel.sendMessage(givingPlayer.getUser().getDisplayName(guild) + " gave their number " + (cardInt + 1) + " card to " + receivingPlayer.getUser().getDisplayName(guild));
+                    givingPlayer.getTable().update(guild);
                     return;
                 }
             }

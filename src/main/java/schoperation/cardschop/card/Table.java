@@ -32,8 +32,8 @@ public class Table {
     // Its deck
     private Deck deck;
 
-    // The current dealer at this table.
-    private Player dealer;
+    // The current dealer at this table. Dummy player as a placeholder.
+    private Player dealer = new Player(null, null);
 
     // Its pot
     private int pot;
@@ -43,9 +43,9 @@ public class Table {
         this.name = n;
         this.channel = c;
         this.message = this.channel.sendMessage("k");
-        this.update(this.channel.getGuild());
         this.channel.sendMessage("------------------------------------------");
         this.deck = new Deck(); // TODO eventually allow players to decide this deck?
+        this.update(this.channel.getGuild());
     }
 
     public Player getDealer()
@@ -117,7 +117,7 @@ public class Table {
         for (i = 0; i < SPACES; i++)
             sb.append(" ");
 
-        sb.append("+-------------------------+\n");
+        sb.append("+===============+\n");
 
         for (i = 0; i < SPACES; i++)
             sb.append(" ");
@@ -130,6 +130,7 @@ public class Table {
 
 
         // For every player (or two players), add another length to the table, with their names.
+        // TODO add their personal front piles
         int numPlayers = this.players.size();
         int j;
         i = 0;
@@ -201,14 +202,30 @@ public class Table {
         for (j = 0; j < SPACES; j++)
             sb.append(" ");
 
-        sb.append("+-------------------------+\n");
+        sb.append("+===============+\n");
         sb.append("\nLog:");
 
         // (Attempt to) find the middle of the table.
-        // That list of char positions? Let's get the amount of them. The REAL amount.
-        int charPositionLength = 0;
-        for (int p : charPosition)
-            charPositionLength++;
+        // That list of char positions? The amount of them is element.
+        // We'll use the position that is in the middle of the array, and insert the deck.
+        int deckPos = charPosition[element / 2] + 20;
+        sb.replace(deckPos, deckPos + 3, "[" + this.deck.getNumberOfCards() + "]");
+        sb.delete(deckPos + 4, deckPos + 9);
+
+        // Add the "middle pile"
+        deckPos = charPosition[(element / 2) - 1] + 20;
+
+        if (this.middlePile.isEmpty())
+        {
+            sb.replace(deckPos, deckPos + 3, "mid");
+            sb.delete(deckPos + 4, deckPos + 8);
+        }
+        else
+        {
+            sb.replace(deckPos, deckPos + 10, this.middlePile.get(this.middlePile.size() - 1).getString());
+            sb.delete(deckPos + 11, deckPos + 11);
+        }
+
 
         // Edit message
         this.message.edit(sb.toString());

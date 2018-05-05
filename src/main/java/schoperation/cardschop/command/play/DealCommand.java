@@ -62,6 +62,7 @@ public class DealCommand implements ICommand {
                     channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3);
                 }
 
+                table.update(guild);
                 return;
             }
             else
