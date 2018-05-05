@@ -2,7 +2,8 @@ package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
-import schoperation.cardschop.core.Objs;
+import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Objs;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -16,7 +17,7 @@ public class JoinCommand implements ICommand {
         join [table] -> joins that table, if it exists.
      */
 
-    private String command = "join";
+    private final String command = "join";
 
     @Override
     public String getCommand()
@@ -46,7 +47,7 @@ public class JoinCommand implements ICommand {
             }
         }
 
-        channel.sendMessage("Could not find that table.");
+        channel.sendMessage(Msges.TABLE_NOT_FOUND);
         return;
     }
 }

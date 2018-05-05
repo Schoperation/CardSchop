@@ -1,7 +1,8 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.core.Utils;
+import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -14,7 +15,7 @@ public class SetDealerCommand implements ICommand {
         setdealer [name] -> sets the dealer to [name] (display name, not default), or just the person executing the command.
      */
 
-    private String command = "setdealer";
+    private final String command = "setdealer";
 
     @Override
     public String getCommand()
@@ -53,10 +54,13 @@ public class SetDealerCommand implements ICommand {
                         return;
                     }
                 }
+
+                channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of a table!");
+                return;
             }
         }
         else
-            channel.sendMessage("You are not part of a table! Use &join [tablename].");
+            channel.sendMessage(Msges.NO_TABLE);
 
         return;
     }

@@ -1,4 +1,4 @@
-package schoperation.cardschop.core;
+package schoperation.cardschop.util;
 
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.*;

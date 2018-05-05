@@ -78,6 +78,13 @@ public class Player {
         return;
     }
 
+    // Remove specified card (index)
+    public void removeCard(int index)
+    {
+        this.hand.remove(index - 1);
+        return;
+    }
+
     // Returns a string showing off the hand.
     public String handToString()
     {

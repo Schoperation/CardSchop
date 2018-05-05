@@ -1,7 +1,8 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.core.Utils;
+import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -14,7 +15,7 @@ public class RevealCommand implements ICommand {
         reveal -> reveals your hand to EVERYONE.
      */
 
-    private String command = "reveal";
+    private final String command = "reveal";
 
     @Override
     public String getCommand()
@@ -33,7 +34,7 @@ public class RevealCommand implements ICommand {
             return;
         }
 
-        channel.sendMessage("You must be part of a table.");
+        channel.sendMessage(Msges.NO_TABLE);
         return;
     }
 }

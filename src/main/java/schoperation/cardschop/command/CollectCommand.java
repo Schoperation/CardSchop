@@ -1,7 +1,8 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.core.Utils;
+import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -15,7 +16,7 @@ public class CollectCommand implements ICommand {
         collect -> collects everyone's cards.
      */
 
-    private String command = "collect";
+    private final String command = "collect";
 
     @Override
     public String getCommand()
@@ -41,12 +42,12 @@ public class CollectCommand implements ICommand {
             }
             else
             {
-                channel.sendMessage("You are not the dealer! Use &setdealer.");
+                channel.sendMessage(Msges.NOT_DEALER);
                 return;
             }
         }
 
-        channel.sendMessage("You must be part of a table.");
+        channel.sendMessage(Msges.NO_TABLE);
         return;
     }
 }

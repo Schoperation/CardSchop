@@ -1,7 +1,8 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.core.Utils;
+import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -14,7 +15,7 @@ public class LeaveCommand implements ICommand {
         leave -> leaves the current table.
      */
 
-    private String command = "leave";
+    private final String command = "leave";
 
     @Override
     public String getCommand()
@@ -43,7 +44,7 @@ public class LeaveCommand implements ICommand {
         }
 
 
-        channel.sendMessage("Could not remove you from the table. Are you even part of one?");
+        channel.sendMessage(Msges.TABLE_NOT_FOUND);
         return;
     }
 }

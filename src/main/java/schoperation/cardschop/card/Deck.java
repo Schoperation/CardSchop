@@ -12,7 +12,7 @@ public class Deck {
      */
 
     // The list. Wow.
-    private List<Card> cards = new ArrayList<Card>();
+    private List<Card> cards = new ArrayList<>();
 
     public Deck()
     {
@@ -40,6 +40,24 @@ public class Deck {
     public void shuffle()
     {
         Collections.shuffle(this.cards);
+        return;
+    }
+
+    // Adds a card to the BOTTOM of the deck. Normal getCards().remove() removes from the end of the list, which is the top.
+    // This is a special method to shift the entire deck to the right.
+    public void addToBottom(Card card)
+    {
+        // Add a dummy card to the deck. We'll just use the given card.
+        this.cards.add(card);
+
+        // Shift the cards to the right, starting from the top of the deck.
+        int i;
+        for (i = this.cards.size() - 1; i > 0; i--)
+            this.cards.set(i, this.cards.get(i - 1));
+
+        // Now set the given card to the top.
+        this.cards.set(0, card);
+
         return;
     }
 

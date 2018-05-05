@@ -1,6 +1,7 @@
 package schoperation.cardschop.core;
 
 import schoperation.cardschop.command.ICommand;
+import schoperation.cardschop.util.Objs;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;

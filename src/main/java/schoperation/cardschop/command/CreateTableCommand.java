@@ -1,7 +1,8 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Table;
-import schoperation.cardschop.core.Objs;
+import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Objs;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -14,7 +15,7 @@ public class CreateTableCommand implements ICommand {
         createtable [name] -> creates a new table named [name].
      */
 
-    private String command = "createtable";
+    private final String command = "createtable";
 
     @Override
     public String getCommand()
@@ -29,12 +30,12 @@ public class CreateTableCommand implements ICommand {
         // Add a table to the list of tables.
         if (arg1.equals("blank"))
         {
-            channel.sendMessage("Please provide a name for the table. Ex. &createtable MyTable");
+            channel.sendMessage("Please provide a name for the table. Ex. " + Msges.PREFIX + "createtable MyTable");
             return;
         }
 
         Objs.TABLES.add(new Table(arg1, channel));
-        channel.sendMessage("Successfully created table. Type &join " + arg1 + "\n to join the table.");
+        channel.sendMessage("Successfully created table. Use " + Msges.PREFIX + "join " + arg1 + "\n to join the table.");
         return;
     }
 }
