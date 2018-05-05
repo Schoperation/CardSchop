@@ -1,8 +1,10 @@
 package schoperation.cardschop.card;
 
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,9 @@ public class Table {
     // List of players
     private List<Player> players = new ArrayList<>();
 
+    // Middle pile (right by the deck).
+    private List<Card> middlePile = new ArrayList<>();
+
     // Its deck
     private Deck deck;
 
@@ -37,7 +42,8 @@ public class Table {
     {
         this.name = n;
         this.channel = c;
-        this.message = this.channel.sendMessage("prototable:\n*---*\n|   |\n*---*\n\nLOG:");
+        this.message = this.channel.sendMessage("k");
+        this.update(this.channel.getGuild());
         this.channel.sendMessage("------------------------------------------");
         this.deck = new Deck(); // TODO eventually allow players to decide this deck?
     }
@@ -68,6 +74,11 @@ public class Table {
         return this.players;
     }
 
+    public List<Card> getMiddlePile()
+    {
+        return this.middlePile;
+    }
+
     public Deck getDeck()
     {
         return this.deck;
@@ -79,7 +90,7 @@ public class Table {
     }
 
     /*
-        Setting and getting the messages associated with the table.
+        Setting and getting the message associated with the table.
      */
 
     public IMessage getTableMsg()
@@ -87,9 +98,127 @@ public class Table {
         return this.message;
     }
 
+    // The main function that edits the table message.
+    public void update(IGuild guild)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        final int SPACES = 35;
+
+        // Use to find the middle of the table. For printing the deck.
+        int[] charPosition = new int[50];
+        int element = 0;
+
+        // Edge of table.
+        sb.append(this.getName());
+        sb.append("\n");
+
+        int i;
+        for (i = 0; i < SPACES; i++)
+            sb.append(" ");
+
+        sb.append("+-------------------------+\n");
+
+        for (i = 0; i < SPACES; i++)
+            sb.append(" ");
+
+        // For every pipe that is ABOUT TO print (|   |), record the position in the string.
+        charPosition[element] = sb.length();
+        element++;
+
+        sb.append("|                                          |\n"); // 42 blanks between the pipes
+
+
+        // For every player (or two players), add another length to the table, with their names.
+        int numPlayers = this.players.size();
+        int j;
+        i = 0;
+        while (numPlayers > 0)
+        {
+            // Only one?
+            if (numPlayers == 1)
+            {
+                // Print a line with just the one player.
+                String dispName = this.players.get(i).getUser().getDisplayName(guild);
+
+                // Print spaces until we're at the const num.
+                for (j = 0; j < (SPACES - (dispName.length() * 2) - 1); j++)
+                    sb.append(" ");
+
+                sb.append(dispName);
+                sb.append(" ");
+
+                charPosition[element] = sb.length();
+                element++;
+                sb.append("|                                          |\n");
+
+                numPlayers--;
+                i++;
+            }
+            // Two or more
+            else
+            {
+                // Print a line with just the one player.
+                String dispName1 = this.players.get(i).getUser().getDisplayName(guild);
+                String dispName2 = this.players.get(i+1).getUser().getDisplayName(guild);
+
+                // Print spaces until we're at the const num.
+                for (j = 0; j < (SPACES - (dispName1.length() * 2) - 1); j++)
+                    sb.append(" ");
+
+                sb.append(dispName1);
+                sb.append(" ");
+
+                charPosition[element] = sb.length();
+                element++;
+                sb.append("|                                          |");
+
+                sb.append(" ");
+                sb.append(dispName2);
+                sb.append("\n");
+
+                numPlayers -= 2;
+                i += 2;
+            }
+
+            // Another divider, so the names are not clumped up.
+            for (j = 0; j < SPACES; j++)
+                sb.append(" ");
+
+            charPosition[element] = sb.length();
+            element++;
+            sb.append("|                                          |\n");
+        }
+
+        // Other edge of table
+        for (j = 0; j < SPACES; j++)
+            sb.append(" ");
+
+        charPosition[element] = sb.length();
+        element++;
+        sb.append("|                                          |\n");
+
+        for (j = 0; j < SPACES; j++)
+            sb.append(" ");
+
+        sb.append("+-------------------------+\n");
+        sb.append("\nLog:");
+
+        // (Attempt to) find the middle of the table.
+        // That list of char positions? Let's get the amount of them. The REAL amount.
+        int charPositionLength = 0;
+        for (int p : charPosition)
+            charPositionLength++;
+
+        // Edit message
+        this.message.edit(sb.toString());
+
+        return;
+    }
+
     /*
-            Deals the cards from the deck to players. 0 perPlayer means just try to distribute the cards evenly.
-         */
+        Deals the cards from the deck to players. 0 perPlayer means just try to distribute the cards evenly.
+     */
     public void dealCards(int perPlayer, int atATime, boolean dealerGetsCards, Player player)
     {
         // So this player is the dealer.
@@ -101,7 +230,7 @@ public class Table {
 
         int i;
         int numCards = 0;
-        boolean alreadyCounted = false;
+        boolean alreadyCounted;
         while (numCards < perPlayer && !this.deck.getCards().isEmpty())
         {
             alreadyCounted = false;

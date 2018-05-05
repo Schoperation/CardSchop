@@ -43,6 +43,7 @@ public class JoinCommand implements ICommand {
                 // This table exists. Make the user into a player.
                 table.getPlayers().add(new Player(sender, table));
                 channel.sendMessage(sender.getDisplayName(guild) + " has joined Table " + table.getName() + ".");
+                table.update(guild);
                 return;
             }
         }

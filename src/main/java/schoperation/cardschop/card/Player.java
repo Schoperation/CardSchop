@@ -51,6 +51,16 @@ public class Player {
         return this.chips;
     }
 
+    public List<Card> getPile()
+    {
+        return this.pile;
+    }
+
+    public List<Card> getFront()
+    {
+        return this.front;
+    }
+
     /*
         These methods deal with the player's hand.
      */
