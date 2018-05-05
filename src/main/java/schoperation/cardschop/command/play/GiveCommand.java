@@ -15,7 +15,9 @@ public class GiveCommand implements ICommand {
     /*
         Gives a card to another player.
 
-        give [player] [number] -> Gives the card corresponding to the number inputted, to the specified player.
+        give [player] [card] -> Gives the card corresponding to the number inputted, to the specified player.
+
+        If card is not specified, use the topmost card of the givingPlayer's hand.
      */
 
     private final String command = "give";
@@ -37,26 +39,31 @@ public class GiveCommand implements ICommand {
             // First player
             Player givingPlayer = Utils.getPlayerClass(sender);
 
+            // Card integer
+            int cardInt;
+
             // Correct arguments?
             if (arg1.equals("blank"))
             {
-                channel.sendMessage("Please provide arguments. The player should be mentioned. \nEx. " + Msges.PREFIX + "give @Schoperation 4 // Gives your fourth card to Schoperation.");
+                channel.sendMessage("Please provide arguments. The player should be mentioned. \nEx. " + Msges.PREFIX + "give @Person#1234 4  //Gives your fourth card to Person.");
                 return;
             }
             else if (arg2.equals("blank"))
             {
-                channel.sendMessage("Please provide a card number. Use the numbers between the square brackets [] to pick a card. \n This is done because it's easier, and for secrecy.");
-                return;
+                // Use the topmost card
+                cardInt = givingPlayer.getHand().size() - 1;
             }
-
-            // Parse the card and see if that's part of their hand
-            int cardInt = Integer.parseInt(arg2);
-
-            // NOT part of their hand.
-            if (cardInt > givingPlayer.getHand().size())
+            else
             {
-                channel.sendMessage("Invalid number.");
-                return;
+                // Parse the card and see if that's part of their hand
+                cardInt = Integer.parseInt(arg2) - 1;
+
+                // NOT part of their hand.
+                if (cardInt > givingPlayer.getHand().size())
+                {
+                    channel.sendMessage("Invalid card number.");
+                    return;
+                }
             }
 
             // Player they're going to give it to.
@@ -70,10 +77,10 @@ public class GiveCommand implements ICommand {
                 {
                     // Found them.
                     // Remove the card from givingPlayer and add it to receivingPlayer's hand.
-                    Card card = givingPlayer.getHand().get(cardInt - 1);
-                    givingPlayer.removeCard(cardInt - 1);
+                    Card card = givingPlayer.getHand().get(cardInt);
+                    givingPlayer.removeCard(cardInt);
                     receivingPlayer.addCard(card);
-                    channel.sendMessage(givingPlayer.getUser().getDisplayName(guild) + " gave their number " + cardInt + " card to " + receivingPlayer.getUser().getDisplayName(guild));
+                    channel.sendMessage(givingPlayer.getUser().getDisplayName(guild) + " gave their number " + (cardInt + 1) + " card to " + receivingPlayer.getUser().getDisplayName(guild));
                     return;
                 }
             }
