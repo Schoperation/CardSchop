@@ -1,14 +1,16 @@
-package schoperation.cardschop.command;
+package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
+import schoperation.cardschop.card.Table;
+import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
-public class GiveCommand implements ICommand{
+public class GiveCommand implements ICommand {
 
     /*
         Gives a card to another player.
@@ -76,7 +78,7 @@ public class GiveCommand implements ICommand{
                 }
             }
 
-            channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of a table!");
+            channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of this table!");
             return;
         }
 

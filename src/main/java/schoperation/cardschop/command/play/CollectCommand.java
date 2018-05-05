@@ -1,21 +1,23 @@
-package schoperation.cardschop.command;
+package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Player;
+import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
-public class ShuffleCommand implements ICommand {
+public class CollectCommand implements ICommand {
 
     /*
-        Shuffles the deck.
+        Collects everyone's cards from their hands (and table, soon tm)
+        and puts them back into the deck.
 
-        shuffle -> shuffles the deck.
+        collect -> collects everyone's cards.
      */
 
-    private final String command = "shuffle";
+    private final String command = "collect";
 
     @Override
     public String getCommand()
@@ -35,8 +37,8 @@ public class ShuffleCommand implements ICommand {
 
             if (player.getTable().getDealer().equals(player))
             {
-                player.getTable().getDeck().shuffle();
-                channel.sendMessage("Shuffled the deck.");
+                player.getTable().collectCards();
+                channel.sendMessage("The dealer collected everyone's cards.");
                 return;
             }
             else

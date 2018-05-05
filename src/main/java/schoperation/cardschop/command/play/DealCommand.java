@@ -1,6 +1,8 @@
-package schoperation.cardschop.command;
+package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Player;
+import schoperation.cardschop.card.Table;
+import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
@@ -30,15 +32,18 @@ public class DealCommand implements ICommand {
         // Is this player part of a table?
         if(Utils.isPartOfTable(sender))
         {
-            // Check if dealer
             Player player = Utils.getPlayerClass(sender);
 
+            // Table
+            Table table = player.getTable();
+
+            // Check if dealer
             if (player.getTable().getDealer().equals(player))
             {
                 // Argument checking
                 if (arg1.equals("blank"))
                 {
-                    player.getTable().dealCards(0, 1, true, player);
+                    table.dealCards(0, 1, true, player);
                     channel.sendMessage("Dealt all cards to everyone, one at a time.");
                 }
                 else if (arg2.equals("blank"))

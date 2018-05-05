@@ -1,7 +1,11 @@
 package schoperation.cardschop.util;
 
 import schoperation.cardschop.card.Table;
-import schoperation.cardschop.command.*;
+import schoperation.cardschop.command.ICommand;
+import schoperation.cardschop.command.JoinCommand;
+import schoperation.cardschop.command.LeaveCommand;
+import schoperation.cardschop.command.TableCommand;
+import schoperation.cardschop.command.play.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +22,7 @@ public class Objs {
     // Commands
     public static final ICommand COMMANDS[] = {
 
-            new CreateTableCommand(),
+            new TableCommand(),
             new JoinCommand(),
             new LeaveCommand(),
             new SetDealerCommand(),

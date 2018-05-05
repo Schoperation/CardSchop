@@ -1,21 +1,22 @@
-package schoperation.cardschop.command;
+package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Player;
+import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
-public class RevealCommand implements ICommand {
+public class SeeCommand implements ICommand {
 
     /*
-        Reveal your hand.
+        See your hand.
 
-        reveal -> reveals your hand to EVERYONE.
+        see -> reveals your hand to YOURSELF ONLY.
      */
 
-    private final String command = "reveal";
+    private final String command = "see";
 
     @Override
     public String getCommand()
@@ -30,7 +31,7 @@ public class RevealCommand implements ICommand {
         if (Utils.isPartOfTable(sender))
         {
             Player player = Utils.getPlayerClass(sender);
-            channel.sendMessage(sender.getDisplayName(guild) + "'s hand: \n" + player.handToString());
+            sender.getOrCreatePMChannel().sendMessage("Your hand: \n" + player.handToString());
             return;
         }
 

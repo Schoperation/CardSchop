@@ -18,7 +18,7 @@ public class Table {
     // Channel it's on
     private IChannel channel;
 
-    // Message the table is printed on
+    // Message the table itself is printed on. Constantly edited. The command output will be put below the table.
     private IMessage message;
 
     // List of players
@@ -37,8 +37,9 @@ public class Table {
     {
         this.name = n;
         this.channel = c;
-        this.message = this.channel.sendMessage("table is this message yay");
-        this.deck = new Deck();
+        this.message = this.channel.sendMessage("prototable:\n*---*\n|   |\n*---*\n\nLOG:");
+        this.channel.sendMessage("------------------------------------------");
+        this.deck = new Deck(); // TODO eventually allow players to decide this deck?
     }
 
     public Player getDealer()
@@ -78,8 +79,17 @@ public class Table {
     }
 
     /*
-        Deals the cards from the deck to players. 0 perPlayer means just try to distribute the cards evenly.
+        Setting and getting the messages associated with the table.
      */
+
+    public IMessage getTableMsg()
+    {
+        return this.message;
+    }
+
+    /*
+            Deals the cards from the deck to players. 0 perPlayer means just try to distribute the cards evenly.
+         */
     public void dealCards(int perPlayer, int atATime, boolean dealerGetsCards, Player player)
     {
         // So this player is the dealer.

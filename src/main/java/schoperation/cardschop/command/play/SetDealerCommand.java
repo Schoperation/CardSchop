@@ -1,6 +1,8 @@
-package schoperation.cardschop.command;
+package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Player;
+import schoperation.cardschop.card.Table;
+import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
@@ -55,7 +57,7 @@ public class SetDealerCommand implements ICommand {
                     }
                 }
 
-                channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of a table!");
+                channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of the table!");
                 return;
             }
         }
