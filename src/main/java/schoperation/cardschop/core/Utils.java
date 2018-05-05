@@ -47,19 +47,4 @@ public class Utils {
         // Nothing.
         return null;
     }
-
-    // Checks if this is a good string. Usable?
-    public static boolean isValidString(String s)
-    {
-        for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++)
-        {
-
-            if (s.toUpperCase().indexOf(alphabet) >= 0)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }

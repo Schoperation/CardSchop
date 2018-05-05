@@ -1,6 +1,5 @@
 package schoperation.cardschop.core;
 
-import schoperation.cardschop.card.Deck;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;

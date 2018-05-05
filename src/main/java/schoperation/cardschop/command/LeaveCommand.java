@@ -1,8 +1,6 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.card.Table;
-import schoperation.cardschop.core.Objs;
 import schoperation.cardschop.core.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;

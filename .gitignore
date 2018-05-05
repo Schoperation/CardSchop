@@ -22,10 +22,18 @@
 hs_err_pid*
 
 # Dumb folders
+build
+gradle
+.gradle
 out
 .git
 .idea
 modules
+
+# Gradle
+gradlew.bat
+gradlew.sh
+gradlew
 
 # Idea
 *.iml
