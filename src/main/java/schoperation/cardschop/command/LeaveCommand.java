@@ -35,7 +35,7 @@ public class LeaveCommand implements ICommand {
             if (player.getNumOfCards() != 0)
             {
                 player.getTable().getDeck().getCards().addAll(player.getHand());
-                player.emptyHand();
+                player.clearHand();
             }
 
             player.getTable().getPlayers().remove(player);

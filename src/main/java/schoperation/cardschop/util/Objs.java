@@ -31,7 +31,8 @@ public class Objs {
             new ShuffleCommand(),
             new GiveCommand(),
             new RevealCommand(),
-            new SeeCommand()
+            new SeeCommand(),
+            new DrawCommand()
 
     };
 }

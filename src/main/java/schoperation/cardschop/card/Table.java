@@ -146,7 +146,7 @@ public class Table {
             if (player.getNumOfCards() != 0)
             {
                 this.deck.getCards().addAll(player.getHand());
-                player.emptyHand();
+                player.clearHand();
             }
         }
     }

@@ -18,6 +18,12 @@ public class Player {
     // Player's hand
     private List<Card> hand = new ArrayList<>();
 
+    // The pile of cards by the player's side.
+    private List<Card> pile = new ArrayList<>();
+
+    // The pile of cards in front of the player (for tricks, mainly).
+    private List<Card> front = new ArrayList<>();
+
     // Table
     private Table table;
 
@@ -59,7 +65,7 @@ public class Player {
         return this.hand.size();
     }
 
-    public void emptyHand()
+    public void clearHand()
     {
         this.hand.clear();
         return;
