@@ -32,7 +32,8 @@ public class Objs {
             new GiveCommand(),
             new RevealCommand(),
             new SeeCommand(),
-            new DrawCommand()
+            new DrawCommand(),
+            new PlaceCommand()
 
     };
 }

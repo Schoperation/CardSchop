@@ -1,5 +1,6 @@
 package schoperation.cardschop.card;
 
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class Player {
     // The pile of cards in front of the player (for tricks, mainly).
     private List<Card> front = new ArrayList<>();
 
+    // The private message that will hold the player's hand.
+    private IMessage pm;
+
     // Table
     private Table table;
 
@@ -34,6 +38,9 @@ public class Player {
     {
         this.user = u;
         this.table = t;
+
+        if (this.user != null)
+            this.pm = this.user.getOrCreatePMChannel().sendMessage("Your hand will appear here.");
     }
 
     public IUser getUser()
@@ -44,6 +51,11 @@ public class Player {
     public Table getTable()
     {
         return this.table;
+    }
+
+    public IMessage getPM()
+    {
+        return this.pm;
     }
 
     public int getChips()
@@ -88,17 +100,17 @@ public class Player {
     }
 
     // Removes card from top of hand
-    public void removeCard()
+    public Card removeCard()
     {
-        this.hand.remove(this.hand.size() - 1);
-        return;
+        Card card = this.hand.remove(this.hand.size() - 1);
+        return card;
     }
 
     // Remove specified card (index)
-    public void removeCard(int index)
+    public Card removeCard(int index)
     {
-        this.hand.remove(index);
-        return;
+        Card card = this.hand.remove(index);
+        return card;
     }
 
     // Returns a string showing off the hand.
@@ -106,6 +118,50 @@ public class Player {
     {
         StringBuilder sb = new StringBuilder();
         Iterator<Card> iterator = this.hand.iterator();
+        int i = 1;
+
+        while (iterator.hasNext())
+        {
+            // Index number
+            sb.append("[" + i + "] ");
+
+            Card card = iterator.next();
+            sb.append(card.getString());
+            sb.append("\n");
+
+            i++;
+        }
+
+        return sb.toString();
+    }
+
+    // Returns a string showing off the side pile.
+    public String pileToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Card> iterator = this.pile.iterator();
+        int i = 1;
+
+        while (iterator.hasNext())
+        {
+            // Index number
+            sb.append("[" + i + "] ");
+
+            Card card = iterator.next();
+            sb.append(card.getString());
+            sb.append("\n");
+
+            i++;
+        }
+
+        return sb.toString();
+    }
+
+    // Returns a string showing off the front pile.
+    public String frontToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Card> iterator = this.front.iterator();
         int i = 1;
 
         while (iterator.hasNext())

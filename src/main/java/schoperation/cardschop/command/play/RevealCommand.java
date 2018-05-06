@@ -11,9 +11,14 @@ import sx.blah.discord.handle.obj.IUser;
 public class RevealCommand implements ICommand {
 
     /*
-        Reveal your hand.
+        Reveals something of yours.
 
-        reveal -> reveals your hand to EVERYONE.
+        reveal -> reveals something to EVERYONE.
+
+        Options include:
+            -hand -> your hand. This is default, if no arguments are provided.
+            -pile -> your personal pile.
+            -infront -> the cards in front of you.
      */
 
     private final String command = "reveal";
@@ -31,7 +36,17 @@ public class RevealCommand implements ICommand {
         if (Utils.isPartOfTable(sender))
         {
             Player player = Utils.getPlayerClass(sender);
-            channel.sendMessage(sender.getDisplayName(guild) + "'s hand: \n" + player.handToString());
+
+            // What place?
+            if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))
+                channel.sendMessage(sender.getDisplayName(guild) + "'s hand:\n" + player.handToString());
+            else if (arg1.toLowerCase().equals("pile"))
+                channel.sendMessage(sender.getDisplayName(guild) + "'s side pile:\n" + player.pileToString());
+            else if (arg1.toLowerCase().equals("infront"))
+                channel.sendMessage(sender.getDisplayName(guild) + "'s front cards:\n" + player.frontToString());
+            else
+                channel.sendMessage("Invalid place. Either chose hand, pile, or infront.");
+            
             return;
         }
 

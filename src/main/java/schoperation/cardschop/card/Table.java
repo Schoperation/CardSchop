@@ -130,7 +130,6 @@ public class Table {
 
 
         // For every player (or two players), add another length to the table, with their names.
-        // TODO add their personal front piles
         int numPlayers = this.players.size();
         int j;
         i = 0;
@@ -149,9 +148,18 @@ public class Table {
                 sb.append(dispName);
                 sb.append(" ");
 
+                // Append their topmost front card, or nothing.
                 charPosition[element] = sb.length();
                 element++;
-                sb.append("|                                          |\n");
+
+                if (this.players.get(i).getFront().isEmpty())
+                    sb.append("|                                          |\n");
+                else
+                {
+                    sb.append("|  ");
+                    sb.append(this.players.get(i).getFront().get(this.players.get(i).getFront().size() - 1).getString());
+                    sb.append("                              |\n");
+                }
 
                 numPlayers--;
                 i++;
@@ -161,7 +169,7 @@ public class Table {
             {
                 // Print a line with just the one player.
                 String dispName1 = this.players.get(i).getUser().getDisplayName(guild);
-                String dispName2 = this.players.get(i+1).getUser().getDisplayName(guild);
+                String dispName2 = this.players.get(i + 1).getUser().getDisplayName(guild);
 
                 // Print spaces until we're at the const num.
                 for (j = 0; j < (SPACES - (dispName1.length() * 2) - 1); j++)
@@ -172,7 +180,24 @@ public class Table {
 
                 charPosition[element] = sb.length();
                 element++;
-                sb.append("|                                          |");
+
+                // Front cards TODO this good?
+                if (this.players.get(i).getFront().isEmpty())
+                    sb.append("|                                          ");
+                else
+                {
+                    sb.append("|  ");
+                    sb.append(this.players.get(i).getFront().get(this.players.get(i).getFront().size() - 1).getString());
+                    sb.append("                                ");
+                }
+
+                if (this.players.get(i + 1).getFront().isEmpty())
+                    sb.append("|");
+                else
+                {
+                    sb.append(this.players.get(i + 1).getFront().get(this.players.get(i + 1).getFront().size() - 1).getString());
+                    sb.append("  |");
+                }
 
                 sb.append(" ");
                 sb.append(dispName2);
@@ -286,14 +311,38 @@ public class Table {
      */
     public void collectCards()
     {
-        // Go through each player, append their hands into the deck, then clear their hand.
+        // Go through each player
         for (Player player : this.players)
         {
+            // Append their hands into the deck, then clear their hand.
             if (player.getNumOfCards() != 0)
             {
                 this.deck.getCards().addAll(player.getHand());
                 player.clearHand();
             }
+
+            // Side pile
+            if (!player.getPile().isEmpty())
+            {
+                this.deck.getCards().addAll(player.getPile());
+                player.getPile().clear();
+            }
+
+            // Front pile
+            if (!player.getFront().isEmpty())
+            {
+                this.deck.getCards().addAll(player.getFront());
+                player.getFront().clear();
+            }
         }
+
+        // Clear the middle pile
+        if (!this.middlePile.isEmpty())
+        {
+            this.deck.getCards().addAll(this.middlePile);
+            this.middlePile.clear();
+        }
+
+        return;
     }
 }
