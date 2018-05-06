@@ -38,28 +38,28 @@ public class DealCommand implements ICommand {
             Table table = player.getTable();
 
             // Check if dealer
-            if (player.getTable().getDealer().equals(player))
+            if (table.getDealer().equals(player))
             {
                 // Argument checking
                 if (arg1.equals("blank"))
                 {
                     table.dealCards(0, 1, true, player);
-                    channel.sendMessage("Dealt all cards to everyone, one at a time.");
+                    channel.sendMessage("Dealt all cards to everyone, one at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
                 }
                 else if (arg2.equals("blank"))
                 {
-                    player.getTable().dealCards(Integer.parseInt(arg1), 1, true, player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time.");
+                    table.dealCards(Integer.parseInt(arg1), 1, true, player);
+                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
                 }
                 else if (arg3.equals("blank"))
                 {
-                    player.getTable().dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), true, player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time.");
+                    table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), true, player);
+                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
                 }
                 else
                 {
-                    player.getTable().dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), Boolean.parseBoolean(arg3), player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3);
+                    table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), Boolean.parseBoolean(arg3), player);
+                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ". Use " + Msges.PREFIX + "see to privately see your hand.");
                 }
 
                 table.update(guild);

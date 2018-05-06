@@ -1,5 +1,6 @@
 package schoperation.cardschop.card;
 
+import schoperation.cardschop.command.play.SeeCommand;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
@@ -334,6 +335,9 @@ public class Table {
                 this.deck.getCards().addAll(player.getFront());
                 player.getFront().clear();
             }
+
+            // Update their hand
+            SeeCommand.seeHand(player);
         }
 
         // Clear the middle pile

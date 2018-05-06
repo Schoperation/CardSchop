@@ -45,6 +45,7 @@ public class DrawCommand implements ICommand {
                 Card card = player.getTable().getDeck().getCards().remove(player.getTable().getDeck().getNumberOfCards() - 1);
                 player.addCard(card);
                 channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the deck.");
+                SeeCommand.seeHand(player);
                 player.getTable().update(guild);
                 return;
             }

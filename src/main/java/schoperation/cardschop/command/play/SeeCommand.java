@@ -40,7 +40,7 @@ public class SeeCommand implements ICommand {
 
             // What place?
             if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))
-                player.getPM().edit("Your hand: \n" + player.handToString());
+                seeHand(player);
             else if (arg1.toLowerCase().equals("pile"))
                 player.getPM().edit("Your side pile: \n" + player.pileToString());
             else if (arg1.toLowerCase().equals("infront"))
@@ -55,6 +55,17 @@ public class SeeCommand implements ICommand {
         }
 
         channel.sendMessage(Msges.NO_TABLE);
+        return;
+    }
+
+    // This is a separate function so other commands can automatically do it.
+    public static void seeHand(Player player)
+    {
+        player.getPM().edit("Your hand: \n" + player.handToString());
+
+        // Send a message for a notification
+        IMessage msg = player.getUser().getOrCreatePMChannel().sendMessage("Your hand has updated.");
+        msg.delete();
         return;
     }
 }

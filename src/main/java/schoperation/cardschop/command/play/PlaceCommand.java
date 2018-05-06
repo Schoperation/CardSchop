@@ -49,6 +49,9 @@ public class PlaceCommand implements ICommand {
                 Card card = player.removeCard();
                 player.getTable().getMiddlePile().add(card);
                 player.getTable().update(guild);
+
+                // Update hand
+                SeeCommand.seeHand(player);
                 return;
             }
             // If one argument, use the topmost card.
@@ -60,34 +63,34 @@ public class PlaceCommand implements ICommand {
                     Card card = player.removeCard();
                     player.getTable().getDeck().addToBottom(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else if (arg1.toLowerCase().equals("middle"))
                 {
                     Card card = player.removeCard();
                     player.getTable().getMiddlePile().add(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else if (arg1.toLowerCase().equals("pile"))
                 {
                     Card card = player.removeCard();
                     player.getPile().add(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else if (arg1.toLowerCase().equals("infront"))
                 {
                     Card card = player.removeCard();
                     player.getFront().add(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else
                 {
                     channel.sendMessage(Msges.INVALID_PLACE);
                     return;
                 }
+
+                // Update hand
+                SeeCommand.seeHand(player);
+                return;
             }
             // Both arguments.
             else
@@ -108,34 +111,34 @@ public class PlaceCommand implements ICommand {
                     Card card = player.removeCard(cardInt);
                     player.getTable().getDeck().addToBottom(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else if (arg1.toLowerCase().equals("middle"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getTable().getMiddlePile().add(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else if (arg1.toLowerCase().equals("pile"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getPile().add(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else if (arg1.toLowerCase().equals("infront"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getFront().add(card);
                     player.getTable().update(guild);
-                    return;
                 }
                 else
                 {
                     channel.sendMessage(Msges.INVALID_PLACE);
                     return;
                 }
+
+                // Update hand
+                SeeCommand.seeHand(player);
+                return;
             }
         }
 
