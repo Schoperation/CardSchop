@@ -2,6 +2,7 @@ package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
+import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
@@ -42,16 +43,17 @@ public class PlaceCommand implements ICommand {
         if (Utils.isPartOfTable(sender))
         {
             Player player = Utils.getPlayerClass(sender);
+            Table table = player.getTable();
 
             // If no arguments, place the topmost card of the player's hand in the middle.
             if (arg1.equals("blank"))
             {
                 Card card = player.removeCard();
-                player.getTable().getMiddlePile().add(card);
-                player.getTable().update(guild);
+                table.getMiddlePile().add(card);
 
-                // Update hand
+                // Update hand and table
                 SeeCommand.seeHand(player);
+                table.update(guild);
                 return;
             }
             // If one argument, use the topmost card.
@@ -61,35 +63,32 @@ public class PlaceCommand implements ICommand {
                 if (arg1.toLowerCase().equals("underdeck"))
                 {
                     Card card = player.removeCard();
-                    player.getTable().getDeck().addToBottom(card);
-                    player.getTable().update(guild);
+                    table.getDeck().addToBottom(card);
                 }
                 else if (arg1.toLowerCase().equals("middle"))
                 {
                     Card card = player.removeCard();
-                    player.getTable().getMiddlePile().add(card);
-                    player.getTable().update(guild);
+                    table.getMiddlePile().add(card);
                 }
                 else if (arg1.toLowerCase().equals("pile"))
                 {
                     Card card = player.removeCard();
                     player.getPile().add(card);
-                    player.getTable().update(guild);
                 }
                 else if (arg1.toLowerCase().equals("infront"))
                 {
                     Card card = player.removeCard();
                     player.getFront().add(card);
-                    player.getTable().update(guild);
                 }
                 else
                 {
-                    channel.sendMessage(Msges.INVALID_PLACE);
+                    channel.sendMessage(Msges.INVALID_PLACE_PLACE);
                     return;
                 }
 
-                // Update hand
+                // Update hand and table
                 SeeCommand.seeHand(player);
+                table.update(guild);
                 return;
             }
             // Both arguments.
@@ -109,35 +108,32 @@ public class PlaceCommand implements ICommand {
                 if (arg1.toLowerCase().equals("underdeck"))
                 {
                     Card card = player.removeCard(cardInt);
-                    player.getTable().getDeck().addToBottom(card);
-                    player.getTable().update(guild);
+                    table.getDeck().addToBottom(card);
                 }
                 else if (arg1.toLowerCase().equals("middle"))
                 {
                     Card card = player.removeCard(cardInt);
-                    player.getTable().getMiddlePile().add(card);
-                    player.getTable().update(guild);
+                    table.getMiddlePile().add(card);
                 }
                 else if (arg1.toLowerCase().equals("pile"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getPile().add(card);
-                    player.getTable().update(guild);
                 }
                 else if (arg1.toLowerCase().equals("infront"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getFront().add(card);
-                    player.getTable().update(guild);
                 }
                 else
                 {
-                    channel.sendMessage(Msges.INVALID_PLACE);
+                    channel.sendMessage(Msges.INVALID_PLACE_PLACE);
                     return;
                 }
 
-                // Update hand
+                // Update hand and table
                 SeeCommand.seeHand(player);
+                table.update(guild);
                 return;
             }
         }
