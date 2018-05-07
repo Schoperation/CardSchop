@@ -1,5 +1,6 @@
 package schoperation.cardschop.card;
 
+import schoperation.cardschop.util.Msges;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 
@@ -40,7 +41,7 @@ public class Player {
         this.table = t;
 
         if (this.user != null)
-            this.pm = this.user.getOrCreatePMChannel().sendMessage("Your hand will appear here.");
+            this.pm = this.user.getOrCreatePMChannel().sendMessage("Your hand will appear here. Use `" + Msges.PREFIX + "see` to update it, if ever necessary. You can also use `" + Msges.PREFIX + "see pile` for your personal pile, and `" + Msges.PREFIX + "see infront` for the cards in front of you (trick).");
     }
 
     public IUser getUser()

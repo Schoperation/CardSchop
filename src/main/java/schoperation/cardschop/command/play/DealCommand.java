@@ -49,7 +49,7 @@ public class DealCommand implements ICommand {
                 else if (arg2.equals("blank"))
                 {
                     table.dealCards(Integer.parseInt(arg1), 1, true, player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
+                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time. Use `" + Msges.PREFIX + "see` to privately see your hand.");
                 }
                 else if (arg3.equals("blank"))
                 {

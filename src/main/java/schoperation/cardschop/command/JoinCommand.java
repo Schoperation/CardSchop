@@ -31,7 +31,7 @@ public class JoinCommand implements ICommand {
 
         if (arg1.equals("blank"))
         {
-            channel.sendMessage("Please provide a table name. Ex. &join MyTable");
+            channel.sendMessage("Please provide a table name. Ex. `" + Msges.PREFIX + "join MyTable`");
             return;
         }
 

@@ -5,7 +5,6 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

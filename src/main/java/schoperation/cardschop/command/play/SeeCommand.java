@@ -40,7 +40,7 @@ public class SeeCommand implements ICommand {
 
             // What place?
             if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))
-                seeHand(player);
+                player.getPM().edit("Your hand: \n" + player.handToString());
             else if (arg1.toLowerCase().equals("pile"))
                 player.getPM().edit("Your personal pile: \n" + player.pileToString());
             else if (arg1.toLowerCase().equals("infront"))
