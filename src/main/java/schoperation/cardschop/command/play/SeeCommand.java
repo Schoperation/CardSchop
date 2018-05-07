@@ -36,13 +36,13 @@ public class SeeCommand implements ICommand {
         // Part of a table?
         if (Utils.isPartOfTable(sender))
         {
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
 
             // What place?
             if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))
                 seeHand(player);
             else if (arg1.toLowerCase().equals("pile"))
-                player.getPM().edit("Your side pile: \n" + player.pileToString());
+                player.getPM().edit("Your personal pile: \n" + player.pileToString());
             else if (arg1.toLowerCase().equals("infront"))
                 player.getPM().edit("Your cards in front of you: \n" + player.frontToString());
             else

@@ -1,7 +1,6 @@
 package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
@@ -33,9 +32,9 @@ public class ShuffleCommand implements ICommand {
         if(Utils.isPartOfTable(sender))
         {
             // Check if dealer
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
 
-            if (player.getTable().getDealer().equals(player))
+            if (player.getTable().getDealer() == player)
             {
                 player.getTable().getDeck().shuffle();
                 channel.sendMessage("Shuffled the deck.");

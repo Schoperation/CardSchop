@@ -30,7 +30,7 @@ public class LeaveCommand implements ICommand {
         if (Utils.isPartOfTable(sender))
         {
             // Good. Put their cards back into the deck, and get them outta there.
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
 
             if (player.getNumOfCards() != 0)
             {

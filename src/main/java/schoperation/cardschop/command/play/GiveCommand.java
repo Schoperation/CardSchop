@@ -2,7 +2,6 @@ package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
@@ -37,7 +36,7 @@ public class GiveCommand implements ICommand {
         {
 
             // First player
-            Player givingPlayer = Utils.getPlayerClass(sender);
+            Player givingPlayer = Utils.getPlayerObj(sender);
 
             // Card integer
             int cardInt;

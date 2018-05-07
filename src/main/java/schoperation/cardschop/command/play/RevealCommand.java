@@ -35,7 +35,7 @@ public class RevealCommand implements ICommand {
         // Part of a table?
         if (Utils.isPartOfTable(sender))
         {
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
 
             // What place?
             if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))

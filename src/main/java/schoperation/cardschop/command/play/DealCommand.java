@@ -32,13 +32,13 @@ public class DealCommand implements ICommand {
         // Is this player part of a table?
         if(Utils.isPartOfTable(sender))
         {
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
 
             // Table
             Table table = player.getTable();
 
             // Check if dealer
-            if (table.getDealer().equals(player))
+            if (table.getDealer() == player)
             {
                 // Argument checking
                 if (arg1.equals("blank"))
@@ -61,6 +61,10 @@ public class DealCommand implements ICommand {
                     table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), Boolean.parseBoolean(arg3), player);
                     channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ". Use " + Msges.PREFIX + "see to privately see your hand.");
                 }
+
+                // Update hands and table
+                for (Player p : table.getPlayers())
+                    SeeCommand.seeHand(p);
 
                 table.update(guild);
                 return;

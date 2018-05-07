@@ -42,7 +42,7 @@ public class PlaceCommand implements ICommand {
         // Part of a table?
         if (Utils.isPartOfTable(sender))
         {
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
             Table table = player.getTable();
 
             // If no arguments, place the topmost card of the player's hand in the middle.

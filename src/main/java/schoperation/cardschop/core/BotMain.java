@@ -7,7 +7,7 @@ import sx.blah.discord.util.DiscordException;
 
 public class BotMain {
 
-    // The bot itself. The token is hidden. Because fuck you. You'll probably figure it out somehow.
+    // The bot itself.
     public static final IDiscordClient bot = createClient(Token.t, true);
 
     // Main

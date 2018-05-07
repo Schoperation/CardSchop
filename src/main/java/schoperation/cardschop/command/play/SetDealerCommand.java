@@ -1,7 +1,6 @@
 package schoperation.cardschop.command.play;
 
 import schoperation.cardschop.card.Player;
-import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
@@ -31,7 +30,7 @@ public class SetDealerCommand implements ICommand {
         // Make sure they are part of a table.
         if (Utils.isPartOfTable(sender))
         {
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
 
             // If no argument, make the sender the dealer.
             if (arg1.equals("blank"))

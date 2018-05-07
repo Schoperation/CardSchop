@@ -30,7 +30,7 @@ public class Utils {
     }
 
     // After finding out that ARE a player, get that object.
-    public static Player getPlayerClass(IUser user)
+    public static Player getPlayerObj(IUser user)
     {
         // Go through tables
         for (Table table : Objs.TABLES)

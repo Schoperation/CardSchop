@@ -17,10 +17,10 @@ public class DrawCommand implements ICommand {
 
         draw [place] [amount] -> takes [amount] cards from [place].
 
-        No amount? Just one, by default.
+        No amount? Just one, by default. Use 'all' just to take all cards.
 
         Available places:
-            -deck -> slides the card back under the deck.
+            -deck -> Takes a card from the deck.
             -middle -> the pile right by the deck. Usually "discard pile", or games like egyptian rat screw.
             -pile -> player's personal pile.
             -infront -> in front of the player. For tricks.
@@ -42,7 +42,7 @@ public class DrawCommand implements ICommand {
         // Part of a table?
         if (Utils.isPartOfTable(sender))
         {
-            Player player = Utils.getPlayerClass(sender);
+            Player player = Utils.getPlayerObj(sender);
             Table table = player.getTable();
 
             // No arguments? Draw one card from the deck.
@@ -113,7 +113,13 @@ public class DrawCommand implements ICommand {
             else
             {
                 // Card amount
-                int amount = Integer.parseInt(arg2);
+                int amount;
+
+                if (arg2.equals("all"))
+                    amount = 200;
+                else
+                    amount = Integer.parseInt(arg2);
+
                 int i = 0;
 
                 // Go through the spots.
