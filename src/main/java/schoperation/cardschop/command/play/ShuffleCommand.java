@@ -29,7 +29,7 @@ public class ShuffleCommand implements ICommand {
     {
 
         // Is this player part of a table?
-        if(Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender))
         {
             // Check if dealer
             Player player = Utils.getPlayerObj(sender);

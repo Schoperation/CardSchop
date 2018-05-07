@@ -32,7 +32,7 @@ public class GiveCommand implements ICommand {
     {
 
         // Is this player part of a table?
-        if(Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender))
         {
 
             // First player

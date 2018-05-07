@@ -1,6 +1,7 @@
 package schoperation.cardschop.util;
 
 import schoperation.cardschop.card.Table;
+import schoperation.cardschop.command.ClearCommand;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.command.JoinCommand;
 import schoperation.cardschop.command.LeaveCommand;
@@ -33,7 +34,8 @@ public class Objs {
             new RevealCommand(),
             new SeeCommand(),
             new DrawCommand(),
-            new PlaceCommand()
+            new PlaceCommand(),
+            new ClearCommand()
 
     };
 }

@@ -24,6 +24,9 @@ public class Table {
     // Message the table itself is printed on. Constantly edited. The command output will be put below the table.
     private IMessage message;
 
+    // Divider message, for help with clearing.
+    private IMessage divider;
+
     // List of players
     private List<Player> players = new ArrayList<>();
 
@@ -44,7 +47,7 @@ public class Table {
         this.name = n;
         this.channel = c;
         this.message = this.channel.sendMessage("k");
-        this.channel.sendMessage("------------------------------------------");
+        this.divider = this.channel.sendMessage("------------------------------------------");
         this.deck = new Deck(); // TODO eventually allow players to decide this deck?
         this.update(this.channel.getGuild());
     }
@@ -91,12 +94,17 @@ public class Table {
     }
 
     /*
-        Setting and getting the message associated with the table.
+        Setting and getting the messages associated with the table.
      */
 
     public IMessage getTableMsg()
     {
         return this.message;
+    }
+
+    public IMessage getDivider()
+    {
+        return this.divider;
     }
 
     // The main function that edits the table message.
