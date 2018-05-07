@@ -93,6 +93,10 @@ public class Player {
     public void subtractChips(int c)
     {
         this.chips -= c;
+
+        if (this.chips < 0)
+            this.chips = 0;
+
         return;
     }
 

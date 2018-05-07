@@ -111,6 +111,10 @@ public class Table {
     public void takeFromPot(int p)
     {
         this.pot -= p;
+
+        if (this.pot < 0)
+            this.pot = 0;
+
         return;
     }
 

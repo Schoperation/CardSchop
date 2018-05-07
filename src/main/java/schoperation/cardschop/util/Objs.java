@@ -7,6 +7,8 @@ import schoperation.cardschop.command.JoinCommand;
 import schoperation.cardschop.command.LeaveCommand;
 import schoperation.cardschop.command.TableCommand;
 import schoperation.cardschop.command.play.*;
+import schoperation.cardschop.command.play.bet.BetCommand;
+import schoperation.cardschop.command.play.bet.ChipsCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +37,9 @@ public class Objs {
             new SeeCommand(),
             new DrawCommand(),
             new PlaceCommand(),
-            new ClearCommand()
+            new ClearCommand(),
+            new BetCommand(),
+            new ChipsCommand()
 
     };
 }
