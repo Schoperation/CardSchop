@@ -92,7 +92,7 @@ public class DrawCommand implements ICommand {
                     player.addCard(card);
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from their personal pile.");
                 }
-                else if (arg1.toLowerCase().equals("infront"))
+                else if (arg1.toLowerCase().equals("infront") || arg1.toLowerCase().equals("trick"))
                 {
                     Card card = player.getFront().remove(player.getFront().size() - 1);
                     player.addCard(card);

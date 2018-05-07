@@ -59,11 +59,6 @@ public class Player {
         return this.pm;
     }
 
-    public int getChips()
-    {
-        return this.chips;
-    }
-
     public List<Card> getPile()
     {
         return this.pile;
@@ -72,6 +67,33 @@ public class Player {
     public List<Card> getFront()
     {
         return this.front;
+    }
+
+    /*
+        Player's chips methods
+     */
+
+    public int getChips()
+    {
+        return this.chips;
+    }
+
+    public void setChips(int c)
+    {
+        this.chips = c;
+        return;
+    }
+
+    public void addChips(int c)
+    {
+        this.chips += c;
+        return;
+    }
+
+    public void subtractChips(int c)
+    {
+        this.chips -= c;
+        return;
     }
 
     /*

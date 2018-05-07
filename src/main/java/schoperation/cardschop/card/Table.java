@@ -87,9 +87,31 @@ public class Table {
         return this.deck;
     }
 
+    /*
+        Dealing with the pot.
+     */
+
     public int getPot()
     {
         return this.pot;
+    }
+
+    public void setPot(int p)
+    {
+        this.pot = p;
+        return;
+    }
+
+    public void addToPot(int p)
+    {
+        this.pot += p;
+        return;
+    }
+
+    public void takeFromPot(int p)
+    {
+        this.pot -= p;
+        return;
     }
 
     /*

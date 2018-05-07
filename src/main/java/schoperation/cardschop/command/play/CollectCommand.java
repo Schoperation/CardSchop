@@ -18,7 +18,7 @@ public class CollectCommand implements ICommand {
 
         Options:
             -cards -> Eveeryone's cards, back into the deck. Dealer only.
-            -trick -> Takes everyone's infront cards, and puts them into the player's personal pile.
+            -trick/infront -> Takes everyone's infront cards, and puts them into the player's personal pile.
             -middle -> Takes the middle cards and puts them into the player's hand.
             -pot -> Takes the pot on the table. TODO
 
@@ -70,7 +70,7 @@ public class CollectCommand implements ICommand {
                         return;
                     }
                 }
-                else if (arg1.toLowerCase().equals("trick"))
+                else if (arg1.toLowerCase().equals("trick") || arg1.toLowerCase().equals("infront"))
                 {
                     // Go through everyone's front piles and add them to this player's personal pile.
                     for (Player p : table.getPlayers())
