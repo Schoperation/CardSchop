@@ -97,8 +97,11 @@ public class CollectCommand implements ICommand {
                 }
                 else if (arg1.toLowerCase().equals("pot"))
                 {
-                    // TODO
-                    channel.sendMessage("Not yet!!!! xdddddd");
+                    // Amount
+                    int amount = table.getPot();
+                    table.takeFromPot(amount);
+                    player.addChips(amount);
+                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has collected the pot from the table.");
                 }
                 else
                 {
