@@ -32,8 +32,8 @@ public class Player {
     // Table
     private Table table;
 
-    // Chips (soon tm)
-    private int chips;
+    // Chips
+    private int chips = 0;
 
     public Player(IUser u, Table t)
     {

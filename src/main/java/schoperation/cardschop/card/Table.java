@@ -169,7 +169,9 @@ public class Table {
         i = 0;
         while (numPlayers > 0)
         {
-            // Only one?
+            /*
+                Only one player left?
+             */
             if (numPlayers == 1)
             {
                 // Print a line with just the one player.
@@ -195,10 +197,29 @@ public class Table {
                     sb.append("                              |\n");
                 }
 
+                // Now, on the next line, add the amount of chips they have. Allocate enough space for the number to fit
+                int chips = this.players.get(i).getChips();
+                int digits = getDigits(chips);
+
+                // Print spaces
+                for (j = 0; j < (SPACES - (digits * 3) + (digits / 2) - 1); j++)
+                    sb.append(" ");
+
+                // Print chips
+                sb.append(this.players.get(i).getChips());
+                sb.append(" ");
+
+                // Table part
+                charPosition[element] = sb.length();
+                element++;
+                sb.append("|                                          |\n");
+
                 numPlayers--;
                 i++;
             }
-            // Two or more
+            /*
+                Two or more players?
+             */
             else
             {
                 // Print a line with just the one player.
@@ -237,6 +258,27 @@ public class Table {
                 sb.append(dispName2);
                 sb.append("\n");
 
+                // Now, on the next line, add the amount of chips they have. Allocate enough space for the number to fit
+                int chips = this.players.get(i).getChips();
+                int digits = getDigits(chips);
+
+                // Print spaces
+                for (j = 0; j < (SPACES - (digits * 3) + (digits / 2) - 1); j++)
+                    sb.append(" ");
+
+                // Print chips
+                sb.append(this.players.get(i).getChips());
+                sb.append(" ");
+
+                // Table part
+                charPosition[element] = sb.length();
+                element++;
+                sb.append("|                                          | ");
+
+                // Add second player's chips
+                sb.append(this.players.get(i + 1).getChips());
+                sb.append("\n");
+
                 numPlayers -= 2;
                 i += 2;
             }
@@ -250,7 +292,7 @@ public class Table {
             sb.append("|                                          |\n");
         }
 
-        // Other edge of table
+        // End edge of table
         for (j = 0; j < SPACES; j++)
             sb.append(" ");
 
@@ -267,12 +309,12 @@ public class Table {
         // (Attempt to) find the middle of the table.
         // That list of char positions? The amount of them is element.
         // We'll use the position that is in the middle of the array, and insert the deck.
-        int deckPos = charPosition[element / 2] + 20;
+        int deckPos = charPosition[element / 2] + 18;
         sb.replace(deckPos, deckPos + 3, "[" + this.deck.getNumberOfCards() + "]");
         sb.delete(deckPos + 4, deckPos + 9);
 
         // Add the "middle pile"
-        deckPos = charPosition[(element / 2) - 1] + 20;
+        deckPos = charPosition[(element / 2) - 1] + 18;
 
         if (this.middlePile.isEmpty())
         {
@@ -381,5 +423,32 @@ public class Table {
         }
 
         return;
+    }
+
+    /*
+        Used in update, this returns the amount of digits in a number, up to 10 digits.
+     */
+    private int getDigits(int num)
+    {
+        if (num >= 1000000000)
+            return 10;
+        else if (num >= 100000000)
+            return 9;
+        else if (num >= 10000000)
+            return 8;
+        else if (num >= 1000000)
+            return 7;
+        else if (num >= 100000)
+            return 6;
+        else if (num >= 10000)
+            return 5;
+        else if (num >= 1000)
+            return 4;
+        else if (num >= 100)
+            return 3;
+        else if (num >= 10)
+            return 2;
+        else
+            return 1;
     }
 }

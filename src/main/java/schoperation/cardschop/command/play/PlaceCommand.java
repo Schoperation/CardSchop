@@ -75,7 +75,7 @@ public class PlaceCommand implements ICommand {
                     Card card = player.removeCard();
                     player.getPile().add(card);
                 }
-                else if (arg1.toLowerCase().equals("infront"))
+                else if (arg1.toLowerCase().equals("infront") || arg1.toLowerCase().equals("trick"))
                 {
                     Card card = player.removeCard();
                     player.getFront().add(card);

@@ -97,7 +97,21 @@ public class TableCommand implements ICommand {
                     if (table.getName().equals(arg2))
                     {
                         table.getTableMsg().delete();
+
+                        // If they are part of the table, clear the log.
+                        if (Utils.isPartOfTable(sender))
+                        {
+                            Player player = Utils.getPlayerObj(sender);
+
+                            if (player.getTable() == table)
+                            {
+                                ClearCommand clear = new ClearCommand();
+                                clear.execute(sender, channel, guild, "blank", "blank", "blank");
+                            }
+                        }
+
                         table.getDivider().delete();
+
                         Objs.TABLES.remove(table);
                         channel.sendMessage("Deleted table " + arg2 + ".");
                         return;
