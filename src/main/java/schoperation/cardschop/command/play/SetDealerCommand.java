@@ -28,9 +28,9 @@ public class SetDealerCommand implements ICommand {
     public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
     {
         // Make sure they are part of a table.
-        if (Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender, guild))
         {
-            Player player = Utils.getPlayerObj(sender);
+            Player player = Utils.getPlayerObj(sender, guild);
 
             // If no argument, make the sender the dealer.
             if (arg1.equals("blank"))

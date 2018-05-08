@@ -34,9 +34,9 @@ public class SeeCommand implements ICommand {
     public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
     {
         // Part of a table?
-        if (Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender, guild))
         {
-            Player player = Utils.getPlayerObj(sender);
+            Player player = Utils.getPlayerObj(sender, guild);
 
             // What place?
             if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))

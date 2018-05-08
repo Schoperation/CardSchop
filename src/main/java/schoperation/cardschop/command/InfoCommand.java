@@ -33,14 +33,10 @@ public class InfoCommand implements ICommand {
         sb.append("CardSchop v" + Msges.VERSION + "\n\n");
 
         sb.append("Made by Schoperation.\n");
-        sb.append("CardSchop is currently on " + BotMain.bot.getGuilds().size() + " servers.\n");
+        sb.append("CardSchop is currently on " + BotMain.bot.getGuilds().size() + " servers.\n\n");
 
-        Runtime runtime = Runtime.getRuntime();
-        final long MEGABYTE = 1024L * 1024L;
-        long usedMemory = runtime.totalMemory() - runtime.freeMemory();
-        usedMemory /= MEGABYTE;
-
-        sb.append("Using " + usedMemory + "MB out of the allocated " + (runtime.maxMemory() / MEGABYTE) + "MB of dedotated wam.\n");
+        sb.append("Submit issues, new stuff, or stalk the code at...\n");
+        sb.append("GitHub: https://github.com/Schoperation/CardSchop\n\n");
 
         sb.append("```");
 

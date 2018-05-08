@@ -1,6 +1,5 @@
 package schoperation.cardschop.util;
 
-import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ClearCommand;
 import schoperation.cardschop.command.HelpCommand;
 import schoperation.cardschop.command.ICommand;
@@ -20,20 +19,10 @@ import schoperation.cardschop.command.play.ShuffleCommand;
 import schoperation.cardschop.command.play.bet.BetCommand;
 import schoperation.cardschop.command.play.bet.ChipsCommand;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Commands {
 
-public class Objs {
-
-    /*
-        This stores objects of stuff. Just a nice, central place.
-     */
-
-    // Tables. These will have their own player lists, and any user can join a table, adding them to the list.
-    public static final List<Table> TABLES = new ArrayList<>();
-
-    // Commands
-    public static final ICommand COMMANDS[] = {
+    // Command list. This is iterated through when a message is received, to check the command.
+    public static final ICommand LIST[] = {
 
             new TableCommand(),
             new JoinCommand(),

@@ -2,7 +2,8 @@ package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
-import schoperation.cardschop.util.Objs;
+import schoperation.cardschop.util.Commands;
+import schoperation.cardschop.util.Tables;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
@@ -53,7 +54,7 @@ public class TableCommand implements ICommand {
             else
             {
                 // Does this table already exist?
-                for (Table t : Objs.TABLES)
+                for (Table t : Tables.list.get(guild))
                 {
                     if (t.getName().equals(arg2))
                     {
@@ -64,7 +65,7 @@ public class TableCommand implements ICommand {
 
                 // Does NOT exist already. Sweet, make it.
                 Table table = new Table(arg2, channel);
-                Objs.TABLES.add(table);
+                Tables.list.get(guild).add(table);
                 channel.sendMessage("Successfully created table. Use `" + Msges.PREFIX + "join " + arg2 + "` to join the table.");
             }
         }
@@ -72,7 +73,7 @@ public class TableCommand implements ICommand {
         // List tables
         else if (arg1.toLowerCase().equals("list"))
         {
-            Iterator<Table> iterator = Objs.TABLES.iterator();
+            Iterator<Table> iterator = Tables.list.get(guild).iterator();
             StringBuilder sb = new StringBuilder();
             sb.append("Tables: \n\n");
 
@@ -98,7 +99,7 @@ public class TableCommand implements ICommand {
             else
             {
                 // Find that table, delete its message, then the object itself.
-                Iterator<Table> iterator = Objs.TABLES.iterator();
+                Iterator<Table> iterator = Tables.list.get(guild).iterator();
 
                 while (iterator.hasNext())
                 {
@@ -109,9 +110,9 @@ public class TableCommand implements ICommand {
                         table.getTableMsg().delete();
 
                         // If they are part of the table, clear the log.
-                        if (Utils.isPartOfTable(sender))
+                        if (Utils.isPartOfTable(sender, guild))
                         {
-                            if (Utils.getPlayerObj(sender).getTable() == table)
+                            if (Utils.getPlayerObj(sender, guild).getTable() == table)
                             {
                                 ClearCommand clear = new ClearCommand();
                                 clear.execute(sender, channel, guild, "blank", "blank", "blank");
@@ -120,7 +121,7 @@ public class TableCommand implements ICommand {
 
                         table.getDivider().delete();
 
-                        Objs.TABLES.remove(table);
+                        Tables.list.get(guild).remove(table);
                         //channel.sendMessage("Deleted table " + arg2 + ".");
                         return;
                     }
@@ -132,7 +133,7 @@ public class TableCommand implements ICommand {
         else if (arg1.toLowerCase().equals("flip"))
         {
             // Must be part of a table.
-            if (Utils.isPartOfTable(sender))
+            if (Utils.isPartOfTable(sender, guild))
             {
                 channel.sendMessage(sender.getDisplayName(guild) + " has flipped the table out of ***pure rage!*** **(╯°□°）╯︵ ┻━┻** Luckily our elite team of beefalo has lifted the table back up before you even noticed!");
                 return;

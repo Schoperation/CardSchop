@@ -1,12 +1,10 @@
 package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Table;
-import schoperation.cardschop.core.BotMain;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.MessageHistory;
 
@@ -33,10 +31,10 @@ public class ClearCommand implements ICommand {
     {
 
         // Is this player part of a table?
-        if (Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender, guild))
         {
             // Alright, start clearing them.
-            Table table = Utils.getPlayerObj(sender).getTable();
+            Table table = Utils.getPlayerObj(sender, guild).getTable();
             MessageHistory history = channel.getMessageHistoryTo(table.getDivider().getLongID());
 
             // Did they specify how many messages to delete?

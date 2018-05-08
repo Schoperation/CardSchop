@@ -1,7 +1,7 @@
 package schoperation.cardschop.core;
 
 import schoperation.cardschop.command.ICommand;
-import schoperation.cardschop.util.Objs;
+import schoperation.cardschop.util.Commands;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
@@ -25,7 +25,7 @@ public class CommandProcessor {
             message.delete();
 
         // Soon make a command class/interface/whatever
-        for (ICommand cmd : Objs.COMMANDS)
+        for (ICommand cmd : Commands.LIST)
         {
             // Does the message line up with that command? Execute it.
             if (command[0].equals(cmd.getCommand()))

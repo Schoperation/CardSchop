@@ -3,7 +3,8 @@ package schoperation.cardschop.command;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
-import schoperation.cardschop.util.Objs;
+import schoperation.cardschop.util.Commands;
+import schoperation.cardschop.util.Tables;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -36,7 +37,7 @@ public class JoinCommand implements ICommand {
         }
 
         // Does that table exist?
-        for (Table table : Objs.TABLES)
+        for (Table table : Tables.list.get(guild))
         {
             if (table.getName().equals(arg1))
             {

@@ -2,6 +2,7 @@ package schoperation.cardschop.util;
 
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
+import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
 public class Utils {
@@ -11,10 +12,10 @@ public class Utils {
      */
 
     // Figure out whether user is a player or not.
-    public static boolean isPartOfTable(IUser user)
+    public static boolean isPartOfTable(IUser user, IGuild guild)
     {
         // Go through tables
-        for (Table table : Objs.TABLES)
+        for (Table table : Tables.list.get(guild))
         {
             // Go through the table's players
             for (Player player : table.getPlayers())
@@ -30,10 +31,10 @@ public class Utils {
     }
 
     // After finding out that ARE a player, get that object.
-    public static Player getPlayerObj(IUser user)
+    public static Player getPlayerObj(IUser user, IGuild guild)
     {
         // Go through tables
-        for (Table table : Objs.TABLES)
+        for (Table table : Tables.list.get(guild))
         {
             // Go through the table's players
             for (Player player : table.getPlayers())

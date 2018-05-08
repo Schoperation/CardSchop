@@ -72,7 +72,7 @@ public class HelpCommand implements ICommand {
             sb.append("\ttable -> Deals with the creation, deletion, and flipping of tables.\n");
             sb.append("\tjoin [table] -> Join the table named [table].\n");
             sb.append("\tleave -> Leave the current table.\n");
-            sb.append("\tinfo (SOONtm) -> See some miscellaneous information about this bot.\n");
+            sb.append("\tinfo -> See some miscellaneous information about this bot.\n");
             sb.append("\thelp -> Stop it. Get some help.\n");
 
             sb.append("\nPlay\n");
@@ -161,7 +161,7 @@ public class HelpCommand implements ICommand {
             sb.append(" info\n\n");
             sb.append("\tinfo -> Display some information about this bot.\n");
 
-            sb.append("\nCOMING SOON\n");
+            sb.append("\nIt's great\n");
 
             sb.append("```");
 

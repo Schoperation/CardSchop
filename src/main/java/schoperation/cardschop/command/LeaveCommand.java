@@ -27,10 +27,10 @@ public class LeaveCommand implements ICommand {
     public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
     {
         // Make sure they are part of a table
-        if (Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender, guild))
         {
             // Good. Put their cards back into the deck, and get them outta there.
-            Player player = Utils.getPlayerObj(sender);
+            Player player = Utils.getPlayerObj(sender, guild);
 
             if (player.getNumOfCards() != 0)
             {

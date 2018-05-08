@@ -30,9 +30,9 @@ public class DealCommand implements ICommand {
     {
 
         // Is this player part of a table?
-        if (Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender, guild))
         {
-            Player player = Utils.getPlayerObj(sender);
+            Player player = Utils.getPlayerObj(sender, guild);
 
             // Table
             Table table = player.getTable();

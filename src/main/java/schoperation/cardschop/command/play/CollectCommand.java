@@ -37,9 +37,9 @@ public class CollectCommand implements ICommand {
     {
 
         // Is this player part of a table?
-        if (Utils.isPartOfTable(sender))
+        if (Utils.isPartOfTable(sender, guild))
         {
-            Player player = Utils.getPlayerObj(sender);
+            Player player = Utils.getPlayerObj(sender, guild);
             Table table = player.getTable();
 
             // No arguments
