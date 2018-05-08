@@ -95,6 +95,12 @@ public class PlaceCommand implements ICommand {
             else
             {
                 // Card
+                if (!Utils.isInt(arg2))
+                {
+                    channel.sendMessage(Msges.NAN);
+                    return;
+                }
+
                 int cardInt = Integer.parseInt(arg2) - 1;
 
                 // NOT part of their hand.

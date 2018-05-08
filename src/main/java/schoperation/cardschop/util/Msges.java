@@ -16,6 +16,7 @@ public class Msges {
     public static final String TABLE_NOT_FOUND = "Could not find that table.";
     public static final String INVALID_CARD = "Invalid card number.";
     public static final String EMPTY_PILE = "This pile is empty.";
+    public static final String NAN = "At least one of your arguments is not a number. Please provide an integer.";
 
     public static final String INVALID_PLACE_PLACE = "Invalid place. Your options are: underdeck, middle, pile, and infront.";
     public static final String INVALID_PLACE_DRAW = "Invalid place. Your options are: deck, middle, pile, and infront.";

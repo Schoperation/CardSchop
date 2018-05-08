@@ -60,6 +60,12 @@ public class ChipsCommand implements ICommand {
                     if (arg1.equals("all") || arg1.equals("@everyone") || arg1.equals("everyone"))
                     {
                         // Found them. Parse amount, and figure out the operator.
+                        if (!Utils.isInt(arg3))
+                        {
+                            channel.sendMessage(Msges.NAN);
+                            return;
+                        }
+
                         int amount = Integer.parseInt(arg3);
 
                         // Add chips
@@ -110,6 +116,12 @@ public class ChipsCommand implements ICommand {
                         if (receivingPlayer.getUser().equals(userFromString))
                         {
                             // Found them. Parse amount, and figure out the operator.
+                            if (!Utils.isInt(arg3))
+                            {
+                                channel.sendMessage(Msges.NAN);
+                                return;
+                            }
+
                             int amount = Integer.parseInt(arg3);
 
                             // Add chips

@@ -41,6 +41,12 @@ public class BetCommand implements ICommand {
             }
             else
             {
+                if (!Utils.isInt(arg1))
+                {
+                    channel.sendMessage(Msges.NAN);
+                    return;
+                }
+
                 int amount = Integer.parseInt(arg1);
 
                 // Enough chips?

@@ -46,7 +46,14 @@ public class ClearCommand implements ICommand {
             }
             else
             {
-                int amount = Integer.parseInt(arg1);
+                int amount;
+                if (!Utils.isInt(arg1))
+                {
+                    channel.sendMessage(arg1 + " is not a valid number. Must be an integer.");
+                    return;
+                }
+
+                amount = Integer.parseInt(arg1);
                 MessageHistory historyLimited = channel.getMessageHistoryTo(table.getDivider().getLongID(), amount);
                 historyLimited.bulkDelete();
 

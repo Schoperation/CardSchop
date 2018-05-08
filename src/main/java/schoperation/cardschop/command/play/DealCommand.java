@@ -48,16 +48,34 @@ public class DealCommand implements ICommand {
                 }
                 else if (arg2.equals("blank"))
                 {
+                    if (!Utils.isInt(arg1))
+                    {
+                        channel.sendMessage(Msges.NAN);
+                        return;
+                    }
+
                     table.dealCards(Integer.parseInt(arg1), 1, true, player);
                     channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time. Use `" + Msges.PREFIX + "see` to privately see your hand.");
                 }
                 else if (arg3.equals("blank"))
                 {
+                    if (!Utils.isInt(arg1) || !Utils.isInt(arg2))
+                    {
+                        channel.sendMessage(Msges.NAN);
+                        return;
+                    }
+
                     table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), true, player);
                     channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
                 }
                 else
                 {
+                    if (!Utils.isInt(arg1) || !Utils.isInt(arg2))
+                    {
+                        channel.sendMessage(Msges.NAN);
+                        return;
+                    }
+
                     table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), Boolean.parseBoolean(arg3), player);
                     channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ". Use " + Msges.PREFIX + "see to privately see your hand.");
                 }

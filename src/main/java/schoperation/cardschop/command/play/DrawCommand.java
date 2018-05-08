@@ -117,8 +117,13 @@ public class DrawCommand implements ICommand {
 
                 if (arg2.equals("all"))
                     amount = 200;
-                else
+                else if (Utils.isInt(arg2))
                     amount = Integer.parseInt(arg2);
+                else
+                {
+                    channel.sendMessage(Msges.NAN);
+                    return;
+                }
 
                 int i = 0;
 

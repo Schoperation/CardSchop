@@ -55,6 +55,12 @@ public class GiveCommand implements ICommand {
             else
             {
                 // Parse the card and see if that's part of their hand
+                if (!Utils.isInt(arg2))
+                {
+                    channel.sendMessage(Msges.NAN);
+                    return;
+                }
+
                 cardInt = Integer.parseInt(arg2) - 1;
 
                 // NOT part of their hand.

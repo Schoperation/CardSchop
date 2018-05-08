@@ -5,6 +5,8 @@ import schoperation.cardschop.card.Table;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
+import java.util.regex.Pattern;
+
 public class Utils {
 
     /*
@@ -47,5 +49,20 @@ public class Utils {
 
         // Nothing.
         return null;
+    }
+
+    // Is this an integer? Used in commands before parsing them.
+    public static boolean isInt(String s)
+    {
+        try
+        {
+            Integer.parseInt(s);
+            return true;
+        }
+        catch (NumberFormatException e)
+        {
+            return false;
+        }
+        // NullPointerEx is not needed, as in every command's execute any blank arguments are passed as "blank".
     }
 }
