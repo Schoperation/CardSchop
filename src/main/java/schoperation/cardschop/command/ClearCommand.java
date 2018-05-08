@@ -49,7 +49,7 @@ public class ClearCommand implements ICommand {
                 int amount;
                 if (!Utils.isInt(arg1))
                 {
-                    channel.sendMessage(arg1 + " is not a valid number. Must be an integer.");
+                    channel.sendMessage(Msges.NAN);
                     return;
                 }
 
