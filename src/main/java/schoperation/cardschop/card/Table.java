@@ -396,15 +396,18 @@ public class Table {
                     {
                         Card card;
 
-                        if (this.deck.getCards().isEmpty())
-                            break;
-                        else
-                            card = this.deck.getCards().remove(this.deck.getNumberOfCards() - 1);
+                        if (p.getNumOfCards() < perPlayer)
+                        {
+                            if (this.deck.getCards().isEmpty())
+                                break;
+                            else
+                                card = this.deck.getCards().remove(this.deck.getNumberOfCards() - 1);
 
-                        p.addCard(card);
+                            p.addCard(card);
 
-                        if (!alreadyCounted)
-                            numCards++;
+                            if (!alreadyCounted)
+                                numCards++;
+                        }
                     }
                 }
 
