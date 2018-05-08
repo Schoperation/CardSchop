@@ -6,6 +6,7 @@ import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.MessageHistory;
 
@@ -17,6 +18,7 @@ public class ClearCommand implements ICommand {
         clear [amount] -> Clears [amount] messages that were sent by the bot, under the "Log:" line.
 
         If no amount specified, clears all messages under "Log:" line.
+        If "pm" specified, clear all the messages made by the bot in the pm channel. Of course, this
      */
 
     private final String command = "clear";
@@ -42,7 +44,7 @@ public class ClearCommand implements ICommand {
             if (arg1.equals("blank"))
             {
                 history.bulkDelete();
-                channel.sendMessage(table.getDivider().getContent());
+                table.setDivider(channel.sendMessage(table.getDivider().getContent()));
                 return;
             }
             else
@@ -52,7 +54,7 @@ public class ClearCommand implements ICommand {
                 historyLimited.bulkDelete();
 
                 if (amount >= history.size())
-                    channel.sendMessage(table.getDivider().getContent());
+                    table.setDivider(channel.sendMessage(table.getDivider().getContent()));
 
                 return;
             }

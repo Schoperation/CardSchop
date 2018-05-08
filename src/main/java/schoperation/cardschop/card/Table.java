@@ -132,6 +132,12 @@ public class Table {
         return this.divider;
     }
 
+    public void setDivider(IMessage msg)
+    {
+        this.divider = msg;
+        return;
+    }
+
     // The main function that edits the table message.
     public void update(IGuild guild)
     {
@@ -143,8 +149,8 @@ public class Table {
         int[] charPosition = new int[50];
         int element = 0;
 
-        // Edge of table.
-        sb.append(this.getName());
+        // Edge of table. Start with the name of it.
+        sb.append("Table **" + this.getName() + "**");
         sb.append("\n");
 
         int i;
@@ -293,12 +299,28 @@ public class Table {
         }
 
         // End edge of table
-        for (j = 0; j < SPACES; j++)
-            sb.append(" ");
+        // Only print an extra one if no one is at the table.
+        if (this.getPlayers().size() <= 0)
+        {
+            for (i = 0; i < 2; i++)
+            {
+                for (j = 0; j < SPACES; j++)
+                    sb.append(" ");
 
-        charPosition[element] = sb.length();
-        element++;
-        sb.append("|                                          |\n");
+                charPosition[element] = sb.length();
+                element++;
+                sb.append("|                                          |\n");
+            }
+        }
+        else
+        {
+            for (j = 0; j < SPACES; j++)
+                sb.append(" ");
+
+            charPosition[element] = sb.length();
+            element++;
+            sb.append("|                                          |\n");
+        }
 
         for (j = 0; j < SPACES; j++)
             sb.append(" ");
@@ -327,9 +349,18 @@ public class Table {
             sb.delete(deckPos + 11, deckPos + 11);
         }
 
+        // Add the amount in the pot below the deck.
+        int digits = getDigits(this.pot);
+        deckPos = charPosition[(element / 2) + 1] + 14 - digits;
+        sb.replace(deckPos, deckPos + digits, Integer.toString(this.pot));
+        sb.delete(deckPos + digits + 1, deckPos + (digits * 2) + 2);
+
 
         // Edit message
-        this.message.edit(sb.toString());
+        if (this.message.isDeleted())
+            this.message = this.channel.sendMessage(sb.toString());
+        else
+            this.message.edit(sb.toString());
 
         return;
     }

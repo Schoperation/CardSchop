@@ -1,6 +1,5 @@
 package schoperation.cardschop.command;
 
-import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Objs;
@@ -101,9 +100,7 @@ public class TableCommand implements ICommand {
                         // If they are part of the table, clear the log.
                         if (Utils.isPartOfTable(sender))
                         {
-                            Player player = Utils.getPlayerObj(sender);
-
-                            if (player.getTable() == table)
+                            if (Utils.getPlayerObj(sender).getTable() == table)
                             {
                                 ClearCommand clear = new ClearCommand();
                                 clear.execute(sender, channel, guild, "blank", "blank", "blank");
@@ -113,7 +110,7 @@ public class TableCommand implements ICommand {
                         table.getDivider().delete();
 
                         Objs.TABLES.remove(table);
-                        channel.sendMessage("Deleted table " + arg2 + ".");
+                        //channel.sendMessage("Deleted table " + arg2 + ".");
                         return;
                     }
                 }
