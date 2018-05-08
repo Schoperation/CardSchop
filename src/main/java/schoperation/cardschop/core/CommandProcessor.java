@@ -21,7 +21,8 @@ public class CommandProcessor {
         String[] command = message.getContent().toLowerCase().replaceFirst(prefix, "").split(" ");
 
         // Delete command. Very nice
-        message.delete();
+        if (!channel.isPrivate())
+            message.delete();
 
         // Soon make a command class/interface/whatever
         for (ICommand cmd : Objs.COMMANDS)

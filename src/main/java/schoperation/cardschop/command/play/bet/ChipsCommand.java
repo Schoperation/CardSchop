@@ -1,9 +1,7 @@
 package schoperation.cardschop.command.play.bet;
 
-import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
-import schoperation.cardschop.command.play.SeeCommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;

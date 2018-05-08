@@ -20,7 +20,7 @@ public class CollectCommand implements ICommand {
             -cards -> Eveeryone's cards, back into the deck. Dealer only.
             -trick/infront -> Takes everyone's infront cards, and puts them into the player's personal pile.
             -middle -> Takes the middle cards and puts them into the player's hand.
-            -pot -> Takes the pot on the table. TODO
+            -pot -> Takes the pot on the table.
 
      */
 

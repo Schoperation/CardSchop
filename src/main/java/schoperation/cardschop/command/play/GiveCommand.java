@@ -50,7 +50,7 @@ public class GiveCommand implements ICommand {
             else if (arg2.equals("blank"))
             {
                 // Use the topmost card
-                cardInt = givingPlayer.getHand().size() - 1;
+                cardInt = givingPlayer.getNumOfCards() - 1;
             }
             else
             {
@@ -58,7 +58,7 @@ public class GiveCommand implements ICommand {
                 cardInt = Integer.parseInt(arg2) - 1;
 
                 // NOT part of their hand.
-                if (cardInt > givingPlayer.getHand().size())
+                if (cardInt > givingPlayer.getNumOfCards())
                 {
                     channel.sendMessage(Msges.INVALID_CARD);
                     return;

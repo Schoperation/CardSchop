@@ -18,7 +18,6 @@ public class ClearCommand implements ICommand {
         clear [amount] -> Clears [amount] messages that were sent by the bot, under the "Log:" line.
 
         If no amount specified, clears all messages under "Log:" line.
-        If "pm" specified, clear all the messages made by the bot in the pm channel. Of course, this
      */
 
     private final String command = "clear";

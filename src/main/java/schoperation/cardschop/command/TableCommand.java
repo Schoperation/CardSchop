@@ -52,6 +52,17 @@ public class TableCommand implements ICommand {
             }
             else
             {
+                // Does this table already exist?
+                for (Table t : Objs.TABLES)
+                {
+                    if (t.getName().equals(arg2))
+                    {
+                        channel.sendMessage("A table named " + arg2 + " already exists.");
+                        return;
+                    }
+                }
+
+                // Does NOT exist already. Sweet, make it.
                 Table table = new Table(arg2, channel);
                 Objs.TABLES.add(table);
                 channel.sendMessage("Successfully created table. Use `" + Msges.PREFIX + "join " + arg2 + "` to join the table.");
