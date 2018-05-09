@@ -84,6 +84,7 @@ public class HelpCommand implements ICommand {
             sb.append("\tplace -> Place a card onto some pile.\n");
             sb.append("\tgive -> Give a card to someone else.\n");
             sb.append("\tcollect -> Collect something.\n");
+            sb.append("\tslap -> Slap the middle pile.\n");
             sb.append("\tsee -> See your hand/pile/front cards PRIVATELY.\n");
             sb.append("\treveal -> Reveal your hand/pile/front cards PUBLICLY.\n");
 
@@ -356,6 +357,20 @@ public class HelpCommand implements ICommand {
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
             return;
+        }
+
+        else if (arg1.equals("slap"))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("```");
+
+            sb.append(" slap\n\n");
+            sb.append("\tslap -> Slap the middle pile.\n");
+
+            sb.append("\nUse this command for slapping, for games like egyptian rat screw.\n");
+
+            sb.append("```");
         }
 
         else if (arg1.equals("see"))

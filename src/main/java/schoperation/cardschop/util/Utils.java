@@ -5,8 +5,6 @@ import schoperation.cardschop.card.Table;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
-import java.util.regex.Pattern;
-
 public class Utils {
 
     /*

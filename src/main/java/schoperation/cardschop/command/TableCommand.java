@@ -2,7 +2,6 @@ package schoperation.cardschop.command;
 
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
-import schoperation.cardschop.util.Commands;
 import schoperation.cardschop.util.Tables;
 import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;

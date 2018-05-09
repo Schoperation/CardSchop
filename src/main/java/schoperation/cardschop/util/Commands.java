@@ -16,6 +16,7 @@ import schoperation.cardschop.command.play.RevealCommand;
 import schoperation.cardschop.command.play.SeeCommand;
 import schoperation.cardschop.command.play.SetDealerCommand;
 import schoperation.cardschop.command.play.ShuffleCommand;
+import schoperation.cardschop.command.play.SlapCommand;
 import schoperation.cardschop.command.play.bet.BetCommand;
 import schoperation.cardschop.command.play.bet.ChipsCommand;
 
@@ -40,7 +41,8 @@ public class Commands {
             new BetCommand(),
             new ChipsCommand(),
             new HelpCommand(),
-            new InfoCommand()
+            new InfoCommand(),
+            new SlapCommand()
 
     };
 }
