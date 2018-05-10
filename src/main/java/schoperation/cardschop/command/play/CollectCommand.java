@@ -53,7 +53,7 @@ public class CollectCommand implements ICommand {
             else
             {
                 // Go through possibilities.
-                if (arg1.toLowerCase().equals("cards"))
+                if (arg1.equals("cards"))
                 {
                     // They must be the dealer to do this.
                     if (table.getDealer() == player)
@@ -70,7 +70,7 @@ public class CollectCommand implements ICommand {
                         return;
                     }
                 }
-                else if (arg1.toLowerCase().equals("trick") || arg1.toLowerCase().equals("infront"))
+                else if (arg1.equals("trick") || arg1.equals("infront"))
                 {
                     // Go through everyone's front piles and add them to this player's personal pile.
                     for (Player p : table.getPlayers())
@@ -83,7 +83,7 @@ public class CollectCommand implements ICommand {
                         }
                     }
                 }
-                else if (arg1.toLowerCase().equals("middle"))
+                else if (arg1.equals("middle"))
                 {
                     // Take the middle pile and put it into the player's hand.
                     if (!table.getMiddlePile().isEmpty())
@@ -95,7 +95,7 @@ public class CollectCommand implements ICommand {
                     }
 
                 }
-                else if (arg1.toLowerCase().equals("pot"))
+                else if (arg1.equals("pot"))
                 {
                     // Amount
                     int amount = table.getPot();

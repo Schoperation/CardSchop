@@ -39,11 +39,11 @@ public class SeeCommand implements ICommand {
             Player player = Utils.getPlayerObj(sender, guild);
 
             // What place?
-            if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))
+            if (arg1.equals("blank") || arg1.equals("hand"))
                 player.getPM().edit("Your hand: \n" + player.handToString());
-            else if (arg1.toLowerCase().equals("pile"))
+            else if (arg1.equals("pile"))
                 player.getPM().edit("Your personal pile: \n" + player.pileToString());
-            else if (arg1.toLowerCase().equals("infront") || arg1.toLowerCase().equals("trick"))
+            else if (arg1.equals("infront") || arg1.equals("trick"))
                 player.getPM().edit("Your cards in front of you: \n" + player.frontToString());
             else
                 player.getPM().edit("Invalid place. Either chose hand, pile, or infront (trick).");

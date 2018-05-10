@@ -74,25 +74,25 @@ public class DrawCommand implements ICommand {
             {
 
                 // Go through the spots.
-                if (arg1.toLowerCase().equals("deck"))
+                if (arg1.equals("deck"))
                 {
                     Card card = table.getDeck().getCards().remove(table.getDeck().getNumberOfCards() - 1);
                     player.addCard(card);
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the deck.");
                 }
-                else if (arg1.toLowerCase().equals("middle"))
+                else if (arg1.equals("middle"))
                 {
                     Card card = table.getMiddlePile().remove(table.getMiddlePile().size() - 1);
                     player.addCard(card);
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the middle pile.");
                 }
-                else if (arg1.toLowerCase().equals("pile"))
+                else if (arg1.equals("pile"))
                 {
                     Card card = player.getPile().remove(player.getPile().size() - 1);
                     player.addCard(card);
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from their personal pile.");
                 }
-                else if (arg1.toLowerCase().equals("infront") || arg1.toLowerCase().equals("trick"))
+                else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     Card card = player.getFront().remove(player.getFront().size() - 1);
                     player.addCard(card);
@@ -128,7 +128,7 @@ public class DrawCommand implements ICommand {
                 int i = 0;
 
                 // Go through the spots.
-                if (arg1.toLowerCase().equals("deck"))
+                if (arg1.equals("deck"))
                 {
                     while (i < amount && !table.getDeck().getCards().isEmpty())
                     {
@@ -139,7 +139,7 @@ public class DrawCommand implements ICommand {
 
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from the deck.");
                 }
-                else if (arg1.toLowerCase().equals("middle"))
+                else if (arg1.equals("middle"))
                 {
                     while (i < amount && !table.getMiddlePile().isEmpty())
                     {
@@ -150,7 +150,7 @@ public class DrawCommand implements ICommand {
 
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from the middle pile.");
                 }
-                else if (arg1.toLowerCase().equals("pile"))
+                else if (arg1.equals("pile"))
                 {
                     while (i < amount && !player.getPile().isEmpty())
                     {
@@ -161,7 +161,7 @@ public class DrawCommand implements ICommand {
 
                     channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from their personal pile.");
                 }
-                else if (arg1.toLowerCase().equals("infront"))
+                else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     while (i < amount && !player.getFront().isEmpty())
                     {

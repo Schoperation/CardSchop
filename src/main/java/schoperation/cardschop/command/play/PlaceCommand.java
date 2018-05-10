@@ -60,22 +60,22 @@ public class PlaceCommand implements ICommand {
             else if (arg2.equals("blank"))
             {
                 // Go through the spots.
-                if (arg1.toLowerCase().equals("underdeck"))
+                if (arg1.equals("underdeck"))
                 {
                     Card card = player.removeCard();
                     table.getDeck().addToBottom(card);
                 }
-                else if (arg1.toLowerCase().equals("middle"))
+                else if (arg1.equals("middle"))
                 {
                     Card card = player.removeCard();
                     table.getMiddlePile().add(card);
                 }
-                else if (arg1.toLowerCase().equals("pile"))
+                else if (arg1.equals("pile"))
                 {
                     Card card = player.removeCard();
                     player.getPile().add(card);
                 }
-                else if (arg1.toLowerCase().equals("infront") || arg1.toLowerCase().equals("trick"))
+                else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     Card card = player.removeCard();
                     player.getFront().add(card);
@@ -111,22 +111,22 @@ public class PlaceCommand implements ICommand {
                 }
 
                 // Go through the spots.
-                if (arg1.toLowerCase().equals("underdeck"))
+                if (arg1.equals("underdeck"))
                 {
                     Card card = player.removeCard(cardInt);
                     table.getDeck().addToBottom(card);
                 }
-                else if (arg1.toLowerCase().equals("middle"))
+                else if (arg1.equals("middle"))
                 {
                     Card card = player.removeCard(cardInt);
                     table.getMiddlePile().add(card);
                 }
-                else if (arg1.toLowerCase().equals("pile"))
+                else if (arg1.equals("pile"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getPile().add(card);
                 }
-                else if (arg1.toLowerCase().equals("infront") || arg1.toLowerCase().equals("trick"))
+                else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     Card card = player.removeCard(cardInt);
                     player.getFront().add(card);

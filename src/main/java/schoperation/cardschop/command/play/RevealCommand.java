@@ -38,14 +38,14 @@ public class RevealCommand implements ICommand {
             Player player = Utils.getPlayerObj(sender, guild);
 
             // What place?
-            if (arg1.equals("blank") || arg1.toLowerCase().equals("hand"))
+            if (arg1.equals("blank") || arg1.equals("hand"))
                 channel.sendMessage(sender.getDisplayName(guild) + "'s hand:\n" + player.handToString());
-            else if (arg1.toLowerCase().equals("pile"))
+            else if (arg1.equals("pile"))
                 channel.sendMessage(sender.getDisplayName(guild) + "'s side pile:\n" + player.pileToString());
-            else if (arg1.toLowerCase().equals("infront"))
+            else if (arg1.equals("infront") || arg1.equals("trick"))
                 channel.sendMessage(sender.getDisplayName(guild) + "'s front cards:\n" + player.frontToString());
             else
-                channel.sendMessage("Invalid place. Either chose hand, pile, or infront.");
+                channel.sendMessage("Invalid place. Either chose hand, pile, or infront/trick.");
             
             return;
         }

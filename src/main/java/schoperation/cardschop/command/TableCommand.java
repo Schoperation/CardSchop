@@ -42,7 +42,7 @@ public class TableCommand implements ICommand {
         }
 
         // Create a table.
-        else if (arg1.toLowerCase().equals("create"))
+        else if (arg1.equals("create"))
         {
             // Check for second argument.
             if (arg2.equals("blank"))
@@ -70,7 +70,7 @@ public class TableCommand implements ICommand {
         }
 
         // List tables
-        else if (arg1.toLowerCase().equals("list"))
+        else if (arg1.equals("list"))
         {
             Iterator<Table> iterator = Tables.list.get(guild).iterator();
             StringBuilder sb = new StringBuilder();
@@ -87,7 +87,7 @@ public class TableCommand implements ICommand {
         }
 
         // Delete table
-        else if (arg1.toLowerCase().equals("delete"))
+        else if (arg1.equals("delete"))
         {
             // Check for second argument.
             if (arg2.equals("blank"))
@@ -129,7 +129,7 @@ public class TableCommand implements ICommand {
         }
 
         // Flip table
-        else if (arg1.toLowerCase().equals("flip"))
+        else if (arg1.equals("flip"))
         {
             // Must be part of a table.
             if (Utils.isPartOfTable(sender, guild))
