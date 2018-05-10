@@ -205,10 +205,10 @@ public class Table {
 
                 // Now, on the next line, add the amount of chips they have. Allocate enough space for the number to fit
                 int chips = this.players.get(i).getChips();
-                int digits = getDigits(chips);
+                int numSpace = getSpace(chips);
 
-                // Print spaces
-                for (j = 0; j < (SPACES - (digits * 3) + (digits / 2) - 1); j++)
+                // Print spaces for chips
+                for (j = 0; j < (SPACES - numSpace - 1); j++)
                     sb.append(" ");
 
                 // Print chips
@@ -266,10 +266,10 @@ public class Table {
 
                 // Now, on the next line, add the amount of chips they have. Allocate enough space for the number to fit
                 int chips = this.players.get(i).getChips();
-                int digits = getDigits(chips);
+                int numSpace = getSpace(chips);
 
-                // Print spaces
-                for (j = 0; j < (SPACES - (digits * 3) + (digits / 2) - 1); j++)
+                // Print spaces for chips
+                for (j = 0; j < (SPACES - numSpace - 1); j++)
                     sb.append(" ");
 
                 // Print chips
@@ -350,10 +350,9 @@ public class Table {
         }
 
         // Add the amount in the pot below the deck.
-        int digits = getDigits(this.pot);
-        deckPos = charPosition[(element / 2) + 1] + 14 - digits;
-        sb.replace(deckPos, deckPos + digits, Integer.toString(this.pot));
-        sb.delete(deckPos + digits + 1, deckPos + (digits * 2) + 2);
+        int numSpace = getSpace(this.pot);
+        deckPos = charPosition[(element / 2) + 1] + 14 - (numSpace / 2);
+        sb.replace(deckPos, deckPos + numSpace, Integer.toString(this.pot));
 
 
         // Edit message
@@ -460,29 +459,25 @@ public class Table {
     }
 
     /*
-        Used in update, this returns the amount of digits in a number, up to 10 digits.
+        Used in update method for determine how much space to allocate for a number
      */
-    private int getDigits(int num)
+    private int getSpace(int num)
     {
-        if (num >= 1000000000)
-            return 10;
-        else if (num >= 100000000)
-            return 9;
-        else if (num >= 10000000)
-            return 8;
-        else if (num >= 1000000)
-            return 7;
-        else if (num >= 100000)
-            return 6;
-        else if (num >= 10000)
-            return 5;
-        else if (num >= 1000)
-            return 4;
-        else if (num >= 100)
-            return 3;
-        else if (num >= 10)
-            return 2;
-        else
-            return 1;
+        // Convert the number to a string, then go through each char individually, adding to space.
+        String stringnum = Integer.toString(num);
+
+        float space = 0;
+        int i;
+        for (i = 0; i < stringnum.length(); i++)
+        {
+            char c = stringnum.charAt(i);
+
+            if (c == '1')
+                space += 1.5;
+            else
+                space += 2.5;
+        }
+
+        return Math.round(space);
     }
 }

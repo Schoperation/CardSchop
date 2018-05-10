@@ -24,7 +24,7 @@ public class CommandProcessor {
         if (!channel.isPrivate())
             message.delete();
 
-        // Soon make a command class/interface/whatever
+        // Go through each command and try to match it
         for (ICommand cmd : Commands.LIST)
         {
             // Does the message line up with that command? Execute it.
