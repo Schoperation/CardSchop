@@ -22,4 +22,6 @@ public class Msges {
     public static final String INVALID_PLACE_DRAW = "Invalid place. Your options are: deck, middle, pile, and infront.";
 
     public static final String COLLECT_ARGUMENT = "Please provide a correct argument. Your options are: cards, trick, middle, and pot.";
+
+    public static final String PM_NOTIFICATION = "PM has updated.";
 }

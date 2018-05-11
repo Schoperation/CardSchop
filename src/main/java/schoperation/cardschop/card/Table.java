@@ -6,6 +6,7 @@ import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Table {
@@ -80,6 +81,29 @@ public class Table {
     public List<Card> getMiddlePile()
     {
         return this.middlePile;
+    }
+
+    // Converts the contents of the middle pile into a printable string.
+    public String middleToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Card> iterator = this.middlePile.iterator();
+        int i = 0;
+
+        while (iterator.hasNext())
+        {
+            Card card = iterator.next();
+            sb.append(card.getString());
+
+            if (i % 13 == 12)
+                sb.append("\n");
+            else
+                sb.append(", ");
+
+            i++;
+        }
+
+        return sb.toString();
     }
 
     public Deck getDeck()

@@ -45,11 +45,39 @@ public class SeeCommand implements ICommand {
                 player.getPM().edit("Your personal pile: \n" + player.pileToString());
             else if (arg1.equals("infront") || arg1.equals("trick"))
                 player.getPM().edit("Your cards in front of you: \n" + player.frontToString());
+            else if (arg1.equals("middle"))
+            {
+                // Must be the dealer to reveal the middle.
+                if (player.getTable().getDealer() == player)
+                {
+                    player.getPM().edit("Middle pile:\n" + player.getTable().middleToString());
+                    IMessage msg = sender.getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
+                    msg.delete();
+                    return;
+                }
+
+                channel.sendMessage(Msges.NOT_DEALER);
+                return;
+            }
+            else if (arg1.equals("deck"))
+            {
+                // Must be the dealer to reveal the deck.
+                if (player.getTable().getDealer() == player)
+                {
+                    player.getPM().edit("Deck:\n" + player.getTable().getDeck().getCardsToString());
+                    IMessage msg = sender.getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
+                    msg.delete();
+                    return;
+                }
+
+                channel.sendMessage(Msges.NOT_DEALER);
+                return;
+            }
             else
                 player.getPM().edit("Invalid place. Either chose hand, pile, or infront (trick).");
 
             // Send a message for a notification
-            IMessage msg = sender.getOrCreatePMChannel().sendMessage("Your hand has updated.");
+            IMessage msg = sender.getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
             msg.delete();
             return;
         }
@@ -64,7 +92,7 @@ public class SeeCommand implements ICommand {
         player.getPM().edit("Your hand: \n" + player.handToString());
 
         // Send a message for a notification
-        IMessage msg = player.getUser().getOrCreatePMChannel().sendMessage("Your hand has updated.");
+        IMessage msg = player.getUser().getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
         msg.delete();
         return;
     }

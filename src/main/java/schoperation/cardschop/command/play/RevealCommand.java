@@ -44,6 +44,30 @@ public class RevealCommand implements ICommand {
                 channel.sendMessage(sender.getDisplayName(guild) + "'s side pile:\n" + player.pileToString());
             else if (arg1.equals("infront") || arg1.equals("trick"))
                 channel.sendMessage(sender.getDisplayName(guild) + "'s front cards:\n" + player.frontToString());
+            else if (arg1.equals("middle"))
+            {
+                // Must be the dealer to reveal the middle.
+                if (player.getTable().getDealer() == player)
+                {
+                    channel.sendMessage("Middle pile:\n" + player.getTable().middleToString());
+                    return;
+                }
+
+                channel.sendMessage(Msges.NOT_DEALER);
+                return;
+            }
+            else if (arg1.equals("deck"))
+            {
+                // Must be the dealer to reveal the deck.
+                if (player.getTable().getDealer() == player)
+                {
+                    channel.sendMessage("Deck:\n" + player.getTable().getDeck().getCardsToString());
+                    return;
+                }
+
+                channel.sendMessage(Msges.NOT_DEALER);
+                return;
+            }
             else
                 channel.sendMessage("Invalid place. Either chose hand, pile, or infront/trick.");
             
