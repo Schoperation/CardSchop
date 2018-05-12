@@ -308,7 +308,20 @@ public class HelpCommand implements ICommand {
             sb.append("\tinfront -> Cards in front of you. For tricks.\n");
             sb.append("\ttrick -> Same as infront.\n");
 
-            sb.append("For [card], use the number assigned to the card in brackets [].\n");
+            sb.append("\nFor [card], you can either use the number assigned to the card in brackets [],\n");
+            sb.append("Or spell out the card. Let's take the 2 of clubs, for example. Acceptable input would include:\n");
+            sb.append("\t2clubs\n");
+            sb.append("\t2ofclubs\n\n");
+
+            sb.append("For the king of diamonds, say:\n");
+            sb.append("\tkingofdiamonds\n");
+            sb.append("\tkingdiamonds\n");
+            sb.append("\tkofdiamonds\n");
+            sb.append("\tkdiamonds\n\n");
+
+            sb.append("For face cards and aces, you can either spell their rank out or use the first letter.\n");
+            sb.append("For other ranks use the actual number.\n");
+            sb.append("Nonetheless, you must specify the rank and the suit correctly, in ONE WORD.\n");
 
             sb.append("```");
 
@@ -327,7 +340,20 @@ public class HelpCommand implements ICommand {
             sb.append("\tgive [player] [card] -> Give the specified player the specified card.\n");
 
             sb.append("\nThe card must be in your hand. [player] should be mentioned.\n");
-            sb.append("For [card], use the number assigned to the card in brackets [].\n");
+            sb.append("\nFor [card], you can either use the number assigned to the card in brackets [],\n");
+            sb.append("Or spell out the card. Let's take the 2 of clubs, for example. Acceptable input would include:\n");
+            sb.append("\t2clubs\n");
+            sb.append("\t2ofclubs\n\n");
+
+            sb.append("For the king of diamonds, say:\n");
+            sb.append("\tkingofdiamonds\n");
+            sb.append("\tkingdiamonds\n");
+            sb.append("\tkofdiamonds\n");
+            sb.append("\tkdiamonds\n\n");
+
+            sb.append("For face cards and aces, you can either spell their rank out or use the first letter.\n");
+            sb.append("For other ranks use the actual number.\n");
+            sb.append("Nonetheless, you must specify the rank and the suit correctly, in ONE WORD.\n");
 
             sb.append("```");
 
