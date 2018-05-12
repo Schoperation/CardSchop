@@ -1,5 +1,7 @@
 package schoperation.cardschop.card;
 
+import schoperation.cardschop.util.Utils;
+
 public class Card {
 
     /*
@@ -78,5 +80,85 @@ public class Card {
             return "K";
         else
             return ":black_joker:";
+    }
+
+    // Parse a string and return a card.
+    public static Card parseCard(String s)
+    {
+        /*
+            Let's take the 2 of clubs as our example. This method will detect it as either
+
+                2clubs
+                2ofclubs
+
+            Face cards are a bit different. Jack of hearts, for example:
+
+                jhearts
+                jackhearts
+                jofhearts
+                jackofhearts
+
+            Joker is just "joker"
+
+            Figure out if it's a joker first. If not, then
+            Get the first char and figure out if its an integer or a j,k,q,a.
+            Then parse the suit.
+            We can safely assume it is all lowercase as the command processor makes the command all lowercase anyway.
+         */
+
+        // Joker?
+        if (s.equals("joker"))
+            return new Card();
+
+        // Not joker
+        char first = s.charAt(0);
+
+        // Used for creating the card
+        int rank;
+        Suit suit;
+
+        // Number?
+        if (Character.isDigit(first))
+        {
+            // Yes!
+
+            // If a 1, it's just part of a 10
+            if (first == '1')
+                rank = 10;
+            else
+                rank = Integer.parseInt(Character.toString(first));
+        }
+        else
+        {
+            // No.
+            if (first == 'j')
+                rank = 11;
+            else if (first == 'q')
+                rank = 12;
+            else if (first == 'k')
+                rank = 13;
+            else if (first == 'a')
+                rank = 1;
+            else
+                rank = 0;
+        }
+
+        // Now search the string for any of the suits.
+        if (s.contains("clubs"))
+            suit = Suit.CLUBS;
+        else if (s.contains("diamonds"))
+            suit = Suit.DIAMONDS;
+        else if (s.contains("hearts"))
+            suit = Suit.HEARTS;
+        else if (s.contains("spades"))
+            suit = Suit.SPADES;
+        else
+            suit = null;
+
+        // Combine the rank and suit.
+        if (rank != 0 && suit != null)
+            return new Card(suit, rank);
+        else
+            return null;
     }
 }

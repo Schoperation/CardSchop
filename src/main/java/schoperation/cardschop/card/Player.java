@@ -114,6 +114,32 @@ public class Player {
         return this.hand.size();
     }
 
+    /*
+        Finding and getting cards from their hand
+     */
+
+    public boolean hasCard(Card card)
+    {
+        for (Card c : this.hand)
+        {
+            if (c.getSuit() == card.getSuit() && c.getValue() == card.getValue())
+                return true;
+        }
+
+        return false;
+    }
+
+    public Card getCardByCard(Card card)
+    {
+        for (Card c : this.hand)
+        {
+            if (c.getSuit() == card.getSuit() && c.getValue() == card.getValue())
+                return c;
+        }
+
+        return null;
+    }
+
     public void clearHand()
     {
         this.hand.clear();
@@ -133,11 +159,11 @@ public class Player {
         return card;
     }
 
-    // Remove specified card (index)
-    public Card removeCard(int index)
+    // Remove specified card (object)
+    public void removeCard(Card card)
     {
-        Card card = this.hand.remove(index);
-        return card;
+        this.hand.remove(card);
+        return;
     }
 
     // Returns a string showing off the hand.

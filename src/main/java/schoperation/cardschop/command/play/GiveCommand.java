@@ -38,8 +38,9 @@ public class GiveCommand implements ICommand {
             // First player
             Player givingPlayer = Utils.getPlayerObj(sender, guild);
 
-            // Card integer
+            // Card
             int cardInt;
+            Card card;
 
             // Correct arguments?
             if (arg1.equals("blank"))
@@ -50,24 +51,34 @@ public class GiveCommand implements ICommand {
             else if (arg2.equals("blank"))
             {
                 // Use the topmost card
-                cardInt = givingPlayer.getNumOfCards() - 1;
+                card = givingPlayer.getHand().get(givingPlayer.getNumOfCards() - 1);
             }
             else
             {
-                // Parse the card and see if that's part of their hand
+                // Decipher the card (just number or a string)
                 if (!Utils.isInt(arg2))
                 {
-                    channel.sendMessage(Msges.NAN);
-                    return;
+                    card = Card.parseCard(arg2);
+
+                    if (card == null || !givingPlayer.hasCard(card))
+                    {
+                        channel.sendMessage(Msges.INVALID_CARD);
+                        return;
+                    }
+
+                    card = givingPlayer.getCardByCard(card);
                 }
-
-                cardInt = Integer.parseInt(arg2) - 1;
-
-                // NOT part of their hand.
-                if (cardInt > givingPlayer.getNumOfCards())
+                else
                 {
-                    channel.sendMessage(Msges.INVALID_CARD);
-                    return;
+                    cardInt = Integer.parseInt(arg2) - 1;
+
+                    if (cardInt > givingPlayer.getHand().size())
+                    {
+                        channel.sendMessage(Msges.INVALID_CARD);
+                        return;
+                    }
+
+                    card = givingPlayer.getHand().get(cardInt);
                 }
             }
 
@@ -82,9 +93,9 @@ public class GiveCommand implements ICommand {
                 {
                     // Found them.
                     // Remove the card from givingPlayer and add it to receivingPlayer's hand.
-                    Card card = givingPlayer.removeCard(cardInt);
+                    givingPlayer.removeCard(card);
                     receivingPlayer.addCard(card);
-                    channel.sendMessage(givingPlayer.getUser().getDisplayName(guild) + " gave their number " + (cardInt + 1) + " card to " + receivingPlayer.getUser().getDisplayName(guild));
+                    channel.sendMessage(givingPlayer.getUser().getDisplayName(guild) + " gave a card to " + receivingPlayer.getUser().getDisplayName(guild) + ".");
                     SeeCommand.seeHand(givingPlayer);
                     SeeCommand.seeHand(receivingPlayer);
                     givingPlayer.getTable().update(guild);

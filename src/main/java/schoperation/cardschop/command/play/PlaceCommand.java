@@ -95,40 +95,54 @@ public class PlaceCommand implements ICommand {
             else
             {
                 // Card
+                int cardInt;
+                Card card;
+
+                // Decipher the card (just number or a string)
                 if (!Utils.isInt(arg2))
                 {
-                    channel.sendMessage(Msges.NAN);
-                    return;
+                    card = Card.parseCard(arg2);
+
+                    if (card == null || !player.hasCard(card))
+                    {
+                        channel.sendMessage(Msges.INVALID_CARD);
+                        return;
+                    }
+
+                    card = player.getCardByCard(card);
                 }
-
-                int cardInt = Integer.parseInt(arg2) - 1;
-
-                // NOT part of their hand.
-                if (cardInt > player.getHand().size())
+                else
                 {
-                    channel.sendMessage(Msges.INVALID_CARD);
-                    return;
+                    cardInt = Integer.parseInt(arg2) - 1;
+
+                    if (cardInt > player.getHand().size())
+                    {
+                        channel.sendMessage(Msges.INVALID_CARD);
+                        return;
+                    }
+
+                    card = player.getHand().get(cardInt);
                 }
 
-                // Go through the spots.
+                // Go through the spots, then remove the card from the player and add it to that spot.
                 if (arg1.equals("underdeck"))
                 {
-                    Card card = player.removeCard(cardInt);
+                    player.removeCard(card);
                     table.getDeck().addToBottom(card);
                 }
                 else if (arg1.equals("middle"))
                 {
-                    Card card = player.removeCard(cardInt);
+                    player.removeCard(card);
                     table.getMiddlePile().add(card);
                 }
                 else if (arg1.equals("pile"))
                 {
-                    Card card = player.removeCard(cardInt);
+                    player.removeCard(card);
                     player.getPile().add(card);
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
-                    Card card = player.removeCard(cardInt);
+                    player.removeCard(card);
                     player.getFront().add(card);
                 }
                 else
