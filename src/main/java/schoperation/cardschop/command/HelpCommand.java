@@ -361,7 +361,7 @@ public class HelpCommand implements ICommand {
             sb.append("\tcards -> Collects everyone's cards and all cards on the table, back into the deck. Only the dealer can do this.\n");
             sb.append("\ttrick -> Collects the trick, or everyone's front cards, into your personal pile.\n");
             sb.append("\tinfront -> Same as trick.\n");
-            sb.append("\tmiddle -> Collects the cards in the middle pile, into your hand.\n");
+            sb.append("\tmiddle -> Collects the cards in the middle pile, into your personal pile.\n");
             sb.append("\tpot -> Collects the table's pot into your chip bank/pot/whatever.\n");
 
             sb.append("\nYou MUST provide an argument; there's no default for this one.\n");

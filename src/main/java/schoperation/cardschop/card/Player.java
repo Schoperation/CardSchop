@@ -1,6 +1,5 @@
 package schoperation.cardschop.card;
 
-import schoperation.cardschop.command.play.SeeCommand;
 import schoperation.cardschop.util.Msges;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
@@ -189,8 +188,6 @@ public class Player {
             swap(i, minIndex);
         }
 
-        // Notify
-        SeeCommand.seeHand(this);
         return;
     }
 

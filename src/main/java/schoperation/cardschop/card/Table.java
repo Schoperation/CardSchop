@@ -1,6 +1,5 @@
 package schoperation.cardschop.card;
 
-import schoperation.cardschop.command.play.SeeCommand;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
@@ -369,13 +368,13 @@ public class Table {
 
         if (this.middlePile.isEmpty())
         {
-            sb.replace(deckPos, deckPos + 3, "mid");
-            sb.delete(deckPos + 4, deckPos + 8);
+            sb.replace(deckPos, deckPos + 7, "mid");
+            //sb.delete(deckPos + 4, deckPos + 8);
         }
         else
         {
-            sb.replace(deckPos, deckPos + 10, this.middlePile.get(this.middlePile.size() - 1).getString());
-            sb.delete(deckPos + 11, deckPos + 11);
+            sb.replace(deckPos, deckPos + 11, this.middlePile.get(this.middlePile.size() - 1).getString());
+            //sb.delete(deckPos + 11, deckPos + 11);
         }
 
         // Add the amount in the pot below the deck.
@@ -472,9 +471,6 @@ public class Table {
                 this.deck.getCards().addAll(player.getFront());
                 player.getFront().clear();
             }
-
-            // Update their hand
-            SeeCommand.seeHand(player);
         }
 
         // Clear the middle pile
