@@ -268,16 +268,21 @@ public class Table {
 
                 // Front cards TODO this good?
                 if (this.players.get(i).getFront().isEmpty())
-                    sb.append("|                                          ");
+                {
+                    sb.append("|  ");
+                    sb.append("                        ");
+                }
                 else
                 {
                     sb.append("|  ");
                     sb.append(this.players.get(i).getFront().get(this.players.get(i).getFront().size() - 1).getString());
-                    sb.append("                                ");
+                    sb.append("                        ");
                 }
 
                 if (this.players.get(i + 1).getFront().isEmpty())
-                    sb.append("|");
+                {
+                    sb.append("        |");
+                }
                 else
                 {
                     sb.append(this.players.get(i + 1).getFront().get(this.players.get(i + 1).getFront().size() - 1).getString());
