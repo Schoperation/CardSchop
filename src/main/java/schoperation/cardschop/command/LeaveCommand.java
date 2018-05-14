@@ -36,6 +36,10 @@ public class LeaveCommand implements ICommand {
             {
                 player.getTable().getDeck().getCards().addAll(player.getHand());
                 player.clearHand();
+                player.getTable().getDeck().getCards().addAll(player.getFront());
+                player.getFront().clear();
+                player.getTable().getDeck().getCards().addAll(player.getPile());
+                player.getPile().clear();
             }
 
             player.getTable().getPlayers().remove(player);
@@ -43,7 +47,6 @@ public class LeaveCommand implements ICommand {
             player.getTable().update(guild);
             return;
         }
-
 
         channel.sendMessage(Msges.TABLE_NOT_FOUND);
         return;

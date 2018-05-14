@@ -360,22 +360,18 @@ public class Table {
         // That list of char positions? The amount of them is element.
         // We'll use the position that is in the middle of the array, and insert the deck.
         int deckPos = charPosition[element / 2] + 18;
-        sb.replace(deckPos, deckPos + 3, "[" + this.deck.getNumberOfCards() + "]");
-        sb.delete(deckPos + 4, deckPos + 9);
+        if (this.deck.getNumberOfCards() < 10)
+            sb.replace(deckPos, deckPos + 8, "[0" + this.deck.getNumberOfCards() + "]");
+        else
+            sb.replace(deckPos, deckPos + 8, "[" + this.deck.getNumberOfCards() + "]");
 
         // Add the "middle pile"
         deckPos = charPosition[(element / 2) - 1] + 18;
 
         if (this.middlePile.isEmpty())
-        {
             sb.replace(deckPos, deckPos + 7, "mid");
-            //sb.delete(deckPos + 4, deckPos + 8);
-        }
         else
-        {
             sb.replace(deckPos, deckPos + 11, this.middlePile.get(this.middlePile.size() - 1).getString());
-            //sb.delete(deckPos + 11, deckPos + 11);
-        }
 
         // Add the amount in the pot below the deck.
         int numSpace = getSpace(this.pot);
@@ -416,7 +412,7 @@ public class Table {
             {
                 // Give them atATime cards
                 if (p.equals(player) && !dealerGetsCards)
-                    ;
+                    continue;
                 else
                 {
                     for (i = 0; i < atATime; i++)

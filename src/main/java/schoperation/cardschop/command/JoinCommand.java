@@ -4,6 +4,7 @@ import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Tables;
+import schoperation.cardschop.util.Utils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
@@ -32,6 +33,13 @@ public class JoinCommand implements ICommand {
         if (arg1.equals("blank"))
         {
             channel.sendMessage("Please provide a table name. Ex. `" + Msges.PREFIX + "join MyTable`");
+            return;
+        }
+
+        // Are they already part of a table?
+        if (Utils.isPartOfTable(sender, guild))
+        {
+            channel.sendMessage("You are already at the table named " + Utils.getPlayerObj(sender, guild).getTable().getName() + ".");
             return;
         }
 
