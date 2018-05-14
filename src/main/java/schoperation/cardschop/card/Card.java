@@ -11,7 +11,7 @@ public class Card {
     // Suit enum
     private Suit suit;
 
-    // Used to designate card value. Ace = 1, 2 = 2, 3 = 3,... J = 11, Q = 12, K = 13
+    // Used to designate card value. 2 = 2, 3 = 3,... J = 11, Q = 12, K = 13, A = 14
     private int value;
 
     private boolean isJoker;
@@ -70,14 +70,14 @@ public class Card {
     {
         if (this.value < 11 && this.value != 1)
             return Integer.toString(this.value);
-        else if (this.value == 1)
-            return "A";
         else if (this.value == 11)
             return "J";
         else if (this.value == 12)
             return "Q";
         else if (this.value == 13)
             return "K";
+        else if (this.value == 14)
+            return "A";
         else
             return ":black_joker:";
     }
@@ -138,7 +138,7 @@ public class Card {
             else if (first == 'k')
                 rank = 13;
             else if (first == 'a')
-                rank = 1;
+                rank = 14;
             else
                 rank = 0;
         }

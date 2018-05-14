@@ -86,6 +86,7 @@ public class HelpCommand implements ICommand {
             sb.append("\tslap -> Slap the middle pile.\n");
             sb.append("\tsee -> See your hand/pile/front cards PRIVATELY.\n");
             sb.append("\treveal -> Reveal your hand/pile/front cards PUBLICLY.\n");
+            sb.append("\tsort -> Sort your hand.\n");
 
             sb.append("\nChips\n");
             sb.append("\tbet -> Throw an amount of chips into the pot.\n");
@@ -426,6 +427,27 @@ public class HelpCommand implements ICommand {
             sb.append("\ttrick -> Same as infront.\n");
 
             sb.append("\nThis command messages the cards in the same channel, so everyone can see them. Use this for the showdown.\n");
+
+            sb.append("```");
+
+            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+        }
+
+        else if (arg1.equals("sort"))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("```");
+
+            sb.append(" sort\n\n");
+            sb.append("\tsort -> Sort your hand by rank.\n");
+            sb.append("\tsort [by] -> Sort your hand by [by].\n");
+
+            sb.append("\nYour options for [by] are:\n");
+            sb.append("\tbyrank -> Rank takes precedence.\n");
+            sb.append("\tbysuit -> Suit takes precedence. Clubs, Diamonds, Hearts, Spades, is the order.\n");
+
+            sb.append("\nThis command sorts your hand, for your convenience.\n");
 
             sb.append("```");
 

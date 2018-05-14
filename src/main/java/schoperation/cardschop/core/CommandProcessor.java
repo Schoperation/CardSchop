@@ -38,11 +38,14 @@ public class CommandProcessor {
                     cmd.execute(sender, channel, guild, command[1], command[2], "blank");
                 else if (command.length == 2)
                     cmd.execute(sender, channel, guild, command[1], "blank", "blank");
-                else if (command.length == 1)
-                    cmd.execute(sender, channel, guild, "blank", "blank", "blank");
                 else
-                    channel.sendMessage(Msges.INVALID_COMMAND);
+                    cmd.execute(sender, channel, guild, "blank", "blank", "blank");
+
+                return;
             }
         }
+
+        // Invalid command
+        channel.sendMessage(Msges.INVALID_COMMAND);
     }
 }

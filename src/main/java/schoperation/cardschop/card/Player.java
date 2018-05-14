@@ -1,5 +1,6 @@
 package schoperation.cardschop.card;
 
+import schoperation.cardschop.command.play.SeeCommand;
 import schoperation.cardschop.util.Msges;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
@@ -112,6 +113,110 @@ public class Player {
     public int getNumOfCards()
     {
         return this.hand.size();
+    }
+
+    public void sortHand(int mode)
+    {
+        /*
+            Ex hand: 2 of clubs, 2 of hearts, 7 of diamonds, 8 of spades, ace of spades, ace of diamonds.
+            Mode 1 (by rank): 2 of clubs, 2 of hearts, 7 of diamonds, 8 of spades, ace of diamonds, ace of spades.
+            Mode 2 (by suit): 2 of clubs, 7 of diamonds, ace of diamonds, 2 of hearts, 8 of spades, ace of spades.
+
+            Suits are in alphabetical order: clubs, diamonds, hearts, and spades.
+            By rank acknowledges this suit order but will always put rank at top priority. So aces will ALWAYS be at the top by rank.
+        */
+
+        int i;
+        int j;
+
+        Card minCard;
+        int minIndex;
+
+        int value;
+        Suit suit;
+
+        for (i = 0; i < this.hand.size() - 1; i++)
+        {
+            // Set the minimum to the current index we're trying to replace.
+            minCard = this.hand.get(i);
+            minIndex = i;
+
+            for (j = i + 1; j < this.hand.size(); j++)
+            {
+                value = this.hand.get(j).getValue();
+                suit = this.hand.get(j).getSuit();
+
+                // Is this card, by definition, lower than the current minimum card?
+                if (mode == 1)
+                {
+                    // Lower rank
+                    if (value < minCard.getValue())
+                    {
+                        minIndex = j;
+                        minCard = this.hand.get(j);
+                    }
+                    // Same rank. Check suits.
+                    else if (value == minCard.getValue())
+                    {
+                        if (hasLowerSuit(j, minIndex))
+                        {
+                            minIndex = j;
+                            minCard = this.hand.get(j);
+                        }
+                    }
+                }
+                else if (mode == 2)
+                {
+                    // Lower suit?
+                    if (hasLowerSuit(j, minIndex))
+                    {
+                        minIndex = j;
+                        minCard = this.hand.get(j);
+                    }
+                    // Same suit? Then check rank.
+                    else if (suit == minCard.getSuit())
+                    {
+                        if (value < minCard.getValue())
+                        {
+                            minIndex = j;
+                            minCard = this.hand.get(j);
+                        }
+                    }
+                }
+            }
+
+            // Swap cards
+            swap(i, minIndex);
+        }
+
+        // Notify
+        SeeCommand.seeHand(this);
+        return;
+    }
+
+    // Used for the sorting method above
+    private void swap(int index1, int index2)
+    {
+        Card temp = this.hand.get(index1);
+        this.hand.set(index1, this.hand.get(index2));
+        this.hand.set(index2, temp);
+        return;
+    }
+
+    // Used for the sorting method above above
+    // Returns true if index1 has a lower suit than index2.
+    private boolean hasLowerSuit(int index1, int index2)
+    {
+        if (this.hand.get(index1).getSuit() == this.hand.get(index2).getSuit())
+            return false;
+        else if (this.hand.get(index2).getSuit() == Suit.SPADES)
+            return true;
+        else if (this.hand.get(index2).getSuit() == Suit.HEARTS && this.hand.get(index1).getSuit() != Suit.SPADES)
+            return true;
+        else if (this.hand.get(index1).getSuit() == Suit.CLUBS)
+            return true;
+        else
+            return false;
     }
 
     /*

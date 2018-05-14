@@ -102,7 +102,7 @@ public class Deck {
             else
                 s = Suit.SPADES;
 
-            card = new Card(s, i % 13 + 1);
+            card = new Card(s, i % 13 + 2);
             this.cards.add(card);
         }
 
