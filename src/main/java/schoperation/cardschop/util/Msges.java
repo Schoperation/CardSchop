@@ -17,11 +17,12 @@ public class Msges {
     public static final String INVALID_CARD = "Invalid card.";
     public static final String EMPTY_PILE = "This pile is empty.";
     public static final String NAN = "At least one of your arguments is not a number. Please provide an integer.";
+    public static final String INVALID_COMMAND = "That command does not exist. Use `" + PREFIX + "help list` if you're completely lost.";
 
-    public static final String INVALID_PLACE_PLACE = "Invalid place. Your options are: underdeck, middle, pile, and infront.";
-    public static final String INVALID_PLACE_DRAW = "Invalid place. Your options are: deck, middle, pile, and infront.";
+    public static final String INVALID_PLACE_PLACE = "Invalid place. Your options are: underdeck, middle, pile, and infront/trick.";
+    public static final String INVALID_PLACE_DRAW = "Invalid place. Your options are: deck, middle, pile, and infront/trick.";
 
-    public static final String COLLECT_ARGUMENT = "Please provide a correct argument. Your options are: cards, trick, middle, and pot.";
+    public static final String COLLECT_ARGUMENT = "Please provide a correct argument. Your options are: cards, infront/trick, middle, and pot.";
 
     public static final String PM_NOTIFICATION = "PM has updated.";
 }

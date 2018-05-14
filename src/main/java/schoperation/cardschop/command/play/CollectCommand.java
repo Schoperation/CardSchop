@@ -85,10 +85,10 @@ public class CollectCommand implements ICommand {
                 }
                 else if (arg1.equals("middle"))
                 {
-                    // Take the middle pile and put it into the player's hand.
+                    // Take the middle pile and put it into the player's personal pile.
                     if (!table.getMiddlePile().isEmpty())
                     {
-                        player.getHand().addAll(table.getMiddlePile());
+                        player.getPile().addAll(table.getMiddlePile());
                         table.getMiddlePile().clear();
                         channel.sendMessage(player.getUser().getDisplayName(guild) + " has taken the middle pile.");
                         SeeCommand.seeHand(player);

@@ -2,6 +2,7 @@ package schoperation.cardschop.core;
 
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Commands;
+import schoperation.cardschop.util.Msges;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
@@ -17,7 +18,7 @@ public class CommandProcessor {
         IChannel channel = message.getChannel();
         IGuild guild = message.getGuild();
 
-        // Split up the message
+        // Split up the message, make it lowercase, blah blah blah
         String[] command = message.getContent().toLowerCase().replaceFirst(prefix, "").split(" ");
 
         // Delete command. Very nice
@@ -37,8 +38,10 @@ public class CommandProcessor {
                     cmd.execute(sender, channel, guild, command[1], command[2], "blank");
                 else if (command.length == 2)
                     cmd.execute(sender, channel, guild, command[1], "blank", "blank");
-                else
+                else if (command.length == 1)
                     cmd.execute(sender, channel, guild, "blank", "blank", "blank");
+                else
+                    channel.sendMessage(Msges.INVALID_COMMAND);
             }
         }
     }

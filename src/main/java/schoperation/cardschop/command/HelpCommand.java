@@ -58,7 +58,6 @@ public class HelpCommand implements ICommand {
             sb.append("Schoperation");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         // List of commands
@@ -95,7 +94,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         // Specific commands
@@ -116,7 +114,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("join"))
@@ -133,7 +130,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("leave"))
@@ -150,7 +146,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("info"))
@@ -167,7 +162,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("help"))
@@ -186,7 +180,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("clear"))
@@ -204,7 +197,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("setdealer"))
@@ -222,7 +214,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("deal"))
@@ -244,7 +235,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("shuffle"))
@@ -261,7 +251,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("draw"))
@@ -287,7 +276,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("place"))
@@ -326,7 +314,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("give"))
@@ -358,7 +345,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("collect"))
@@ -382,7 +368,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("slap"))
@@ -397,6 +382,8 @@ public class HelpCommand implements ICommand {
             sb.append("\nUse this command for slapping, for games like egyptian rat screw.\n");
 
             sb.append("```");
+
+            sender.getOrCreatePMChannel().sendMessage(sb.toString());
         }
 
         else if (arg1.equals("see"))
@@ -420,7 +407,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("reveal"))
@@ -444,7 +430,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("bet"))
@@ -464,7 +449,6 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
 
         else if (arg1.equals("chips"))
@@ -489,7 +473,11 @@ public class HelpCommand implements ICommand {
             sb.append("```");
 
             sender.getOrCreatePMChannel().sendMessage(sb.toString());
-            return;
         }
+
+        else
+            sender.getOrCreatePMChannel().sendMessage(Msges.INVALID_COMMAND);
+
+        return;
     }
 }
