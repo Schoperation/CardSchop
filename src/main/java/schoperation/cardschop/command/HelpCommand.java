@@ -68,14 +68,16 @@ public class HelpCommand implements ICommand {
             sb.append("```");
             sb.append("Prefix is " + Msges.PREFIX + ". Use `" + Msges.PREFIX + "help [command]` for more details and arguments about said command.\n");
             sb.append("\nBasic\n");
-            sb.append("\ttable -> Deals with the creation, deletion, and flipping of tables.\n");
-            sb.append("\tjoin [table] -> Join the table named [table].\n");
-            sb.append("\tleave -> Leave the current table.\n");
             sb.append("\tinfo -> See some miscellaneous information about this bot.\n");
             sb.append("\thelp -> Stop it. Get some help.\n");
 
-            sb.append("\nPlay\n");
+            sb.append("\nTable\n");
+            sb.append("\ttable -> Deal with the creation, deletion, and flipping of tables.\n");
+            sb.append("\tjoin [table] -> Join the table named [table].\n");
+            sb.append("\tleave -> Leave the current table.\n");
             sb.append("\tclear -> Clear the table's log.\n");
+
+            sb.append("\nPlay\n");
             sb.append("\tsetdealer -> Set the dealer to someone.\n");
             sb.append("\tdeal -> DEALER ONLY. Deal out a bunch of cards from the deck to everyone at the table.\n");
             sb.append("\tshuffle -> DEALER ONLY. Shuffles the deck.\n");
@@ -84,9 +86,12 @@ public class HelpCommand implements ICommand {
             sb.append("\tgive -> Give a card to someone else.\n");
             sb.append("\tcollect -> Collect something.\n");
             sb.append("\tslap -> Slap the middle pile.\n");
+
+            sb.append("\n(Own) Cards\n");
             sb.append("\tsee -> See your hand/pile/front cards PRIVATELY.\n");
             sb.append("\treveal -> Reveal your hand/pile/front cards PUBLICLY.\n");
             sb.append("\tsort -> Sort your hand.\n");
+            sb.append("\tflip -> Flip a card in your hand.\n");
 
             sb.append("\nChips\n");
             sb.append("\tbet -> Throw an amount of chips into the pot.\n");
@@ -98,6 +103,40 @@ public class HelpCommand implements ICommand {
         }
 
         // Specific commands
+        else if (arg1.equals("info"))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("```");
+
+            sb.append(" info\n\n");
+            sb.append("\tinfo -> Display some information about this bot.\n");
+
+            sb.append("\nIt's great\n");
+
+            sb.append("```");
+
+            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+        }
+
+        else if (arg1.equals("help"))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("```");
+
+            sb.append(" help\n\n");
+            sb.append("\thelp -> Show a basic startup guide for using this bot.\n");
+            sb.append("\thelp list -> Show a list of commands.\n");
+            sb.append("\thelp [command] -> Show more details and arguments about a command.\n");
+
+            sb.append("\nYou just used this command, and you appear to be pretty good at it!\n");
+
+            sb.append("```");
+
+            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+        }
+
         else if (arg1.equals("table"))
         {
             StringBuilder sb = new StringBuilder();
@@ -143,40 +182,6 @@ public class HelpCommand implements ICommand {
             sb.append("\tleave -> Leave the current table.\n");
 
             sb.append("\nThis is how you leave a table. Of course, you must be at one to leave it.\n");
-
-            sb.append("```");
-
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
-        }
-
-        else if (arg1.equals("info"))
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("```");
-
-            sb.append(" info\n\n");
-            sb.append("\tinfo -> Display some information about this bot.\n");
-
-            sb.append("\nIt's great\n");
-
-            sb.append("```");
-
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
-        }
-
-        else if (arg1.equals("help"))
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("```");
-
-            sb.append(" help\n\n");
-            sb.append("\thelp -> Show a basic startup guide for using this bot.\n");
-            sb.append("\thelp list -> Show a list of commands.\n");
-            sb.append("\thelp [command] -> Show more details and arguments about a command.\n");
-
-            sb.append("\nYou just used this command, and you appear to be pretty good at it!\n");
 
             sb.append("```");
 
@@ -453,6 +458,39 @@ public class HelpCommand implements ICommand {
             sb.append("\tbysuit -> Suit takes precedence. Clubs, Diamonds, Hearts, Spades, is the order.\n");
 
             sb.append("\nThis command sorts your hand, for your convenience.\n");
+
+            sb.append("```");
+
+            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+        }
+
+        else if (arg1.equals("flip"))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("```");
+
+            sb.append(" flip\n\n");
+            sb.append("\tflip [card] -> Flip the specified card.\n");
+            sb.append("\tflip [card] [faceupordown] -> Flip the specified card to the specified side.\n");
+
+            sb.append("\nThe card must be in your hand. This command only affects cards in your hand.\n");
+            sb.append("\nFor [card], you can either use the number assigned to the card in brackets [], use 'all' for all cards in your hand,\n");
+            sb.append("Or spell out the card. Let's take the 2 of clubs, for example. Acceptable input would include:\n");
+            sb.append("\t2clubs\n");
+            sb.append("\t2ofclubs\n\n");
+
+            sb.append("For the king of diamonds, say:\n");
+            sb.append("\tkingofdiamonds\n");
+            sb.append("\tkingdiamonds\n");
+            sb.append("\tkofdiamonds\n");
+            sb.append("\tkdiamonds\n\n");
+
+            sb.append("For face cards and aces, you can either spell their rank out or use the first letter.\n");
+            sb.append("For other ranks use the actual number.\n");
+            sb.append("Nonetheless, you must specify the rank and the suit correctly, in ONE WORD.\n");
+
+            sb.append("\nFor [faceupordown], say 'faceup' or 'facedown', and it'll flip the card accordingly.\n");
 
             sb.append("```");
 
