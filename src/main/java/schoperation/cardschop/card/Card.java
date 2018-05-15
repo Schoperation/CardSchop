@@ -14,7 +14,11 @@ public class Card {
     // Used to designate card value. 2 = 2, 3 = 3,... J = 11, Q = 12, K = 13, A = 14
     private int value;
 
+    // Is this a joker?
     private boolean isJoker;
+
+    // Faceup or facedown?
+    private boolean isFaceDown = false;
 
     // Normal constructor
     public Card(Suit s, int v)
@@ -42,25 +46,57 @@ public class Card {
         return this.value;
     }
 
+    public boolean isFaceDown()
+    {
+        return this.isFaceDown;
+    }
+
+    public void flip()
+    {
+        if (this.isFaceDown)
+            this.isFaceDown = false;
+        else
+            this.isFaceDown = true;
+        return;
+    }
+
+    public void setFaceDown()
+    {
+        this.isFaceDown = true;
+        return;
+    }
+
+    public void setFaceUp()
+    {
+        this.isFaceDown = false;
+        return;
+    }
+
     // Returns a string that can be printed out.
     public String getString()
     {
         StringBuilder sb = new StringBuilder();
 
-        // First, the card value itself.
-        sb.append(this.getPicture());
-
-        // Now the suit.
-        if (this.isJoker)
-            ;
-        else if (this.suit == Suit.CLUBS)
-            sb.append(":clubs:");
-        else if (this.suit == Suit.DIAMONDS)
-            sb.append(":diamonds:");
-        else if (this.suit == Suit.HEARTS)
-            sb.append(":hearts:");
+        // If the card is facedown, dont show the card. Show something.
+        if (this.isFaceDown)
+            sb.append(":mahjong:  ");
         else
-            sb.append(":spades:");
+        {
+            // First, the card value itself.
+            sb.append(this.getPicture());
+
+            // Now the suit.
+            if (this.isJoker)
+                ;
+            else if (this.suit == Suit.CLUBS)
+                sb.append(":clubs:");
+            else if (this.suit == Suit.DIAMONDS)
+                sb.append(":diamonds:");
+            else if (this.suit == Suit.HEARTS)
+                sb.append(":hearts:");
+            else
+                sb.append(":spades:");
+        }
 
         return sb.toString();
     }

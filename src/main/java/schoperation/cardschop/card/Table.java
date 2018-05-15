@@ -450,21 +450,36 @@ public class Table {
             // Append their hands into the deck, then clear their hand.
             if (player.getNumOfCards() != 0)
             {
-                this.deck.getCards().addAll(player.getHand());
+                for (Card card : player.getHand())
+                {
+                    card.setFaceUp();
+                    this.deck.getCards().add(card);
+                }
+
                 player.clearHand();
             }
 
             // Side pile
             if (!player.getPile().isEmpty())
             {
-                this.deck.getCards().addAll(player.getPile());
+                for (Card card : player.getPile())
+                {
+                    card.setFaceUp();
+                    this.deck.getCards().add(card);
+                }
+
                 player.getPile().clear();
             }
 
             // Front pile
             if (!player.getFront().isEmpty())
             {
-                this.deck.getCards().addAll(player.getFront());
+                for (Card card : player.getFront())
+                {
+                    card.setFaceUp();
+                    this.deck.getCards().add(card);
+                }
+
                 player.getFront().clear();
             }
         }
@@ -472,7 +487,12 @@ public class Table {
         // Clear the middle pile
         if (!this.middlePile.isEmpty())
         {
-            this.deck.getCards().addAll(this.middlePile);
+            for (Card card : this.middlePile)
+            {
+                card.setFaceUp();
+                this.deck.getCards().add(card);
+            }
+
             this.middlePile.clear();
         }
 

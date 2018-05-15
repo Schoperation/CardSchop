@@ -287,8 +287,11 @@ public class HelpCommand implements ICommand {
 
             sb.append(" place\n\n");
             sb.append("\tplace -> Place your topmost card in the middle pile.\n");
+            sb.append("\tplace [faceupordown] -> Place your topmost card in the middle pile, faceup or facedown.\n");
             sb.append("\tplace [place] -> Place your topmost card in the specified place.\n");
+            sb.append("\tplace [place] [faceupordown] -> Place your topmost card in the specified place, faceup or facedown.\n");
             sb.append("\tplace [place] [card] -> Place a specified card in the specified place.\n");
+            sb.append("\tplace [place] [card] [faceupordown] -> Place a specified card in the specified place, faceup or facedown.\n");
 
             sb.append("\nThe options for [place] are:\n");
             sb.append("\tunderdeck -> Slides the card UNDER the main deck.\n");
@@ -311,6 +314,8 @@ public class HelpCommand implements ICommand {
             sb.append("For face cards and aces, you can either spell their rank out or use the first letter.\n");
             sb.append("For other ranks use the actual number.\n");
             sb.append("Nonetheless, you must specify the rank and the suit correctly, in ONE WORD.\n");
+
+            sb.append("\nFor [faceupordown], say 'faceup' or 'facedown', and it'll flip the card accordingly.\n");
 
             sb.append("```");
 

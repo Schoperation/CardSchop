@@ -15,7 +15,7 @@ public class PlaceCommand implements ICommand {
     /*
         Places the specified card somewhere.
 
-        place [place] [card] -> places [card] on top of [place]. If no card specified, places the topmost one from the player's hand.
+        place [place] [card] [faceupordown] -> places [card] on top of [place]. If no card specified, places the topmost one from the player's hand.
 
         If nothing specified, place the topmost card in the middle.
 
@@ -26,6 +26,8 @@ public class PlaceCommand implements ICommand {
             -infront -> in front of the player. For tricks.
 
             Defaults to middle.
+
+        Can add 'faceup' or 'facedown' as an argument to any of the above combinations.
      */
 
     private final String command = "place";
@@ -45,39 +47,64 @@ public class PlaceCommand implements ICommand {
             Player player = Utils.getPlayerObj(sender, guild);
             Table table = player.getTable();
 
-            // If no arguments, place the topmost card of the player's hand in the middle.
-            if (arg1.equals("blank"))
+            // If no arguments, except for faceup or facedown, place the topmost card of the player's hand in the middle.
+            if (arg1.equals("blank") || arg1.equals("faceup") || arg1.equals("facedown"))
             {
                 Card card = player.removeCard();
-                table.getMiddlePile().add(card);
 
-                // Update hand and table
-                SeeCommand.seeHand(player);
-                table.update(guild);
-                return;
+                if (arg1.equals("faceup"))
+                    card.setFaceUp();
+                else if (arg1.equals("facedown"))
+                    card.setFaceDown();
+
+                table.getMiddlePile().add(card);
             }
             // If one argument, use the topmost card.
-            else if (arg2.equals("blank"))
+            else if (arg2.equals("blank") || arg2.equals("faceup") || arg2.equals("facedown"))
             {
                 // Go through the spots.
                 if (arg1.equals("underdeck"))
                 {
                     Card card = player.removeCard();
+
+                    if (arg2.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg2.equals("facedown"))
+                        card.setFaceDown();
+
                     table.getDeck().addToBottom(card);
                 }
                 else if (arg1.equals("middle"))
                 {
                     Card card = player.removeCard();
+
+                    if (arg2.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg2.equals("facedown"))
+                        card.setFaceDown();
+
                     table.getMiddlePile().add(card);
                 }
                 else if (arg1.equals("pile"))
                 {
                     Card card = player.removeCard();
+
+                    if (arg2.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg2.equals("facedown"))
+                        card.setFaceDown();
+
                     player.getPile().add(card);
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     Card card = player.removeCard();
+
+                    if (arg2.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg2.equals("facedown"))
+                        card.setFaceDown();
+
                     player.getFront().add(card);
                 }
                 else
@@ -85,11 +112,6 @@ public class PlaceCommand implements ICommand {
                     channel.sendMessage(Msges.INVALID_PLACE_PLACE);
                     return;
                 }
-
-                // Update hand and table
-                SeeCommand.seeHand(player);
-                table.update(guild);
-                return;
             }
             // Both arguments.
             else
@@ -128,21 +150,45 @@ public class PlaceCommand implements ICommand {
                 if (arg1.equals("underdeck"))
                 {
                     player.removeCard(card);
+
+                    if (arg3.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg3.equals("facedown"))
+                        card.setFaceDown();
+
                     table.getDeck().addToBottom(card);
                 }
                 else if (arg1.equals("middle"))
                 {
                     player.removeCard(card);
+
+                    if (arg3.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg3.equals("facedown"))
+                        card.setFaceDown();
+
                     table.getMiddlePile().add(card);
                 }
                 else if (arg1.equals("pile"))
                 {
                     player.removeCard(card);
+
+                    if (arg3.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg3.equals("facedown"))
+                        card.setFaceDown();
+
                     player.getPile().add(card);
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     player.removeCard(card);
+
+                    if (arg3.equals("faceup"))
+                        card.setFaceUp();
+                    else if (arg3.equals("facedown"))
+                        card.setFaceDown();
+
                     player.getFront().add(card);
                 }
                 else
@@ -150,12 +196,12 @@ public class PlaceCommand implements ICommand {
                     channel.sendMessage(Msges.INVALID_PLACE_PLACE);
                     return;
                 }
-
-                // Update hand and table
-                SeeCommand.seeHand(player);
-                table.update(guild);
-                return;
             }
+
+            // Update hand and table
+            SeeCommand.seeHand(player);
+            table.update(guild);
+            return;
         }
 
         channel.sendMessage(Msges.NO_TABLE);

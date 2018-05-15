@@ -7,17 +7,7 @@ import schoperation.cardschop.command.InfoCommand;
 import schoperation.cardschop.command.JoinCommand;
 import schoperation.cardschop.command.LeaveCommand;
 import schoperation.cardschop.command.TableCommand;
-import schoperation.cardschop.command.play.CollectCommand;
-import schoperation.cardschop.command.play.DealCommand;
-import schoperation.cardschop.command.play.DrawCommand;
-import schoperation.cardschop.command.play.GiveCommand;
-import schoperation.cardschop.command.play.PlaceCommand;
-import schoperation.cardschop.command.play.RevealCommand;
-import schoperation.cardschop.command.play.SeeCommand;
-import schoperation.cardschop.command.play.SetDealerCommand;
-import schoperation.cardschop.command.play.ShuffleCommand;
-import schoperation.cardschop.command.play.SlapCommand;
-import schoperation.cardschop.command.play.SortCommand;
+import schoperation.cardschop.command.play.*;
 import schoperation.cardschop.command.play.bet.BetCommand;
 import schoperation.cardschop.command.play.bet.ChipsCommand;
 
@@ -44,7 +34,8 @@ public class Commands {
             new HelpCommand(),
             new InfoCommand(),
             new SlapCommand(),
-            new SortCommand()
+            new SortCommand(),
+            new FlipCommand()
 
     };
 }
