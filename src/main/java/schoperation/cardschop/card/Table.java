@@ -275,12 +275,12 @@ public class Table {
                 {
                     sb.append("|  ");
                     sb.append(this.players.get(i).getFront().get(this.players.get(i).getFront().size() - 1).getString());
-                    sb.append("                        ");
+                    sb.append("               ");
                 }
 
                 if (this.players.get(i + 1).getFront().isEmpty())
                 {
-                    sb.append("        |");
+                    sb.append("                |");
                 }
                 else
                 {

@@ -64,6 +64,7 @@ public class RevealCommand implements ICommand {
                             player2.getPM().edit(sender.getDisplayName(guild) + "'s hand:\n" + player.handToString());
                             IMessage msg = player2.getUser().getOrCreatePMChannel().sendMessage(sender.getDisplayName(guild) + " has revealed their hand to you.");
                             msg.delete();
+                            channel.sendMessage(sender.getDisplayName(guild) + " revealed their hand to " + player2.getUser().getDisplayName(guild) + ".");
                             return;
                         }
 
@@ -97,6 +98,7 @@ public class RevealCommand implements ICommand {
                             player2.getPM().edit(sender.getDisplayName(guild) + "'s side pile:\n" + player.pileToString());
                             IMessage msg = player2.getUser().getOrCreatePMChannel().sendMessage(sender.getDisplayName(guild) + " has revealed their personal pile to you.");
                             msg.delete();
+                            channel.sendMessage(sender.getDisplayName(guild) + " revealed their personal pile to " + player2.getUser().getDisplayName(guild) + ".");
                             return;
                         }
 
@@ -130,6 +132,7 @@ public class RevealCommand implements ICommand {
                             player2.getPM().edit(sender.getDisplayName(guild) + "'s front cards:\n" + player.frontToString());
                             IMessage msg = player2.getUser().getOrCreatePMChannel().sendMessage(sender.getDisplayName(guild) + " has revealed their front cards to you.");
                             msg.delete();
+                            channel.sendMessage(sender.getDisplayName(guild) + " revealed their front cards to " + player2.getUser().getDisplayName(guild) + ".");
                             return;
                         }
 
