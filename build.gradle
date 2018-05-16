@@ -1,16 +1,27 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id 'java'
+}
+
 group 'schoperation.cardschop'
 version '0.1.0'
 
-apply plugin: 'java'
-
 sourceCompatibility = 1.8
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'schoperation.cardschop.core.BotMain'
+    }
+}
+
+shadowJar {
+     classifier = null
+}
+
 repositories {
-    mavenCentral()
     jcenter()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'com.discord4j:Discord4J:2.10.1'
 }
