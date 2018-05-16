@@ -412,6 +412,8 @@ public class HelpCommand implements ICommand {
             sb.append("\tpile -> Your personal pile.\n");
             sb.append("\tinfront -> Your cards in front of you.\n");
             sb.append("\ttrick -> Same as infront.\n");
+            sb.append("\tmiddle -> Dealer only. The middle pile of the table.\n");
+            sb.append("\tdeck -> Dealer only. The deck of the table.\n");
 
             sb.append("\nThis command PMs you the cards. Many commands will automatically call this command for your hand, whenever it gets updated.\n");
 
@@ -429,14 +431,20 @@ public class HelpCommand implements ICommand {
             sb.append(" reveal\n\n");
             sb.append("\treveal -> Reveal your hand publicly.\n");
             sb.append("\treveal [place] -> Reveal something publicly.\n");
+            sb.append("\treveal [place] [player] -> Reveal something to the specified person.\n");
 
             sb.append("\nYour options for [place] are:\n");
             sb.append("\thand -> Your own hand.\n");
             sb.append("\tpile -> Your personal pile.\n");
             sb.append("\tinfront -> Your cards in front of you.\n");
             sb.append("\ttrick -> Same as infront.\n");
+            sb.append("\tmiddle -> Dealer only. The middle pile of the table.\n");
+            sb.append("\tdeck -> Dealer only. The deck of the table.\n");
 
-            sb.append("\nThis command messages the cards in the same channel, so everyone can see them. Use this for the showdown.\n");
+            sb.append("\nFor [player], mention the user.\n");
+
+            sb.append("\nThis command messages the cards in the same channel if no one is specified, so everyone can see them. Use this for the showdown.\n");
+            sb.append("Any cards revealed WILL BE FACE UP, regardless if they already are or not.\n");
 
             sb.append("```");
 

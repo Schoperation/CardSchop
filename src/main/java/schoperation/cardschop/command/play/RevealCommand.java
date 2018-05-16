@@ -1,5 +1,6 @@
 package schoperation.cardschop.command.play;
 
+import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
@@ -46,7 +47,13 @@ public class RevealCommand implements ICommand {
             {
                 // Is someone specified?
                 if (arg2.equals("blank"))
+                {
+                    // Make sure all cards are faceup
+                    for (Card c : player.getHand())
+                        c.setFaceUp();
+
                     channel.sendMessage(sender.getDisplayName(guild) + "'s hand:\n" + player.handToString());
+                }
                 else
                 {
                     // Player they're going to give it to.
@@ -61,6 +68,10 @@ public class RevealCommand implements ICommand {
 
                         if (player2.getTable() == player.getTable())
                         {
+                            // Make sure all cards are faceup
+                            for (Card c : player.getHand())
+                                c.setFaceUp();
+
                             player2.getPM().edit(sender.getDisplayName(guild) + "'s hand:\n" + player.handToString());
                             IMessage msg = player2.getUser().getOrCreatePMChannel().sendMessage(sender.getDisplayName(guild) + " has revealed their hand to you.");
                             msg.delete();
@@ -80,7 +91,13 @@ public class RevealCommand implements ICommand {
             {
                 // Is someone specified?
                 if (arg2.equals("blank"))
+                {
+                    // Make sure all cards are faceup
+                    for (Card c : player.getPile())
+                        c.setFaceUp();
+
                     channel.sendMessage(sender.getDisplayName(guild) + "'s side pile:\n" + player.pileToString());
+                }
                 else
                 {
                     // Player they're going to give it to.
@@ -95,6 +112,10 @@ public class RevealCommand implements ICommand {
 
                         if (player2.getTable() == player.getTable())
                         {
+                            // Make sure all cards are faceup
+                            for (Card c : player.getPile())
+                                c.setFaceUp();
+
                             player2.getPM().edit(sender.getDisplayName(guild) + "'s side pile:\n" + player.pileToString());
                             IMessage msg = player2.getUser().getOrCreatePMChannel().sendMessage(sender.getDisplayName(guild) + " has revealed their personal pile to you.");
                             msg.delete();
@@ -114,7 +135,13 @@ public class RevealCommand implements ICommand {
             {
                 // Is someone specified?
                 if (arg2.equals("blank"))
+                {
+                    // Make sure all cards are faceup
+                    for (Card c : player.getFront())
+                        c.setFaceUp();
+
                     channel.sendMessage(sender.getDisplayName(guild) + "'s front cards:\n" + player.frontToString());
+                }
                 else
                 {
                     // Player they're going to give it to.
@@ -129,6 +156,10 @@ public class RevealCommand implements ICommand {
 
                         if (player2.getTable() == player.getTable())
                         {
+                            // Make sure all cards are faceup
+                            for (Card c : player.getFront())
+                                c.setFaceUp();
+
                             player2.getPM().edit(sender.getDisplayName(guild) + "'s front cards:\n" + player.frontToString());
                             IMessage msg = player2.getUser().getOrCreatePMChannel().sendMessage(sender.getDisplayName(guild) + " has revealed their front cards to you.");
                             msg.delete();
@@ -149,6 +180,10 @@ public class RevealCommand implements ICommand {
                 // Must be the dealer to reveal the middle.
                 if (player.getTable().getDealer() == player)
                 {
+                    // Make sure all cards are faceup
+                    for (Card c : player.getTable().getMiddlePile())
+                        c.setFaceUp();
+
                     channel.sendMessage("Middle pile:\n" + player.getTable().middleToString());
                     return;
                 }
@@ -161,6 +196,10 @@ public class RevealCommand implements ICommand {
                 // Must be the dealer to reveal the deck.
                 if (player.getTable().getDealer() == player)
                 {
+                    // Make sure all cards are faceup
+                    for (Card c : player.getTable().getDeck().getCards())
+                        c.setFaceUp();
+
                     channel.sendMessage("Deck:\n" + player.getTable().getDeck().getCardsToString());
                     return;
                 }
