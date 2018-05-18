@@ -85,7 +85,7 @@ public class Deck {
     }
 
     // Fills it up with cards
-    private void fill(boolean withJoker)
+    public void fill(boolean withJoker)
     {
         // Add all 52 cards to the deck
         int i;

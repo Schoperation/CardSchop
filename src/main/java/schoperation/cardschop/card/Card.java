@@ -32,8 +32,8 @@ public class Card {
     public Card()
     {
         this.isJoker = true;
-        this.value = -1;
-        this.suit = Suit.HEARTS;
+        this.value = 15;
+        this.suit = Suit.SPADES;
     }
 
     public Suit getSuit()

@@ -80,7 +80,7 @@ public class HelpCommand implements ICommand {
             sb.append("\nPlay\n");
             sb.append("\tsetdealer -> Set the dealer to someone.\n");
             sb.append("\tdeal -> DEALER ONLY. Deal out a bunch of cards from the deck to everyone at the table.\n");
-            sb.append("\tshuffle -> DEALER ONLY. Shuffles the deck.\n");
+            sb.append("\tshuffle -> DEALER ONLY. Shuffle the deck.\n");
             sb.append("\tdraw -> Draw/Take a card from some pile.\n");
             sb.append("\tplace -> Place a card onto some pile.\n");
             sb.append("\tgive -> Give a card to someone else.\n");
