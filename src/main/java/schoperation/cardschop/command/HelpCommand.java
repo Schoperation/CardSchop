@@ -81,6 +81,7 @@ public class HelpCommand implements ICommand {
             sb.append("\tsetdealer -> Set the dealer to someone.\n");
             sb.append("\tdeal -> DEALER ONLY. Deal out a bunch of cards from the deck to everyone at the table.\n");
             sb.append("\tshuffle -> DEALER ONLY. Shuffle the deck.\n");
+            sb.append("\tdeck -> DEALER ONLY. Edit the deck.\n");
             sb.append("\tdraw -> Draw/Take a card from some pile.\n");
             sb.append("\tplace -> Place a card onto some pile.\n");
             sb.append("\tgive -> Give a card to someone else.\n");
@@ -253,6 +254,44 @@ public class HelpCommand implements ICommand {
             sb.append("\tshuffle -> Shuffle the deck.\n");
 
             sb.append("\nDealer only. The deck does NOT start out shuffle upon creating a table. So, use this command before you use deal, unless you don't want it shuffled.\n");
+
+            sb.append("```");
+
+            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+        }
+
+        else if (arg1.equals("deck"))
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("```");
+
+            sb.append(" deck\n\n");
+            sb.append("\tdeck [operator] [card] -> Edit the deck.\n");
+
+            sb.append("\nDealer only.\n");
+            sb.append("Options for operator are:\n");
+            sb.append("\tadd -> Add a card, or cards.\n");
+            sb.append("\tremove -> Remove a card, or cards.\n");
+            sb.append("\treset -> Resets the deck to the standard 52 cards.\n");
+
+            sb.append("\nFor [card], you can either specify the card directly, like so:\n");
+            sb.append("Take the 2 of clubs, for example. Acceptable input would include:\n");
+            sb.append("\t2clubs\n");
+            sb.append("\t2ofclubs\n\n");
+
+            sb.append("For the king of diamonds, say:\n");
+            sb.append("\tkingofdiamonds\n");
+            sb.append("\tkingdiamonds\n");
+            sb.append("\tkofdiamonds\n");
+            sb.append("\tkdiamonds\n\n");
+
+            sb.append("For face cards and aces, you can either spell their rank out or use the first letter.\n");
+            sb.append("For other ranks use the actual number.\n");
+            sb.append("Nonetheless, you must specify the rank and the suit correctly, in ONE WORD.\n");
+
+            sb.append("\nYou can also omit the suit (so just '2' or just 'king' or 'kings') to add/remove ALL cards of that rank.\n");
+            sb.append("Along with that, omit the rank (so just 'clubs', 'diamonds', 'hearts', or 'spades') to add/remove ALL cards of that suit.\n");
 
             sb.append("```");
 

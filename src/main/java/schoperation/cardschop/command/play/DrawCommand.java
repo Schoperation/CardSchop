@@ -116,7 +116,7 @@ public class DrawCommand implements ICommand {
                 int amount;
 
                 if (arg2.equals("all"))
-                    amount = 200;
+                    amount = 1000;
                 else if (Utils.isInt(arg2))
                     amount = Integer.parseInt(arg2);
                 else

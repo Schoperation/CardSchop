@@ -79,6 +79,44 @@ public class DeckCommand implements ICommand {
                         channel.sendMessage("The dealer added 2 jokers to the deck.");
                     }
 
+                    // Different suits?
+                    else if (arg2.equals("clubs"))
+                    {
+                        // Add all 13 cards of clubs
+                        int i;
+                        for (i = 2; i < 15; i++)
+                            table.getDeck().getCards().add(new Card(Suit.CLUBS, i));
+
+                        channel.sendMessage("The dealer added all 13 cards of clubs.");
+                    }
+                    else if (arg2.equals("diamonds"))
+                    {
+                        // Add all 13 cards of diamonds
+                        int i;
+                        for (i = 2; i < 15; i++)
+                            table.getDeck().getCards().add(new Card(Suit.DIAMONDS, i));
+
+                        channel.sendMessage("The dealer added all 13 cards of diamonds.");
+                    }
+                    else if (arg2.equals("hearts"))
+                    {
+                        // Add all 13 cards of hearts
+                        int i;
+                        for (i = 2; i < 15; i++)
+                            table.getDeck().getCards().add(new Card(Suit.HEARTS, i));
+
+                        channel.sendMessage("The dealer added all 13 cards of hearts.");
+                    }
+                    else if (arg2.equals("spades"))
+                    {
+                        // Add all 13 cards of spades
+                        int i;
+                        for (i = 2; i < 15; i++)
+                            table.getDeck().getCards().add(new Card(Suit.SPADES, i));
+
+                        channel.sendMessage("The dealer added all 13 cards of spades.");
+                    }
+
                     // Try to parse it as an int, then a card
                     else
                     {
@@ -187,6 +225,64 @@ public class DeckCommand implements ICommand {
                         }
 
                         channel.sendMessage("The dealer removed all jokers from the deck.");
+                    }
+
+                    // Different suits?
+                    else if (arg2.equals("clubs"))
+                    {
+                        // Remove all cards with clubs
+                        Iterator<Card> iterator = table.getDeck().getCards().iterator();
+                        while (iterator.hasNext())
+                        {
+                            Card card = iterator.next();
+
+                            if (card.getSuit() == Suit.CLUBS)
+                                iterator.remove();
+                        }
+
+                        channel.sendMessage("The dealer removed all cards of clubs.");
+                    }
+                    else if (arg2.equals("diamonds"))
+                    {
+                        // Remove all cards with diamonds
+                        Iterator<Card> iterator = table.getDeck().getCards().iterator();
+                        while (iterator.hasNext())
+                        {
+                            Card card = iterator.next();
+
+                            if (card.getSuit() == Suit.DIAMONDS)
+                                iterator.remove();
+                        }
+
+                        channel.sendMessage("The dealer removed all cards of diamonds.");
+                    }
+                    else if (arg2.equals("hearts"))
+                    {
+                        // Remove all cards with hearts
+                        Iterator<Card> iterator = table.getDeck().getCards().iterator();
+                        while (iterator.hasNext())
+                        {
+                            Card card = iterator.next();
+
+                            if (card.getSuit() == Suit.HEARTS)
+                                iterator.remove();
+                        }
+
+                        channel.sendMessage("The dealer removed all cards of hearts.");
+                    }
+                    else if (arg2.equals("spades"))
+                    {
+                        // Remove all cards with spades
+                        Iterator<Card> iterator = table.getDeck().getCards().iterator();
+                        while (iterator.hasNext())
+                        {
+                            Card card = iterator.next();
+
+                            if (card.getSuit() == Suit.SPADES)
+                                iterator.remove();
+                        }
+
+                        channel.sendMessage("The dealer removed all cards of spades.");
                     }
 
                     // Try to parse it as an int, then a card
