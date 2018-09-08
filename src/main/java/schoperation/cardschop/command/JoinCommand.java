@@ -49,8 +49,17 @@ public class JoinCommand implements ICommand {
             if (table.getName().equals(arg1))
             {
                 // This table exists. Make the user into a player.
-                table.getPlayers().add(new Player(sender, table));
+                Player newPlayer = new Player(sender, table);
+                table.getPlayers().add(newPlayer);
                 channel.sendMessage(sender.getDisplayName(guild) + " has joined Table " + table.getName() + ".");
+
+                // If this is the first player to join, make them the dealer.
+                if (table.getPlayers().size() == 1)
+                {
+                    table.setDealer(newPlayer);
+                    channel.sendMessage("As they are the first to join, they are the dealer.");
+                }
+                
                 table.update(guild);
                 return;
             }

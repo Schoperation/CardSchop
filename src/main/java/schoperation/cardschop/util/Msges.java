@@ -11,7 +11,7 @@ public class Msges {
 
     public static final String VERSION = "0.1.0";
 
-    public static final String NOT_DEALER = "You are not the dealer! Use `" + PREFIX + "setdealer`.";
+    public static final String NOT_DEALER = "You are not the dealer! The dealer and people with Manage Server permissions can use `" + PREFIX + "setdealer`.";
     public static final String NO_TABLE = "You must be part of a table. Use `" + PREFIX + "join [tablename]` to join one.";
     public static final String TABLE_NOT_FOUND = "Could not find that table.";
     public static final String INVALID_CARD = "Invalid card.";
