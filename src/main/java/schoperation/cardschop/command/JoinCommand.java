@@ -59,7 +59,7 @@ public class JoinCommand implements ICommand {
                     table.setDealer(newPlayer);
                     channel.sendMessage("As they are the first to join, they are the dealer.");
                 }
-                
+
                 table.update(guild);
                 return;
             }

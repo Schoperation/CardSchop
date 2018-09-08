@@ -42,6 +42,9 @@ public class LeaveCommand implements ICommand {
                 player.getPile().clear();
             }
 
+            // Delete PM
+            player.getPM().delete();
+
             player.getTable().getPlayers().remove(player);
             channel.sendMessage(sender.getDisplayName(guild) + " has left the table.");
             player.getTable().update(guild);
