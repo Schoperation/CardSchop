@@ -437,6 +437,31 @@ public class Table {
                 alreadyCounted = true;
             }
         }
+
+        return;
+    }
+    /*
+        Used to deal cards to a specific player.
+     */
+    public void dealCardsToSinglePlayer(int amount, Player player)
+    {
+        if (amount == 0)
+            amount = 52;
+
+        int i;
+        Card card;
+        for (i = 0; i < amount; i++)
+        {
+            // Empty deck?
+            if (this.deck.getCards().isEmpty())
+                break;
+            else
+                card = this.deck.getCards().remove(this.deck.getNumberOfCards() - 1);
+
+            player.addCard(card);
+        }
+
+        return;
     }
 
     /*

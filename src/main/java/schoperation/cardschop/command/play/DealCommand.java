@@ -1,5 +1,6 @@
 package schoperation.cardschop.command.play;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
@@ -44,7 +45,7 @@ public class DealCommand implements ICommand {
                 if (arg1.equals("blank"))
                 {
                     table.dealCards(0, 1, true, player);
-                    channel.sendMessage("Dealt all cards to everyone, one at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
+                    channel.sendMessage("Dealt all cards to everyone, one at a time.");
                 }
                 else if (arg2.equals("blank"))
                 {
@@ -55,18 +56,44 @@ public class DealCommand implements ICommand {
                     }
 
                     table.dealCards(Integer.parseInt(arg1), 1, true, player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time. Use `" + Msges.PREFIX + "see` to privately see your hand.");
+                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, one at a time.");
                 }
                 else if (arg3.equals("blank"))
                 {
-                    if (!Utils.isInt(arg1) || !Utils.isInt(arg2))
+                    if (!Utils.isInt(arg1))
                     {
                         channel.sendMessage(Msges.NAN);
                         return;
                     }
 
-                    table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), true, player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Use " + Msges.PREFIX + "see to privately see your hand.");
+                    // Could be a username
+                    if (Utils.isInt(arg2))
+                    {
+                        table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), true, player);
+                        channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time.");
+                    }
+                    else
+                    {
+                        arg2 = arg2.replaceAll("[<>@!]", "");
+                        IUser userFromString = guild.getUserByID(Long.parseLong(arg2));
+
+                        // Same table?
+                        if (Utils.isPartOfTable(userFromString, guild))
+                        {
+                            Player player1 = Utils.getPlayerObj(userFromString, guild);
+
+                            if (player1.getTable() == table)
+                            {
+                                table.dealCardsToSinglePlayer(Integer.parseInt(arg1), player1);
+                                channel.sendMessage("Dealt " + arg1 + " cards to " + userFromString.getDisplayName(guild) + ".");
+                            }
+                        }
+                        else
+                        {
+                            channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of this table!");
+                            return;
+                        }
+                    }
                 }
                 else
                 {
@@ -77,7 +104,7 @@ public class DealCommand implements ICommand {
                     }
 
                     table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), Boolean.parseBoolean(arg3), player);
-                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ". Use " + Msges.PREFIX + "see to privately see your hand.");
+                    channel.sendMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ".");
                 }
 
                 // Update hands and table

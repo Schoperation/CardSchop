@@ -116,6 +116,12 @@ public class DeckCommand implements ICommand {
 
                         channel.sendMessage("The dealer added all 13 cards of spades.");
                     }
+                    else if (arg2.equals("deck"))
+                    {
+                        // Add another deck
+                        table.getDeck().fill(false);
+                        channel.sendMessage("The dealer added an entire deck to the existing one.");
+                    }
 
                     // Try to parse it as an int, then a card
                     else

@@ -232,6 +232,7 @@ public class HelpCommand implements ICommand {
             sb.append(" deal\n\n");
             sb.append("\tdeal -> Deal all cards to everyone, one at a time.\n");
             sb.append("\tdeal [amount] -> Deal the specified amount of cards to everyone, one at a time.\n");
+            sb.append("\tdeal [amount] [player] -> Deal the specified amount of cards to the specified person. For [player], mention them.\n");
             sb.append("\tdeal [amount] [atatime] -> Deal the specified amount of cards to everyone, a specified amount at a time. Ex. deal 5 2 deals 5 cards to everyone, 2 cards at a time.\n");
             sb.append("\tdeal [amount] [atatime] [dealergetscards] -> Like above, but can specify whether the dealer also gets cards. Use 'true' or 'false' for this argument.\n");
 
@@ -292,6 +293,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("\nYou can also omit the suit (so just '2' or just 'king' or 'kings') to add/remove ALL cards of that rank.\n");
             sb.append("Along with that, omit the rank (so just 'clubs', 'diamonds', 'hearts', or 'spades') to add/remove ALL cards of that suit.\n");
+            sb.append("Specify 'deck' to add a second deck to the existing one.\n");
 
             sb.append("```");
 
