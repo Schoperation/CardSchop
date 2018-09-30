@@ -206,6 +206,10 @@ public class Table {
                 // Print a line with just the one player.
                 String dispName = this.players.get(i).getUser().getDisplayName(guild);
 
+                // If their dispName is 14 characters or longer, cut it off.
+                if (dispName.length() >= 14)
+                    dispName = dispName.substring(0, 14);
+
                 // Print spaces until we're at the const num.
                 for (j = 0; j < (SPACES - (dispName.length() * 2) - 1); j++)
                     sb.append(" ");
@@ -254,6 +258,10 @@ public class Table {
                 // Print a line with just the one player.
                 String dispName1 = this.players.get(i).getUser().getDisplayName(guild);
                 String dispName2 = this.players.get(i + 1).getUser().getDisplayName(guild);
+
+                // If their dispName is 14 characters or longer, cut it off.
+                if (dispName1.length() >= 14)
+                    dispName1 = dispName1.substring(0, 14);
 
                 // Print spaces until we're at the const num.
                 for (j = 0; j < (SPACES - (dispName1.length() * 2) - 1); j++)
