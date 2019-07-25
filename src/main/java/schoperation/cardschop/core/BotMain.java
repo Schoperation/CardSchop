@@ -1,38 +1,24 @@
 package schoperation.cardschop.core;
 
-import sx.blah.discord.api.ClientBuilder;
-import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.api.events.EventDispatcher;
-import sx.blah.discord.util.DiscordException;
+import discord4j.core.DiscordClient;
+import discord4j.core.DiscordClientBuilder;
 
 public class BotMain {
 
     // The bot itself.
-    public static final IDiscordClient bot = createClient(Token.t, true);
+    public static DiscordClient bot = null;
 
-    // Main
+    // Build and log the bot on.
     public static void main(String args[])
     {
-        EventDispatcher dispatcher = bot.getDispatcher();
-        dispatcher.registerListener(new BotListener());
-    }
+        DiscordClientBuilder builder = new DiscordClientBuilder(Token.t);
+        bot = builder.build();
 
-    public static IDiscordClient createClient(String token, boolean login)
-    {
-        ClientBuilder clientBuilder = new ClientBuilder();
-        clientBuilder.withToken(token);
+        // Call event listener
+        BotListener listener = new BotListener();
+        listener.listenForEvents(bot);
 
-        try
-        {
-            if (login)
-                return clientBuilder.login();
-            else
-                return clientBuilder.build();
-        }
-        catch (DiscordException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
+        // Log in
+        bot.login().block();
     }
 }

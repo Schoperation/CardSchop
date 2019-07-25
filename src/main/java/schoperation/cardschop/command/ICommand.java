@@ -1,8 +1,8 @@
 package schoperation.cardschop.command;
 
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
+import discord4j.core.object.entity.Channel;
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.User;
 
 public interface ICommand {
 
@@ -12,5 +12,5 @@ public interface ICommand {
 
     public String getCommand();
 
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3);
+    public void execute(User sender, Channel channel, Guild guild, String arg1, String arg2, String arg3);
 }

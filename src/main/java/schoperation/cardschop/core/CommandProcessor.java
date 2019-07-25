@@ -1,29 +1,20 @@
 package schoperation.cardschop.core;
 
+import discord4j.core.object.entity.Channel;
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Commands;
 import schoperation.cardschop.util.Msges;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.IUser;
 
 public class CommandProcessor {
 
     // Process commands coming in
-    public static void processCommand(IMessage message, String prefix)
+    public static void processCommand(String message, String prefix, User sender, MessageChannel channel, Guild guild)
     {
-        // Who and what sent it?
-        IUser sender = message.getAuthor();
-        IChannel channel = message.getChannel();
-        IGuild guild = message.getGuild();
-
         // Split up the message, make it lowercase, blah blah blah
-        String[] command = message.getContent().toLowerCase().replaceFirst(prefix, "").split(" ");
-
-        // Delete command. Very nice
-        if (!channel.isPrivate())
-            message.delete();
+        String[] command = message.toLowerCase().replaceFirst(prefix, "").split(" ");
 
         // Go through each command and try to match it
         for (ICommand cmd : Commands.LIST)
@@ -46,6 +37,6 @@ public class CommandProcessor {
         }
 
         // Invalid command
-        channel.sendMessage(Msges.INVALID_COMMAND);
+        channel.createMessage(Msges.INVALID_COMMAND);
     }
 }

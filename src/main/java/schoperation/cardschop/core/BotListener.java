@@ -1,16 +1,8 @@
 package schoperation.cardschop.core;
 
-import schoperation.cardschop.card.Table;
+import discord4j.core.DiscordClient;
+import discord4j.core.event.domain.message.MessageCreateEvent;
 import schoperation.cardschop.util.Msges;
-import schoperation.cardschop.util.Tables;
-import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.impl.events.guild.GuildCreateEvent;
-import sx.blah.discord.handle.impl.events.guild.GuildLeaveEvent;
-import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.IGuild;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BotListener {
 
@@ -18,17 +10,20 @@ public class BotListener {
         Listen for events
      */
 
-    // When a message is received
-    @EventSubscriber
-    public void onMessageEvent(MessageReceivedEvent event)
+    public void listenForEvents(DiscordClient client)
     {
-        // Is this a command we should recognize?
-        if (event.getMessage().getContent().toLowerCase().startsWith(Msges.PREFIX))
-            CommandProcessor.processCommand(event.getMessage(), Msges.PREFIX);
+        client.getEventDispatcher().on(MessageCreateEvent.class)
+        .map(MessageCreateEvent::getMessage)
+        .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
+        .subscribe(event -> {
+            // We got a message from a non-bot, check for correct prefix, then send it on its way to CommandProcessor.
+            if (event.getContent().get().startsWith(Msges.PREFIX))
+                CommandProcessor.processCommand(event.getContent().get(), Msges.PREFIX, event.getAuthor().get(), event.getChannel().block(), event.getGuild().block());
+        });
 
-        return;
+
     }
-
+/*
     // When a server adds this bot, either through the invite link, back from being offline, or when the bot boots up.
     @EventSubscriber
     public void onGuildCreate(GuildCreateEvent event)
@@ -56,4 +51,6 @@ public class BotListener {
 
         return;
     }
+
+ */
 }
