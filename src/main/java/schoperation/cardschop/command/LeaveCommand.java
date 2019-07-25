@@ -1,11 +1,11 @@
 package schoperation.cardschop.command;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class LeaveCommand implements ICommand {
 
@@ -17,14 +17,12 @@ public class LeaveCommand implements ICommand {
 
     private final String command = "leave";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Make sure they are part of a table
         if (Utils.isPartOfTable(sender, guild))
@@ -43,15 +41,15 @@ public class LeaveCommand implements ICommand {
             }
 
             // Delete PM
-            player.getPM().delete();
+            player.getPM().block().delete();
 
             player.getTable().getPlayers().remove(player);
-            channel.sendMessage(sender.getDisplayName(guild) + " has left the table.");
+            channel.createMessage(player.getDisplayName() + " has left the table.");
             player.getTable().update(guild);
             return;
         }
 
-        channel.sendMessage(Msges.TABLE_NOT_FOUND);
+        channel.createMessage(Msges.TABLE_NOT_FOUND);
         return;
     }
 }

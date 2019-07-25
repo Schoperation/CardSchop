@@ -2,6 +2,8 @@ package schoperation.cardschop.core;
 
 import discord4j.core.DiscordClient;
 import discord4j.core.DiscordClientBuilder;
+import discord4j.core.object.presence.Activity;
+import discord4j.core.object.presence.Presence;
 
 public class BotMain {
 
@@ -20,5 +22,8 @@ public class BotMain {
 
         // Log in
         bot.login().block();
+
+        // Update presence
+        bot.updatePresence(Presence.online(Activity.watching("your stupid cmds")));
     }
 }

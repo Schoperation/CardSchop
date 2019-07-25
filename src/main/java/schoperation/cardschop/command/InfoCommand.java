@@ -1,10 +1,10 @@
 package schoperation.cardschop.command;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.core.BotMain;
 import schoperation.cardschop.util.Msges;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class InfoCommand implements ICommand {
 
@@ -16,14 +16,12 @@ public class InfoCommand implements ICommand {
 
     private final String command = "info";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Let's show it to them!
         StringBuilder sb = new StringBuilder();
@@ -33,13 +31,13 @@ public class InfoCommand implements ICommand {
         sb.append("CardSchop v" + Msges.VERSION + "\n\n");
 
         sb.append("Made by Schoperation.\n");
-        sb.append("CardSchop is currently on " + BotMain.bot.getGuilds().size() + " servers.\n\n");
+        sb.append("CardSchop is currently on " + BotMain.bot.getGuilds().count().block().intValue() + " servers.\n\n");
 
         sb.append("Submit issues, new stuff, or stalk the code at...\n");
         sb.append("GitHub: https://github.com/Schoperation/CardSchop\n\n");
 
         sb.append("```");
 
-        channel.sendMessage(sb.toString());
+        channel.createMessage(sb.toString());
     }
 }

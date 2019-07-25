@@ -1,12 +1,14 @@
 package schoperation.cardschop.command;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.util.MessageHistory;
+
+import java.util.List;
 
 public class ClearCommand implements ICommand {
 
@@ -27,7 +29,7 @@ public class ClearCommand implements ICommand {
     }
 
     @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
 
         // Is this player part of a table?
@@ -35,36 +37,45 @@ public class ClearCommand implements ICommand {
         {
             // Alright, start clearing them.
             Table table = Utils.getPlayerObj(sender, guild).getTable();
-            MessageHistory history = channel.getMessageHistoryTo(table.getDivider().getLongID());
+            List<Message> msgList;
+
 
             // Did they specify how many messages to delete?
+            // No specification
             if (arg1.equals("blank"))
             {
-                history.bulkDelete();
-                table.setDivider(channel.sendMessage(table.getDivider().getContent()));
+                msgList = channel.getMessagesAfter(table.getDivider().block().getId()).collectList().block();
+
+                // We got the list, now iterate through each msg and delete it.
+                for (Message msg : msgList)
+                    msg.delete();
+
+                //table.setDivider(channel.sendMessage(table.getDivider().getContent()));
                 return;
             }
-            else
+            else // Specific amount
             {
                 int amount;
                 if (!Utils.isInt(arg1))
                 {
-                    channel.sendMessage(Msges.NAN);
+                    channel.createMessage(Msges.NAN);
                     return;
                 }
 
                 amount = Integer.parseInt(arg1);
-                MessageHistory historyLimited = channel.getMessageHistoryTo(table.getDivider().getLongID(), amount);
-                historyLimited.bulkDelete();
+                Long l = new Long(amount);
 
-                if (amount >= history.size())
-                    table.setDivider(channel.sendMessage(table.getDivider().getContent()));
+                msgList = channel.getMessagesAfter(table.getDivider().block().getId()).take(l).collectList().block();
+
+                // We got the list, now iterate through each msg and delete it.
+                for (Message msg : msgList)
+                    msg.delete();
 
                 return;
             }
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

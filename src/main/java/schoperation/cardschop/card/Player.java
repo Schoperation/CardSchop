@@ -1,8 +1,9 @@
 package schoperation.cardschop.card;
 
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.User;
+import reactor.core.publisher.Mono;
 import schoperation.cardschop.util.Msges;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.IUser;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +16,7 @@ public class Player {
      */
 
     // Player himself
-    private IUser user;
+    private User user;;
 
     // Player's hand
     private List<Card> hand = new ArrayList<>();
@@ -27,7 +28,7 @@ public class Player {
     private List<Card> front = new ArrayList<>();
 
     // The private message that will hold the player's hand.
-    private IMessage pm;
+    private Mono<Message> pm;
 
     // Table
     private Table table;
@@ -35,26 +36,28 @@ public class Player {
     // Chips
     private int chips = 0;
 
-    public Player(IUser u, Table t)
+    public Player(User u, Table t)
     {
         this.user = u;
         this.table = t;
 
         if (this.user != null)
-            this.pm = this.user.getOrCreatePMChannel().sendMessage("Your hand will appear here. Use `" + Msges.PREFIX + "see` to update it, if ever necessary. You can also use `" + Msges.PREFIX + "see pile` for your personal pile, and `" + Msges.PREFIX + "see infront` for the cards in front of you (trick).");
+            this.pm = this.user.getPrivateChannel().block().createMessage("Your hand will appear here. Use `" + Msges.PREFIX + "see` to update it, if ever necessary. You can also use `" + Msges.PREFIX + "see pile` for your personal pile, and `" + Msges.PREFIX + "see infront` for the cards in front of you (trick).");
     }
 
-    public IUser getUser()
+    public User getUser()
     {
         return this.user;
     }
+
+    public String getDisplayName() { return this.user.asMember(this.table.getTableMsg().block().getGuild().block().getId()).block().getNickname().get(); }
 
     public Table getTable()
     {
         return this.table;
     }
 
-    public IMessage getPM()
+    public Mono<Message> getPM()
     {
         return this.pm;
     }

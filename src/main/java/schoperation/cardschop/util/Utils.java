@@ -1,9 +1,9 @@
 package schoperation.cardschop.util;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class Utils {
 
@@ -12,7 +12,7 @@ public class Utils {
      */
 
     // Figure out whether user is a player or not.
-    public static boolean isPartOfTable(IUser user, IGuild guild)
+    public static boolean isPartOfTable(User user, Guild guild)
     {
         // Go through tables
         for (Table table : Tables.list.get(guild))
@@ -31,7 +31,7 @@ public class Utils {
     }
 
     // After finding out that ARE a player, get that object.
-    public static Player getPlayerObj(IUser user, IGuild guild)
+    public static Player getPlayerObj(User user, Guild guild)
     {
         // Go through tables
         for (Table table : Tables.list.get(guild))

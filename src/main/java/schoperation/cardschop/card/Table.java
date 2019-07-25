@@ -1,12 +1,15 @@
 package schoperation.cardschop.card;
 
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IMessage;
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.spec.MessageEditSpec;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Table {
 
@@ -18,13 +21,13 @@ public class Table {
     private String name;
 
     // Channel it's on
-    private IChannel channel;
+    private MessageChannel channel;
 
     // Message the table itself is printed on. Constantly edited. The command output will be put below the table.
-    private IMessage message;
+    private Mono<Message> message;
 
     // Divider message, for help with clearing.
-    private IMessage divider;
+    private Mono<Message> divider;
 
     // List of players
     private List<Player> players = new ArrayList<>();
@@ -41,14 +44,14 @@ public class Table {
     // Its pot
     private int pot;
 
-    public Table(String n, IChannel c)
+    public Table(String n, MessageChannel c)
     {
         this.name = n;
         this.channel = c;
-        this.message = this.channel.sendMessage("k");
-        this.divider = this.channel.sendMessage("------------------------------------------");
+        this.message = this.channel.createMessage("k");
+        this.divider = this.channel.createMessage("------------------------------------------");
         this.deck = new Deck(); // TODO eventually allow players to decide this deck?
-        this.update(this.channel.getGuild());
+        this.update(this.message.block().getGuild().block());
     }
 
     public Player getDealer()
@@ -67,7 +70,7 @@ public class Table {
         return this.name;
     }
 
-    public IChannel getChannel()
+    public MessageChannel getChannel()
     {
         return this.channel;
     }
@@ -145,24 +148,24 @@ public class Table {
         Setting and getting the messages associated with the table.
      */
 
-    public IMessage getTableMsg()
+    public Mono<Message> getTableMsg()
     {
         return this.message;
     }
 
-    public IMessage getDivider()
+    public Mono<Message> getDivider()
     {
         return this.divider;
     }
 
-    public void setDivider(IMessage msg)
+    public void setDivider(Mono<Message> msg)
     {
         this.divider = msg;
         return;
     }
 
     // The main function that edits the table message.
-    public void update(IGuild guild)
+    public void update(Guild guild)
     {
         StringBuilder sb = new StringBuilder();
 
@@ -204,7 +207,7 @@ public class Table {
             if (numPlayers == 1)
             {
                 // Print a line with just the one player.
-                String dispName = this.players.get(i).getUser().getDisplayName(guild);
+                String dispName = this.players.get(i).getDisplayName();
 
                 // If their dispName is 14 characters or longer, cut it off.
                 if (dispName.length() >= 14)
@@ -256,8 +259,8 @@ public class Table {
             else
             {
                 // Print a line with just the one player.
-                String dispName1 = this.players.get(i).getUser().getDisplayName(guild);
-                String dispName2 = this.players.get(i + 1).getUser().getDisplayName(guild);
+                String dispName1 = this.players.get(i).getDisplayName();
+                String dispName2 = this.players.get(i + 1).getDisplayName();
 
                 // If their dispName is 14 characters or longer, cut it off.
                 if (dispName1.length() >= 14)
@@ -388,10 +391,11 @@ public class Table {
 
 
         // Edit message
-        if (this.message.isDeleted())
-            this.message = this.channel.sendMessage(sb.toString());
-        else
-            this.message.edit(sb.toString());
+        Consumer<? super MessageEditSpec> consumer = (Consumer<MessageEditSpec>) messageEditSpec -> {
+            messageEditSpec.setContent(sb.toString());
+        };
+
+        this.message.block().edit(consumer);
 
         return;
     }

@@ -1,9 +1,9 @@
 package schoperation.cardschop.command;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.util.Msges;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class HelpCommand implements ICommand {
 
@@ -19,14 +19,12 @@ public class HelpCommand implements ICommand {
 
     private final String command = "help";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // No arguments? Introduction.
         if (arg1.equals("blank"))
@@ -57,7 +55,7 @@ public class HelpCommand implements ICommand {
             sb.append("Cheers,\n");
             sb.append("Schoperation");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         // List of commands
@@ -100,7 +98,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());;
         }
 
         // Specific commands
@@ -117,7 +115,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("help"))
@@ -135,7 +133,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("table"))
@@ -154,7 +152,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("join"))
@@ -170,7 +168,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("leave"))
@@ -186,7 +184,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("clear"))
@@ -203,7 +201,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("setdealer"))
@@ -220,7 +218,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("deal"))
@@ -242,7 +240,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("shuffle"))
@@ -258,7 +256,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("deck"))
@@ -297,7 +295,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("draw"))
@@ -322,7 +320,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("place"))
@@ -365,7 +363,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("give"))
@@ -396,7 +394,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("collect"))
@@ -419,7 +417,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("slap"))
@@ -435,7 +433,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("see"))
@@ -460,7 +458,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("reveal"))
@@ -489,7 +487,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("sort"))
@@ -510,7 +508,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("flip"))
@@ -543,7 +541,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("bet"))
@@ -562,7 +560,7 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else if (arg1.equals("chips"))
@@ -586,11 +584,11 @@ public class HelpCommand implements ICommand {
 
             sb.append("```");
 
-            sender.getOrCreatePMChannel().sendMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString());
         }
 
         else
-            sender.getOrCreatePMChannel().sendMessage(Msges.INVALID_COMMAND);
+            sender.getPrivateChannel().block().createMessage(Msges.INVALID_COMMAND);
 
         return;
     }

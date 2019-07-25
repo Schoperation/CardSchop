@@ -1,12 +1,13 @@
 package schoperation.cardschop.command;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
+import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Tables;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 import java.util.Iterator;
 
@@ -23,21 +24,19 @@ public class TableCommand implements ICommand {
 
     private final String command = "table";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
 
         // Stuff with tables.
         // Show some help for tables. TODO eventually forward this to the help command?
         if (arg1.equals("blank"))
         {
-            channel.sendMessage("Please use: ```\n\n" + Msges.PREFIX + "table create [name]\n" + Msges.PREFIX + "table list\n" + Msges.PREFIX + "table delete [name]\n" + Msges.PREFIX + "table flip```");
+            channel.createMessage("Please use: ```\n\n" + Msges.PREFIX + "table create [name]\n" + Msges.PREFIX + "table list\n" + Msges.PREFIX + "table delete [name]\n" + Msges.PREFIX + "table flip```");
             return;
         }
 
@@ -47,7 +46,7 @@ public class TableCommand implements ICommand {
             // Check for second argument.
             if (arg2.equals("blank"))
             {
-                channel.sendMessage("Please provide a name for the table. Ex. `" + Msges.PREFIX + "table create MyTable`");
+                channel.createMessage("Please provide a name for the table. Ex. `" + Msges.PREFIX + "table create MyTable`");
                 return;
             }
             else
@@ -57,7 +56,7 @@ public class TableCommand implements ICommand {
                 {
                     if (t.getName().equals(arg2))
                     {
-                        channel.sendMessage("A table named " + arg2 + " already exists.");
+                        channel.createMessage("A table named " + arg2 + " already exists.");
                         return;
                     }
                 }
@@ -65,7 +64,7 @@ public class TableCommand implements ICommand {
                 // Does NOT exist already. Sweet, make it.
                 Table table = new Table(arg2, channel);
                 Tables.list.get(guild).add(table);
-                channel.sendMessage("Successfully created table. Use `" + Msges.PREFIX + "join " + arg2 + "` to join the table.");
+                channel.createMessage("Successfully created table. Use `" + Msges.PREFIX + "join " + arg2 + "` to join the table.");
             }
         }
 
@@ -83,7 +82,7 @@ public class TableCommand implements ICommand {
                 sb.append("\n");
             }
 
-            channel.sendMessage(sb.toString());
+            channel.createMessage(sb.toString());
         }
 
         // Delete table
@@ -92,7 +91,7 @@ public class TableCommand implements ICommand {
             // Check for second argument.
             if (arg2.equals("blank"))
             {
-                channel.sendMessage("Please provide a name for the table. Ex. `" + Msges.PREFIX + "table delete MyTable`");
+                channel.createMessage("Please provide a name for the table. Ex. `" + Msges.PREFIX + "table delete MyTable`");
                 return;
             }
             else
@@ -106,7 +105,7 @@ public class TableCommand implements ICommand {
 
                     if (table.getName().equals(arg2))
                     {
-                        table.getTableMsg().delete();
+                        table.getTableMsg().block().delete();
 
                         // If they are part of the table, clear the log.
                         if (Utils.isPartOfTable(sender, guild))
@@ -118,7 +117,7 @@ public class TableCommand implements ICommand {
                             }
                         }
 
-                        table.getDivider().delete();
+                        table.getDivider().block().delete();
 
                         Tables.list.get(guild).remove(table);
                         //channel.sendMessage("Deleted table " + arg2 + ".");
@@ -134,11 +133,13 @@ public class TableCommand implements ICommand {
             // Must be part of a table.
             if (Utils.isPartOfTable(sender, guild))
             {
-                channel.sendMessage(sender.getDisplayName(guild) + " has flipped the table out of ***pure rage!*** **(╯°□°）╯︵ ┻━┻** Luckily our elite team of beefalo has lifted the table back up before you even noticed!");
+                Player p = Utils.getPlayerObj(sender, guild);
+
+                channel.createMessage(p.getDisplayName() + " has flipped the table out of ***pure rage!*** **(╯°□°）╯︵ ┻━┻** Luckily our elite team of beefalo has lifted the table back up before you even noticed!");
                 return;
             }
 
-            channel.sendMessage(Msges.NO_TABLE);
+            channel.createMessage(Msges.NO_TABLE);
             return;
         }
 
