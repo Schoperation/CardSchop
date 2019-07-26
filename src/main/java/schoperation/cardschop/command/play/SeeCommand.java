@@ -1,13 +1,16 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
+import discord4j.core.spec.MessageEditSpec;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.IUser;
+
+import java.util.function.Consumer;
 
 public class SeeCommand implements ICommand {
 
@@ -24,75 +27,77 @@ public class SeeCommand implements ICommand {
 
     private final String command = "see";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Part of a table?
         if (Utils.isPartOfTable(sender, guild))
         {
             Player player = Utils.getPlayerObj(sender, guild);
+            String newMsg;
 
             // What place?
             if (arg1.equals("blank") || arg1.equals("hand"))
-                player.getPM().edit("Your hand: \n" + player.handToString());
+                newMsg = "Your hand: \n" + player.handToString();
             else if (arg1.equals("pile"))
-                player.getPM().edit("Your personal pile: \n" + player.pileToString());
+                newMsg = "Your personal pile: \n" + player.pileToString();
             else if (arg1.equals("infront") || arg1.equals("trick"))
-                player.getPM().edit("Your cards in front of you: \n" + player.frontToString());
+                newMsg = "Your cards in front of you: \n" + player.frontToString();
             else if (arg1.equals("middle"))
             {
                 // Must be the dealer to reveal the middle.
                 if (player.getTable().getDealer() == player)
+                    newMsg = "Middle pile:\n" + player.getTable().middleToString();
+                else
                 {
-                    player.getPM().edit("Middle pile:\n" + player.getTable().middleToString());
-                    IMessage msg = sender.getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
-                    msg.delete();
+                    channel.createMessage(Msges.NOT_DEALER);
                     return;
                 }
-
-                channel.sendMessage(Msges.NOT_DEALER);
-                return;
             }
             else if (arg1.equals("deck"))
             {
                 // Must be the dealer to reveal the deck.
                 if (player.getTable().getDealer() == player)
+                    newMsg = "Deck:\n" + player.getTable().getDeck().getCardsToString();
+                else
                 {
-                    player.getPM().edit("Deck:\n" + player.getTable().getDeck().getCardsToString());
-                    IMessage msg = sender.getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
-                    msg.delete();
+                    channel.createMessage(Msges.NOT_DEALER);
                     return;
                 }
-
-                channel.sendMessage(Msges.NOT_DEALER);
-                return;
             }
             else
-                player.getPM().edit("Invalid place. Either chose hand, pile, or infront (trick).");
+                newMsg = "Invalid place. Either chose hand, pile, or infront (trick).";
+
+            // For editing the msg
+            Consumer<? super MessageEditSpec> consumer = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent(newMsg);
+
+            // Actually edit the PM messages
+            player.getPM().block().edit(consumer);
 
             // Send a message for a notification
-            IMessage msg = sender.getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
+            Message msg = sender.getPrivateChannel().block().createMessage(Msges.PM_NOTIFICATION).block();
             msg.delete();
             return;
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 
     // This is a separate function so other commands can automatically do it.
     public static void seeHand(Player player)
     {
-        player.getPM().edit("Your hand: \n" + player.handToString());
+        // For editing the msg
+        Consumer<? super MessageEditSpec> consumer = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent("Your hand: \n" + player.handToString());
+
+        player.getPM().block().edit(consumer);
 
         // Send a message for a notification
-        IMessage msg = player.getUser().getOrCreatePMChannel().sendMessage(Msges.PM_NOTIFICATION);
+        Message msg = player.getUser().getPrivateChannel().block().createMessage(Msges.PM_NOTIFICATION).block();
         msg.delete();
         return;
     }

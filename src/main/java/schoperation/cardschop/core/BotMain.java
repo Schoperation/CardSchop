@@ -24,6 +24,6 @@ public class BotMain {
         bot.login().block();
 
         // Update presence
-        bot.updatePresence(Presence.online(Activity.watching("your stupid cmds")));
+        bot.updatePresence(Presence.online(Activity.watching("your stupid cmds"))).subscribe();
     }
 }

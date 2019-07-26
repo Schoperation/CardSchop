@@ -1,13 +1,13 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class CollectCommand implements ICommand {
 
@@ -26,14 +26,12 @@ public class CollectCommand implements ICommand {
 
     private final String command = "collect";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
 
         // Is this player part of a table?
@@ -45,7 +43,7 @@ public class CollectCommand implements ICommand {
             // No arguments
             if (arg1.equals("blank"))
             {
-                channel.sendMessage(Msges.COLLECT_ARGUMENT);
+                channel.createMessage(Msges.COLLECT_ARGUMENT);
                 return;
             }
 
@@ -59,14 +57,14 @@ public class CollectCommand implements ICommand {
                     if (table.getDealer() == player)
                     {
                         table.collectCards();
-                        channel.sendMessage("The dealer collected everyone's cards.");
+                        channel.createMessage("The dealer collected everyone's cards.");
 
                         for (Player p : table.getPlayers())
                             SeeCommand.seeHand(p);
                     }
                     else
                     {
-                        channel.sendMessage(Msges.NOT_DEALER);
+                        channel.createMessage(Msges.NOT_DEALER);
                         return;
                     }
                 }
@@ -79,7 +77,7 @@ public class CollectCommand implements ICommand {
                         {
                             player.getPile().addAll(p.getFront());
                             p.getFront().clear();
-                            channel.sendMessage(player.getUser().getDisplayName(guild) + " has taken the trick.");
+                            channel.createMessage(player.getDisplayName() + " has taken the trick.");
                         }
                     }
                 }
@@ -90,7 +88,7 @@ public class CollectCommand implements ICommand {
                     {
                         player.getPile().addAll(table.getMiddlePile());
                         table.getMiddlePile().clear();
-                        channel.sendMessage(player.getUser().getDisplayName(guild) + " has taken the middle pile.");
+                        channel.createMessage(player.getDisplayName() + " has taken the middle pile.");
                         SeeCommand.seeHand(player);
                     }
 
@@ -101,11 +99,11 @@ public class CollectCommand implements ICommand {
                     int amount = table.getPot();
                     table.takeFromPot(amount);
                     player.addChips(amount);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has collected the pot from the table.");
+                    channel.createMessage(player.getDisplayName() + " has collected the pot from the table.");
                 }
                 else
                 {
-                    channel.sendMessage(Msges.COLLECT_ARGUMENT);
+                    channel.createMessage(Msges.COLLECT_ARGUMENT);
                     return;
                 }
 
@@ -115,7 +113,7 @@ public class CollectCommand implements ICommand {
             }
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

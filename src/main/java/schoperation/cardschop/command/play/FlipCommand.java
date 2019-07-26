@@ -1,13 +1,13 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class FlipCommand implements ICommand {
 
@@ -22,14 +22,12 @@ public class FlipCommand implements ICommand {
 
     private final String command = "flip";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Is this player part of a table?
         if (Utils.isPartOfTable(sender, guild))
@@ -39,7 +37,7 @@ public class FlipCommand implements ICommand {
             // First argument
             if (arg1.equals("blank"))
             {
-                channel.sendMessage("Please specify a card, or `all` for all cards in your hand.");
+                channel.createMessage("Please specify a card, or `all` for all cards in your hand.");
                 return;
             }
             // All cards
@@ -64,7 +62,7 @@ public class FlipCommand implements ICommand {
                 }
                 else
                 {
-                    channel.sendMessage("For the second argument (optional), use `faceup` or `facedown`.");
+                    channel.createMessage("For the second argument (optional), use `faceup` or `facedown`.");
                     return;
                 }
             }
@@ -75,7 +73,7 @@ public class FlipCommand implements ICommand {
 
                 if (cardInt > player.getHand().size())
                 {
-                    channel.sendMessage(Msges.INVALID_CARD);
+                    channel.createMessage(Msges.INVALID_CARD);
                     return;
                 }
 
@@ -90,7 +88,7 @@ public class FlipCommand implements ICommand {
                     card.setFaceDown();
                 else
                 {
-                    channel.sendMessage("For the second argument (optional), use `faceup` or `facedown`.");
+                    channel.createMessage("For the second argument (optional), use `faceup` or `facedown`.");
                     return;
                 }
             }
@@ -101,7 +99,7 @@ public class FlipCommand implements ICommand {
 
                 if (card == null || !player.hasCard(card))
                 {
-                    channel.sendMessage(Msges.INVALID_CARD);
+                    channel.createMessage(Msges.INVALID_CARD);
                     return;
                 }
 
@@ -116,7 +114,7 @@ public class FlipCommand implements ICommand {
                     card.setFaceDown();
                 else
                 {
-                    channel.sendMessage("For the second argument (optional), use `faceup` or `facedown`.");
+                    channel.createMessage("For the second argument (optional), use `faceup` or `facedown`.");
                     return;
                 }
             }
@@ -126,7 +124,7 @@ public class FlipCommand implements ICommand {
             return;
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

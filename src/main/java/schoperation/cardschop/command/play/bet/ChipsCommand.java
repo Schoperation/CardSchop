@@ -1,12 +1,14 @@
 package schoperation.cardschop.command.play.bet;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.util.Snowflake;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class ChipsCommand implements ICommand {
 
@@ -26,14 +28,12 @@ public class ChipsCommand implements ICommand {
 
     private final String command = "chips";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
 
         // Is this player part of a table?
@@ -47,7 +47,7 @@ public class ChipsCommand implements ICommand {
                 // All three arguments must be fulfilled.
                 if (arg1.equals("blank") || arg2.equals("blank") || arg3.equals("blank"))
                 {
-                    channel.sendMessage("Usage: `" + Msges.PREFIX + "chips [player] [operator] [amount]`. All three arguments must be fulfilled.");
+                    channel.createMessage("Usage: `" + Msges.PREFIX + "chips [player] [operator] [amount]`. All three arguments must be fulfilled.");
                     return;
                 }
                 else
@@ -62,7 +62,7 @@ public class ChipsCommand implements ICommand {
                         // Found them. Parse amount, and figure out the operator.
                         if (!Utils.isInt(arg3))
                         {
-                            channel.sendMessage(Msges.NAN);
+                            channel.createMessage(Msges.NAN);
                             return;
                         }
 
@@ -74,7 +74,7 @@ public class ChipsCommand implements ICommand {
                             for (Player p : player.getTable().getPlayers())
                                 p.addChips(amount);
 
-                            channel.sendMessage("The dealer has given everyone " + amount + " chips.");
+                            channel.createMessage("The dealer has given everyone " + amount + " chips.");
                         }
 
                         // Subtract chips
@@ -83,7 +83,7 @@ public class ChipsCommand implements ICommand {
                             for (Player p : player.getTable().getPlayers())
                                 p.subtractChips(amount);
 
-                            channel.sendMessage("The dealer has taken " + amount + " chips from everyone.");
+                            channel.createMessage("The dealer has taken " + amount + " chips from everyone.");
                         }
 
                         // Set chips
@@ -92,11 +92,11 @@ public class ChipsCommand implements ICommand {
                             for (Player p : player.getTable().getPlayers())
                                 p.setChips(amount);
 
-                            channel.sendMessage("The dealer has set everyone's chips to " + amount + ".");
+                            channel.createMessage("The dealer has set everyone's chips to " + amount + ".");
                         }
 
                         else
-                            channel.sendMessage("Invalid operator. Valid operators are add, subtract (sub), and set.");
+                            channel.createMessage("Invalid operator. Valid operators are add, subtract (sub), and set.");
 
                         // Update table
                         player.getTable().update(guild);
@@ -109,16 +109,16 @@ public class ChipsCommand implements ICommand {
 
                     // Make sure they are part of a table first.
                     arg1 = arg1.replaceAll("[<>@!]", "");
-                    IUser userFromString = guild.getUserByID(Long.parseLong(arg1));
+                    Member userFromString = guild.getMemberById(Snowflake.of(Long.parseLong(arg1))).block();
 
                     for (Player receivingPlayer : player.getTable().getPlayers())
                     {
-                        if (receivingPlayer.getUser().equals(userFromString))
+                        if (receivingPlayer.getUser().asMember(guild.getId()).equals(userFromString))
                         {
                             // Found them. Parse amount, and figure out the operator.
                             if (!Utils.isInt(arg3))
                             {
-                                channel.sendMessage(Msges.NAN);
+                                channel.createMessage(Msges.NAN);
                                 return;
                             }
 
@@ -128,25 +128,25 @@ public class ChipsCommand implements ICommand {
                             if (arg2.equals("add"))
                             {
                                 receivingPlayer.addChips(amount);
-                                channel.sendMessage("The dealer has given " + receivingPlayer.getUser().getDisplayName(guild) + " " + amount + " chips.");
+                                channel.createMessage("The dealer has given " + receivingPlayer.getDisplayName() + " " + amount + " chips.");
                             }
 
                             // Subtract chips
                             else if (arg2.equals("subtract") || arg2.equals("sub"))
                             {
                                 receivingPlayer.subtractChips(amount);
-                                channel.sendMessage("The dealer has taken " + amount + " chips from " + receivingPlayer.getUser().getDisplayName(guild) + ".");
+                                channel.createMessage("The dealer has taken " + amount + " chips from " + receivingPlayer.getDisplayName() + ".");
                             }
 
                             // Set chips
                             else if (arg2.equals("set"))
                             {
                                 receivingPlayer.setChips(amount);
-                                channel.sendMessage("The dealer has set " + receivingPlayer.getUser().getDisplayName(guild) + "'s chips to " + amount + ".");
+                                channel.createMessage("The dealer has set " + receivingPlayer.getDisplayName() + "'s chips to " + amount + ".");
                             }
 
                             else
-                                channel.sendMessage("Invalid operator. Valid operators are add, subtract (sub), and set.");
+                                channel.createMessage("Invalid operator. Valid operators are add, subtract (sub), and set.");
 
                             // Update table
                             player.getTable().update(guild);
@@ -154,16 +154,16 @@ public class ChipsCommand implements ICommand {
                         }
                     }
 
-                    channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of this table!");
+                    channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
                     return;
                 }
             }
 
-            channel.sendMessage(Msges.NOT_DEALER);
+            channel.createMessage(Msges.NOT_DEALER);
             return;
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

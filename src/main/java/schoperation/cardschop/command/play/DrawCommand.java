@@ -1,14 +1,14 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class DrawCommand implements ICommand {
 
@@ -30,14 +30,12 @@ public class DrawCommand implements ICommand {
 
     private final String command = "draw";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Part of a table?
         if (Utils.isPartOfTable(sender, guild))
@@ -52,7 +50,7 @@ public class DrawCommand implements ICommand {
                 // Is there a card in the deck?
                 if(table.getDeck().getNumberOfCards() < 1)
                 {
-                    channel.sendMessage(Msges.EMPTY_PILE);
+                    channel.createMessage(Msges.EMPTY_PILE);
                     return;
                 }
                 else
@@ -60,7 +58,7 @@ public class DrawCommand implements ICommand {
                     // Take a card from the deck and add it to the player's hand.
                     Card card = table.getDeck().getCards().remove(table.getDeck().getNumberOfCards() - 1);
                     player.addCard(card);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the deck.");
+                    channel.createMessage(player.getDisplayName() + " has drawn a card from the deck.");
                 }
                 
                 // Update hand and table
@@ -78,29 +76,29 @@ public class DrawCommand implements ICommand {
                 {
                     Card card = table.getDeck().getCards().remove(table.getDeck().getNumberOfCards() - 1);
                     player.addCard(card);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the deck.");
+                    channel.createMessage(player.getDisplayName() + " has drawn a card from the deck.");
                 }
                 else if (arg1.equals("middle"))
                 {
                     Card card = table.getMiddlePile().remove(table.getMiddlePile().size() - 1);
                     player.addCard(card);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the middle pile.");
+                    channel.createMessage(player.getDisplayName() + " has drawn a card from the middle pile.");
                 }
                 else if (arg1.equals("pile"))
                 {
                     Card card = player.getPile().remove(player.getPile().size() - 1);
                     player.addCard(card);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from their personal pile.");
+                    channel.createMessage(player.getDisplayName() + " has drawn a card from their personal pile.");
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     Card card = player.getFront().remove(player.getFront().size() - 1);
                     player.addCard(card);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " has drawn a card from the pile in front of them.");
+                    channel.createMessage(player.getDisplayName() + " has drawn a card from the pile in front of them.");
                 }
                 else
                 {
-                    channel.sendMessage(Msges.INVALID_PLACE_DRAW);
+                    channel.createMessage(Msges.INVALID_PLACE_DRAW);
                     return;
                 }
 
@@ -121,7 +119,7 @@ public class DrawCommand implements ICommand {
                     amount = Integer.parseInt(arg2);
                 else
                 {
-                    channel.sendMessage(Msges.NAN);
+                    channel.createMessage(Msges.NAN);
                     return;
                 }
 
@@ -137,7 +135,7 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from the deck.");
+                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from the deck.");
                 }
                 else if (arg1.equals("middle"))
                 {
@@ -148,7 +146,7 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from the middle pile.");
+                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from the middle pile.");
                 }
                 else if (arg1.equals("pile"))
                 {
@@ -159,7 +157,7 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from their personal pile.");
+                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from their personal pile.");
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
@@ -170,11 +168,11 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " drew " + amount + " cards from the pile in front of them.");
+                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from the pile in front of them.");
                 }
                 else
                 {
-                    channel.sendMessage(Msges.INVALID_PLACE_DRAW);
+                    channel.createMessage(Msges.INVALID_PLACE_DRAW);
                     return;
                 }
 
@@ -185,7 +183,7 @@ public class DrawCommand implements ICommand {
             }
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

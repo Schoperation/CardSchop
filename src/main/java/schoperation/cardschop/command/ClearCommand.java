@@ -4,6 +4,7 @@ import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.MessageChannel;
 import discord4j.core.object.entity.User;
+import reactor.core.publisher.Mono;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
@@ -31,7 +32,6 @@ public class ClearCommand implements ICommand {
     @Override
     public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
-
         // Is this player part of a table?
         if (Utils.isPartOfTable(sender, guild))
         {

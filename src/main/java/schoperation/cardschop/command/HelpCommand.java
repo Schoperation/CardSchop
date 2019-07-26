@@ -3,9 +3,15 @@ package schoperation.cardschop.command;
 import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.MessageChannel;
 import discord4j.core.object.entity.User;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.MonoSink;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.Utils;
+
+import java.util.function.Consumer;
 
 public class HelpCommand implements ICommand {
+
 
     /*
         Receive help.
@@ -26,6 +32,7 @@ public class HelpCommand implements ICommand {
 
     public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
+        //System.out.println("in the command");
         // No arguments? Introduction.
         if (arg1.equals("blank"))
         {
@@ -55,7 +62,8 @@ public class HelpCommand implements ICommand {
             sb.append("Cheers,\n");
             sb.append("Schoperation");
 
-            sender.getPrivateChannel().block().createMessage(sb.toString());
+            sender.getPrivateChannel().block().createMessage(sb.toString()).subscribe();
+            //Utils.sendMessage(sender.getPrivateChannel().block(), sb.toString());
         }
 
         // List of commands
@@ -589,6 +597,7 @@ public class HelpCommand implements ICommand {
 
         else
             sender.getPrivateChannel().block().createMessage(Msges.INVALID_COMMAND);
+
 
         return;
     }

@@ -1,13 +1,15 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
+import discord4j.core.object.util.Permission;
+import discord4j.core.object.util.Snowflake;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.handle.obj.Permissions;
 
 public class SetDealerCommand implements ICommand {
 
@@ -19,14 +21,12 @@ public class SetDealerCommand implements ICommand {
 
     private final String command = "setdealer";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Make sure they are part of a table.
         if (Utils.isPartOfTable(sender, guild))
@@ -37,46 +37,46 @@ public class SetDealerCommand implements ICommand {
             if (arg1.equals("blank"))
             {
                 // First guy to join a table becomes dealer, and since only the dealer (and near-admins) can change the dealer, why let the dealer become the dealer again
-                if (player.getUser().getPermissionsForGuild(guild).contains(Permissions.MANAGE_SERVER))
+                if (player.getUser().asMember(guild.getId()).block().getBasePermissions().block().contains(Permission.MANAGE_GUILD))
                 {
                     player.getTable().setDealer(player);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " is now the dealer.");
+                    channel.createMessage(player.getDisplayName() + " is now the dealer.");
                 }
                 else
-                    channel.sendMessage(Msges.NOT_DEALER);
+                    channel.createMessage(Msges.NOT_DEALER);
 
                 return;
             }
             else
             {
                 // Is this guy the dealer or a guy with Manage Server settings?
-                if (player.getTable().getDealer() != player || !player.getUser().getPermissionsForGuild(guild).contains(Permissions.MANAGE_SERVER))
+                if (player.getTable().getDealer() != player || !player.getUser().asMember(guild.getId()).block().getBasePermissions().block().contains(Permission.MANAGE_GUILD))
                 {
-                    channel.sendMessage(Msges.NOT_DEALER);
+                    channel.createMessage(Msges.NOT_DEALER);
                     return;
                 }
 
                 // Find the other player in the table.
                 // First, get the actual user.
                 arg1 = arg1.replaceAll("[<>@!]", "");
-                IUser userFromString = guild.getUserByID(Long.parseLong(arg1));
+                Member userFromString = guild.getMemberById(Snowflake.of(Long.parseLong(arg1))).block();
 
                 for (Player p : player.getTable().getPlayers())
                 {
-                    if (p.getUser().equals(userFromString))
+                    if (p.getUser().asMember(guild.getId()).equals(userFromString))
                     {
                         player.getTable().setDealer(p);
-                        channel.sendMessage(p.getUser().getDisplayName(guild) + " is now the dealer.");
+                        channel.createMessage(p.getDisplayName() + " is now the dealer.");
                         return;
                     }
                 }
 
-                channel.sendMessage(userFromString.getDisplayName(guild) + " is not part of the table!");
+                channel.createMessage(userFromString.getDisplayName() + " is not part of the table!");
                 return;
             }
         }
         else
-            channel.sendMessage(Msges.NO_TABLE);
+            channel.createMessage(Msges.NO_TABLE);
 
         return;
     }

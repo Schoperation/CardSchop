@@ -1,12 +1,12 @@
 package schoperation.cardschop.command.play.bet;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class BetCommand implements ICommand {
 
@@ -18,14 +18,12 @@ public class BetCommand implements ICommand {
 
     private final String command = "bet";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
 
         // Is this player part of a table?
@@ -36,14 +34,14 @@ public class BetCommand implements ICommand {
             // No arguments
             if (arg1.equals("blank"))
             {
-                channel.sendMessage("Please provide an amount of chips you'd like to throw into the pot.");
+                channel.createMessage("Please provide an amount of chips you'd like to throw into the pot.");
                 return;
             }
             else
             {
                 if (!Utils.isInt(arg1))
                 {
-                    channel.sendMessage(Msges.NAN);
+                    channel.createMessage(Msges.NAN);
                     return;
                 }
 
@@ -52,14 +50,14 @@ public class BetCommand implements ICommand {
                 // Enough chips?
                 if (amount > player.getChips())
                 {
-                    channel.sendMessage("Sorry, you're too poor to throw away that amount.");
+                    channel.createMessage("Sorry, you're too poor to throw away that amount.");
                     return;
                 }
                 else
                 {
                     player.subtractChips(amount);
                     player.getTable().addToPot(amount);
-                    channel.sendMessage(player.getUser().getDisplayName(guild) + " threw " + amount + " chips into the pot.");
+                    channel.createMessage(player.getDisplayName() + " threw " + amount + " chips into the pot.");
                 }
             }
 
@@ -68,7 +66,7 @@ public class BetCommand implements ICommand {
             return;
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

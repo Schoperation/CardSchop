@@ -1,12 +1,12 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class ShuffleCommand implements ICommand {
 
@@ -18,14 +18,12 @@ public class ShuffleCommand implements ICommand {
 
     private final String command = "shuffle";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
 
         // Is this player part of a table?
@@ -37,17 +35,17 @@ public class ShuffleCommand implements ICommand {
             if (player.getTable().getDealer() == player)
             {
                 player.getTable().getDeck().shuffle();
-                channel.sendMessage("Shuffled the deck.");
+                channel.createMessage("Shuffled the deck.");
                 return;
             }
             else
             {
-                channel.sendMessage(Msges.NOT_DEALER);
+                channel.createMessage(Msges.NOT_DEALER);
                 return;
             }
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }

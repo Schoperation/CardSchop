@@ -1,12 +1,12 @@
 package schoperation.cardschop.command.play;
 
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.MessageChannel;
+import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
 import schoperation.cardschop.util.Utils;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 
 public class SortCommand implements ICommand {
 
@@ -22,14 +22,12 @@ public class SortCommand implements ICommand {
 
     private final String command = "sort";
 
-    @Override
     public String getCommand()
     {
         return this.command;
     }
 
-    @Override
-    public void execute(IUser sender, IChannel channel, IGuild guild, String arg1, String arg2, String arg3)
+    public void execute(User sender, MessageChannel channel, Guild guild, String arg1, String arg2, String arg3)
     {
         // Is this player part of a table?
         if (Utils.isPartOfTable(sender, guild))
@@ -42,13 +40,13 @@ public class SortCommand implements ICommand {
             else if (arg1.equals("bysuit"))
                 player.sortHand(2);
             else
-                channel.sendMessage("Valid sorting methods are byrank and bysuit.");
+                channel.createMessage("Valid sorting methods are byrank and bysuit.");
 
             SeeCommand.seeHand(player);
             return;
         }
 
-        channel.sendMessage(Msges.NO_TABLE);
+        channel.createMessage(Msges.NO_TABLE);
         return;
     }
 }
