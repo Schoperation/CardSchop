@@ -6,6 +6,7 @@ import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class SlapCommand implements ICommand {
@@ -30,11 +31,11 @@ public class SlapCommand implements ICommand {
         if (Utils.isPartOfTable(sender, guild))
         {
             Player player = Utils.getPlayerObj(sender, guild);
-            channel.createMessage(player.getDisplayName() + " has slapped the middle!");
+            PostalService.sendMessage(channel, player.getDisplayName() + " has slapped the middle!");
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

@@ -6,6 +6,7 @@ import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Tables;
 import schoperation.cardschop.util.Utils;
 
@@ -36,7 +37,7 @@ public class TableCommand implements ICommand {
         // Show some help for tables. TODO eventually forward this to the help command?
         if (arg1.equals("blank"))
         {
-            channel.createMessage("Please use: ```\n\n" + Msges.PREFIX + "table create [name]\n" + Msges.PREFIX + "table list\n" + Msges.PREFIX + "table delete [name]\n" + Msges.PREFIX + "table flip```");
+            PostalService.sendMessage(channel, "Please use: ```\n\n" + Msges.PREFIX + "table create [name]\n" + Msges.PREFIX + "table list\n" + Msges.PREFIX + "table delete [name]\n" + Msges.PREFIX + "table flip```");
             return;
         }
 
@@ -46,7 +47,7 @@ public class TableCommand implements ICommand {
             // Check for second argument.
             if (arg2.equals("blank"))
             {
-                channel.createMessage("Please provide a name for the table. Ex. `" + Msges.PREFIX + "table create MyTable`");
+                PostalService.sendMessage(channel, "Please provide a name for the table. Ex. `" + Msges.PREFIX + "table create MyTable`");
                 return;
             }
             else
@@ -56,7 +57,7 @@ public class TableCommand implements ICommand {
                 {
                     if (t.getName().equals(arg2))
                     {
-                        channel.createMessage("A table named " + arg2 + " already exists.");
+                        PostalService.sendMessage(channel, "A table named " + arg2 + " already exists.");
                         return;
                     }
                 }
@@ -64,7 +65,7 @@ public class TableCommand implements ICommand {
                 // Does NOT exist already. Sweet, make it.
                 Table table = new Table(arg2, channel);
                 Tables.list.get(guild).add(table);
-                channel.createMessage("Successfully created table. Use `" + Msges.PREFIX + "join " + arg2 + "` to join the table.");
+                PostalService.sendMessage(channel, "Successfully created table. Use `" + Msges.PREFIX + "join " + arg2 + "` to join the table.");
             }
         }
 
@@ -82,7 +83,7 @@ public class TableCommand implements ICommand {
                 sb.append("\n");
             }
 
-            channel.createMessage(sb.toString());
+            PostalService.sendMessage(channel, sb.toString());
         }
 
         // Delete table
@@ -91,7 +92,7 @@ public class TableCommand implements ICommand {
             // Check for second argument.
             if (arg2.equals("blank"))
             {
-                channel.createMessage("Please provide a name for the table. Ex. `" + Msges.PREFIX + "table delete MyTable`");
+                PostalService.sendMessage(channel, "Please provide a name for the table. Ex. `" + Msges.PREFIX + "table delete MyTable`");
                 return;
             }
             else
@@ -105,7 +106,7 @@ public class TableCommand implements ICommand {
 
                     if (table.getName().equals(arg2))
                     {
-                        table.getTableMsg().block().delete();
+                        table.getTableMsg().delete().subscribe();
 
                         // If they are part of the table, clear the log.
                         if (Utils.isPartOfTable(sender, guild))
@@ -117,7 +118,7 @@ public class TableCommand implements ICommand {
                             }
                         }
 
-                        table.getDivider().block().delete();
+                        table.getDivider().delete().subscribe();
 
                         Tables.list.get(guild).remove(table);
                         //channel.sendMessage("Deleted table " + arg2 + ".");
@@ -135,11 +136,11 @@ public class TableCommand implements ICommand {
             {
                 Player p = Utils.getPlayerObj(sender, guild);
 
-                channel.createMessage(p.getDisplayName() + " has flipped the table out of ***pure rage!*** **(╯°□°）╯︵ ┻━┻** Luckily our elite team of beefalo has lifted the table back up before you even noticed!");
+                PostalService.sendMessage(channel, p.getDisplayName() + " has flipped the table out of ***pure rage!*** **(╯°□°）╯︵ ┻━┻** Luckily our elite team of beefalo has lifted the table back up before you even noticed!");
                 return;
             }
 
-            channel.createMessage(Msges.NO_TABLE);
+            PostalService.sendMessage(channel, Msges.NO_TABLE);
             return;
         }
 

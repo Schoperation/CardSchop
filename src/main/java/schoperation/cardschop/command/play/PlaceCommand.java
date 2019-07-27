@@ -8,6 +8,7 @@ import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class PlaceCommand implements ICommand {
@@ -107,7 +108,7 @@ public class PlaceCommand implements ICommand {
                 }
                 else
                 {
-                    channel.createMessage(Msges.INVALID_PLACE_PLACE);
+                    PostalService.sendMessage(channel, Msges.INVALID_PLACE_PLACE);
                     return;
                 }
             }
@@ -125,7 +126,7 @@ public class PlaceCommand implements ICommand {
 
                     if (card == null || !player.hasCard(card))
                     {
-                        channel.createMessage(Msges.INVALID_CARD);
+                        PostalService.sendMessage(channel, Msges.INVALID_CARD);
                         return;
                     }
 
@@ -137,7 +138,7 @@ public class PlaceCommand implements ICommand {
 
                     if (cardInt > player.getHand().size())
                     {
-                        channel.createMessage(Msges.INVALID_CARD);
+                        PostalService.sendMessage(channel, Msges.INVALID_CARD);
                         return;
                     }
 
@@ -191,7 +192,7 @@ public class PlaceCommand implements ICommand {
                 }
                 else
                 {
-                    channel.createMessage(Msges.INVALID_PLACE_PLACE);
+                    PostalService.sendMessage(channel, Msges.INVALID_PLACE_PLACE);
                     return;
                 }
             }
@@ -202,7 +203,7 @@ public class PlaceCommand implements ICommand {
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

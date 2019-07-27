@@ -26,7 +26,10 @@ public class BotListener {
         .subscribe(event -> {
             // We got a message from a non-bot, check for correct prefix, then send it on its way to CommandProcessor.
             if (event.getContent().get().startsWith(Msges.PREFIX))
+            {
                 CommandProcessor.processCommand(event.getContent().get(), Msges.PREFIX, event.getAuthor().get(), event.getChannel().block(), event.getGuild().block());
+                event.delete().subscribe();
+            }
         });
 
         // When a server adds this bot, or the bot boots up, reconnecting to all the servers.

@@ -7,6 +7,7 @@ import discord4j.core.object.entity.User;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Commands;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 
 public class CommandProcessor {
 
@@ -37,6 +38,6 @@ public class CommandProcessor {
         }
 
         // Invalid command
-        channel.createMessage(Msges.INVALID_COMMAND);
+        PostalService.sendMessage(channel, Msges.INVALID_COMMAND);
     }
 }

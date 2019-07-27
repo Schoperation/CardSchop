@@ -1,11 +1,12 @@
 package schoperation.cardschop.util;
 
-import discord4j.core.object.entity.Guild;
-import discord4j.core.object.entity.MessageChannel;
-import discord4j.core.object.entity.PrivateChannel;
-import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.*;
+import discord4j.core.spec.MessageEditSpec;
+import reactor.core.publisher.Mono;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
+
+import java.util.function.Consumer;
 
 public class Utils {
 
@@ -23,7 +24,7 @@ public class Utils {
             for (Player player : table.getPlayers())
             {
                 // Is this the player?
-                if (player.getUser() == user)
+                if (player.getUser().getId().equals(user.getId()))
                     return true;
             }
         }
@@ -42,7 +43,7 @@ public class Utils {
             for (Player player : table.getPlayers())
             {
                 // Is this the player?
-                if (player.getUser() == user)
+                if (player.getUser().getId().equals(user.getId()))
                     return player;
             }
         }
@@ -64,20 +65,5 @@ public class Utils {
             return false;
         }
         // NullPointerEx is not needed, as in every command's execute any blank arguments are passed as "blank".
-    }
-
-    // This is only here bc of Mono, Flux, blah blah blah the stream stuff. Every message goes through here to be subscribed, aka executed.
-    // Normal message
-    public static void sendMessage(MessageChannel channel, String message)
-    {
-        channel.createMessage(message).subscribe();
-        return;
-    }
-
-    // Private message
-    public static void sendMessage(PrivateChannel channel, String message)
-    {
-        channel.createMessage(message).subscribe();
-        return;
     }
 }

@@ -8,6 +8,7 @@ import discord4j.core.spec.MessageEditSpec;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 import java.util.function.Consumer;
@@ -54,7 +55,7 @@ public class SeeCommand implements ICommand {
                     newMsg = "Middle pile:\n" + player.getTable().middleToString();
                 else
                 {
-                    channel.createMessage(Msges.NOT_DEALER);
+                    PostalService.sendMessage(channel, Msges.NOT_DEALER);
                     return;
                 }
             }
@@ -65,40 +66,33 @@ public class SeeCommand implements ICommand {
                     newMsg = "Deck:\n" + player.getTable().getDeck().getCardsToString();
                 else
                 {
-                    channel.createMessage(Msges.NOT_DEALER);
+                    PostalService.sendMessage(channel, Msges.NOT_DEALER);
                     return;
                 }
             }
             else
                 newMsg = "Invalid place. Either chose hand, pile, or infront (trick).";
 
-            // For editing the msg
-            Consumer<? super MessageEditSpec> consumer = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent(newMsg);
-
-            // Actually edit the PM messages
-            player.getPM().block().edit(consumer);
+            PostalService.editMessage(player.getPM(), newMsg);
 
             // Send a message for a notification
             Message msg = sender.getPrivateChannel().block().createMessage(Msges.PM_NOTIFICATION).block();
-            msg.delete();
+            msg.delete().subscribe();
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 
     // This is a separate function so other commands can automatically do it.
     public static void seeHand(Player player)
     {
-        // For editing the msg
-        Consumer<? super MessageEditSpec> consumer = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent("Your hand: \n" + player.handToString());
-
-        player.getPM().block().edit(consumer);
+        PostalService.editMessage(player.getPM(), "Your hand: \n" + player.handToString());
 
         // Send a message for a notification
         Message msg = player.getUser().getPrivateChannel().block().createMessage(Msges.PM_NOTIFICATION).block();
-        msg.delete();
+        msg.delete().subscribe();
         return;
     }
 }

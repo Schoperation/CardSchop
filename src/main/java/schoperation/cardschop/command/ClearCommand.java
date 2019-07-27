@@ -7,6 +7,7 @@ import discord4j.core.object.entity.User;
 import reactor.core.publisher.Mono;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 import java.util.List;
@@ -44,11 +45,11 @@ public class ClearCommand implements ICommand {
             // No specification
             if (arg1.equals("blank"))
             {
-                msgList = channel.getMessagesAfter(table.getDivider().block().getId()).collectList().block();
+                msgList = channel.getMessagesAfter(table.getDivider().getId()).collectList().block();
 
                 // We got the list, now iterate through each msg and delete it.
                 for (Message msg : msgList)
-                    msg.delete();
+                    msg.delete().subscribe();
 
                 //table.setDivider(channel.sendMessage(table.getDivider().getContent()));
                 return;
@@ -58,24 +59,24 @@ public class ClearCommand implements ICommand {
                 int amount;
                 if (!Utils.isInt(arg1))
                 {
-                    channel.createMessage(Msges.NAN);
+                    PostalService.sendMessage(channel, Msges.NAN);
                     return;
                 }
 
                 amount = Integer.parseInt(arg1);
                 Long l = new Long(amount);
 
-                msgList = channel.getMessagesAfter(table.getDivider().block().getId()).take(l).collectList().block();
+                msgList = channel.getMessagesAfter(table.getDivider().getId()).take(l).collectList().block();
 
                 // We got the list, now iterate through each msg and delete it.
                 for (Message msg : msgList)
-                    msg.delete();
+                    msg.delete().subscribe();
 
                 return;
             }
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

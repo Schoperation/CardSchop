@@ -6,6 +6,7 @@ import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class ShuffleCommand implements ICommand {
@@ -35,17 +36,17 @@ public class ShuffleCommand implements ICommand {
             if (player.getTable().getDealer() == player)
             {
                 player.getTable().getDeck().shuffle();
-                channel.createMessage("Shuffled the deck.");
+                PostalService.sendMessage(channel, "Shuffled the deck.");
                 return;
             }
             else
             {
-                channel.createMessage(Msges.NOT_DEALER);
+                PostalService.sendMessage(channel, Msges.NOT_DEALER);
                 return;
             }
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

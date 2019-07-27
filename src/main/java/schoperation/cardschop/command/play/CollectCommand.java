@@ -7,6 +7,7 @@ import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class CollectCommand implements ICommand {
@@ -43,7 +44,7 @@ public class CollectCommand implements ICommand {
             // No arguments
             if (arg1.equals("blank"))
             {
-                channel.createMessage(Msges.COLLECT_ARGUMENT);
+                PostalService.sendMessage(channel, Msges.COLLECT_ARGUMENT);
                 return;
             }
 
@@ -57,14 +58,14 @@ public class CollectCommand implements ICommand {
                     if (table.getDealer() == player)
                     {
                         table.collectCards();
-                        channel.createMessage("The dealer collected everyone's cards.");
+                        PostalService.sendMessage(channel, "The dealer collected everyone's cards.");
 
                         for (Player p : table.getPlayers())
                             SeeCommand.seeHand(p);
                     }
                     else
                     {
-                        channel.createMessage(Msges.NOT_DEALER);
+                        PostalService.sendMessage(channel, Msges.NOT_DEALER);
                         return;
                     }
                 }
@@ -77,7 +78,7 @@ public class CollectCommand implements ICommand {
                         {
                             player.getPile().addAll(p.getFront());
                             p.getFront().clear();
-                            channel.createMessage(player.getDisplayName() + " has taken the trick.");
+                            PostalService.sendMessage(channel, player.getDisplayName() + " has taken the trick.");
                         }
                     }
                 }
@@ -88,7 +89,7 @@ public class CollectCommand implements ICommand {
                     {
                         player.getPile().addAll(table.getMiddlePile());
                         table.getMiddlePile().clear();
-                        channel.createMessage(player.getDisplayName() + " has taken the middle pile.");
+                        PostalService.sendMessage(channel, player.getDisplayName() + " has taken the middle pile.");
                         SeeCommand.seeHand(player);
                     }
 
@@ -99,11 +100,11 @@ public class CollectCommand implements ICommand {
                     int amount = table.getPot();
                     table.takeFromPot(amount);
                     player.addChips(amount);
-                    channel.createMessage(player.getDisplayName() + " has collected the pot from the table.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " has collected the pot from the table.");
                 }
                 else
                 {
-                    channel.createMessage(Msges.COLLECT_ARGUMENT);
+                    PostalService.sendMessage(channel, Msges.COLLECT_ARGUMENT);
                     return;
                 }
 
@@ -113,7 +114,7 @@ public class CollectCommand implements ICommand {
             }
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

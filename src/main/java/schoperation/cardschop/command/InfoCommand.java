@@ -5,6 +5,7 @@ import discord4j.core.object.entity.MessageChannel;
 import discord4j.core.object.entity.User;
 import schoperation.cardschop.core.BotMain;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 
 public class InfoCommand implements ICommand {
 
@@ -38,6 +39,6 @@ public class InfoCommand implements ICommand {
 
         sb.append("```");
 
-        channel.createMessage(sb.toString());
+        PostalService.sendMessage(channel, sb.toString());
     }
 }

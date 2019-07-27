@@ -7,6 +7,7 @@ import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 import java.util.function.Consumer;
@@ -51,7 +52,7 @@ public class RevealCommand implements ICommand {
                     for (Card c : player.getHand())
                         c.setFaceUp();
 
-                    channel.createMessage(player.getDisplayName() + "'s hand:\n" + player.handToString());
+                    PostalService.sendMessage(channel, player.getDisplayName() + "'s hand:\n" + player.handToString());
                 }
                 else
                 {
@@ -71,21 +72,19 @@ public class RevealCommand implements ICommand {
                             for (Card c : player.getHand())
                                 c.setFaceUp();
 
-                            // For editing the msg
-                            Consumer<? super MessageEditSpec> newMsg = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent(player.getDisplayName() + "'s hand:\n" + player.handToString());
+                            PostalService.editMessage(player2.getPM(), player.getDisplayName() + "'s hand:\n" + player.handToString());
 
-                            player2.getPM().block().edit(newMsg);
                             Message msg = player2.getUser().getPrivateChannel().block().createMessage(player.getDisplayName() + " has revealed their hand to you.").block();
-                            msg.delete();
-                            channel.createMessage(player.getDisplayName() + " revealed their hand to " + player2.getDisplayName() + ".");
+                            msg.delete().subscribe();
+                            PostalService.sendMessage(channel, player.getDisplayName() + " revealed their hand to " + player2.getDisplayName() + ".");
                             return;
                         }
 
-                        channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                        PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                         return;
                     }
 
-                    channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                    PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                     return;
                 }
             }
@@ -98,7 +97,7 @@ public class RevealCommand implements ICommand {
                     for (Card c : player.getPile())
                         c.setFaceUp();
 
-                    channel.createMessage(player.getDisplayName() + "'s side pile:\n" + player.pileToString());
+                    PostalService.sendMessage(channel, player.getDisplayName() + "'s side pile:\n" + player.pileToString());
                 }
                 else
                 {
@@ -118,21 +117,19 @@ public class RevealCommand implements ICommand {
                             for (Card c : player.getPile())
                                 c.setFaceUp();
 
-                            // For editing the msg
-                            Consumer<? super MessageEditSpec> newMsg = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent(player.getDisplayName() + "'s side pile:\n" + player.pileToString());
+                            PostalService.editMessage(player2.getPM(), player.getDisplayName() + "'s side pile:\n" + player.pileToString());
 
-                            player2.getPM().block().edit(newMsg);
                             Message msg = player2.getUser().getPrivateChannel().block().createMessage(player.getDisplayName() + " has revealed their personal pile to you.").block();
-                            msg.delete();
-                            channel.createMessage(player.getDisplayName() + " revealed their personal pile to " + player2.getDisplayName() + ".");
+                            msg.delete().subscribe();
+                            PostalService.sendMessage(channel, player.getDisplayName() + " revealed their personal pile to " + player2.getDisplayName() + ".");
                             return;
                         }
 
-                        channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                        PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                         return;
                     }
 
-                    channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                    PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                     return;
                 }
             }
@@ -145,7 +142,7 @@ public class RevealCommand implements ICommand {
                     for (Card c : player.getFront())
                         c.setFaceUp();
 
-                    channel.createMessage(player.getDisplayName() + "'s front cards:\n" + player.frontToString());
+                    PostalService.sendMessage(channel, player.getDisplayName() + "'s front cards:\n" + player.frontToString());
                 }
                 else
                 {
@@ -165,21 +162,18 @@ public class RevealCommand implements ICommand {
                             for (Card c : player.getFront())
                                 c.setFaceUp();
 
-                            // For editing the msg
-                            Consumer<? super MessageEditSpec> newMsg = (Consumer<MessageEditSpec>) messageEditSpec -> messageEditSpec.setContent(player.getDisplayName() + "'s front cards:\n" + player.frontToString());
-
-                            player2.getPM().block().edit(newMsg);
+                            PostalService.editMessage(player2.getPM(), player.getDisplayName() + "'s front cards:\n" + player.frontToString());
                             Message msg = player2.getUser().getPrivateChannel().block().createMessage(player.getDisplayName() + " has revealed their front cards to you.").block();
-                            msg.delete();
-                            channel.createMessage(player.getDisplayName() + " revealed their front cards to " + player2.getDisplayName() + ".");
+                            msg.delete().subscribe();
+                            PostalService.sendMessage(channel, player.getDisplayName() + " revealed their front cards to " + player2.getDisplayName() + ".");
                             return;
                         }
 
-                        channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                        PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                         return;
                     }
 
-                    channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                    PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                     return;
                 }
             }
@@ -192,11 +186,11 @@ public class RevealCommand implements ICommand {
                     for (Card c : player.getTable().getMiddlePile())
                         c.setFaceUp();
 
-                    channel.createMessage("Middle pile:\n" + player.getTable().middleToString());
+                    PostalService.sendMessage(channel, "Middle pile:\n" + player.getTable().middleToString());
                     return;
                 }
 
-                channel.createMessage(Msges.NOT_DEALER);
+                PostalService.sendMessage(channel, Msges.NOT_DEALER);
                 return;
             }
             else if (arg1.equals("deck"))
@@ -208,20 +202,20 @@ public class RevealCommand implements ICommand {
                     for (Card c : player.getTable().getDeck().getCards())
                         c.setFaceUp();
 
-                    channel.createMessage("Deck:\n" + player.getTable().getDeck().getCardsToString());
+                    PostalService.sendMessage(channel, "Deck:\n" + player.getTable().getDeck().getCardsToString());
                     return;
                 }
 
-                channel.createMessage(Msges.NOT_DEALER);
+                PostalService.sendMessage(channel, Msges.NOT_DEALER);
                 return;
             }
             else
-                channel.createMessage("Invalid place. Either chose hand, pile, or infront/trick.");
+                PostalService.sendMessage(channel, "Invalid place. Either chose hand, pile, or infront/trick.");
             
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

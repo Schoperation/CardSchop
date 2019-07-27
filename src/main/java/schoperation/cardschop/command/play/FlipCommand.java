@@ -7,6 +7,7 @@ import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class FlipCommand implements ICommand {
@@ -37,7 +38,7 @@ public class FlipCommand implements ICommand {
             // First argument
             if (arg1.equals("blank"))
             {
-                channel.createMessage("Please specify a card, or `all` for all cards in your hand.");
+                PostalService.sendMessage(channel, "Please specify a card, or `all` for all cards in your hand.");
                 return;
             }
             // All cards
@@ -62,7 +63,7 @@ public class FlipCommand implements ICommand {
                 }
                 else
                 {
-                    channel.createMessage("For the second argument (optional), use `faceup` or `facedown`.");
+                    PostalService.sendMessage(channel, "For the second argument (optional), use `faceup` or `facedown`.");
                     return;
                 }
             }
@@ -73,7 +74,7 @@ public class FlipCommand implements ICommand {
 
                 if (cardInt > player.getHand().size())
                 {
-                    channel.createMessage(Msges.INVALID_CARD);
+                    PostalService.sendMessage(channel, Msges.INVALID_CARD);
                     return;
                 }
 
@@ -88,7 +89,7 @@ public class FlipCommand implements ICommand {
                     card.setFaceDown();
                 else
                 {
-                    channel.createMessage("For the second argument (optional), use `faceup` or `facedown`.");
+                    PostalService.sendMessage(channel, "For the second argument (optional), use `faceup` or `facedown`.");
                     return;
                 }
             }
@@ -99,7 +100,7 @@ public class FlipCommand implements ICommand {
 
                 if (card == null || !player.hasCard(card))
                 {
-                    channel.createMessage(Msges.INVALID_CARD);
+                    PostalService.sendMessage(channel, Msges.INVALID_CARD);
                     return;
                 }
 
@@ -114,7 +115,7 @@ public class FlipCommand implements ICommand {
                     card.setFaceDown();
                 else
                 {
-                    channel.createMessage("For the second argument (optional), use `faceup` or `facedown`.");
+                    PostalService.sendMessage(channel, "For the second argument (optional), use `faceup` or `facedown`.");
                     return;
                 }
             }
@@ -124,7 +125,7 @@ public class FlipCommand implements ICommand {
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

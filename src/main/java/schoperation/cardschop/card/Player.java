@@ -2,8 +2,8 @@ package schoperation.cardschop.card;
 
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
-import reactor.core.publisher.Mono;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,7 +28,7 @@ public class Player {
     private List<Card> front = new ArrayList<>();
 
     // The private message that will hold the player's hand.
-    private Mono<Message> pm;
+    private Message pm;
 
     // Table
     private Table table;
@@ -42,7 +42,7 @@ public class Player {
         this.table = t;
 
         if (this.user != null)
-            this.pm = this.user.getPrivateChannel().block().createMessage("Your hand will appear here. Use `" + Msges.PREFIX + "see` to update it, if ever necessary. You can also use `" + Msges.PREFIX + "see pile` for your personal pile, and `" + Msges.PREFIX + "see infront` for the cards in front of you (trick).");
+            this.pm = PostalService.sendAndReturnMessage(this.user.getPrivateChannel().block(), "Your hand will appear here. Use `" + Msges.PREFIX + "see` to update it, if ever necessary. You can also use `" + Msges.PREFIX + "see pile` for your personal pile, and `" + Msges.PREFIX + "see infront` for the cards in front of you (trick).");
     }
 
     public User getUser()
@@ -50,14 +50,14 @@ public class Player {
         return this.user;
     }
 
-    public String getDisplayName() { return this.user.asMember(this.table.getTableMsg().block().getGuild().block().getId()).block().getNickname().get(); }
+    public String getDisplayName() { return this.user.asMember(this.table.getTableMsg().getGuild().block().getId()).block().getNickname().orElse(getUser().getUsername()); }
 
     public Table getTable()
     {
         return this.table;
     }
 
-    public Mono<Message> getPM()
+    public Message getPM()
     {
         return this.pm;
     }

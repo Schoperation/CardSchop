@@ -9,6 +9,7 @@ import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class DealCommand implements ICommand {
@@ -44,24 +45,24 @@ public class DealCommand implements ICommand {
                 if (arg1.equals("blank"))
                 {
                     table.dealCards(0, 1, true, player);
-                    channel.createMessage("Dealt all cards to everyone, one at a time.");
+                    PostalService.sendMessage(channel, "Dealt all cards to everyone, one at a time.");
                 }
                 else if (arg2.equals("blank"))
                 {
                     if (!Utils.isInt(arg1))
                     {
-                        channel.createMessage(Msges.NAN);
+                        PostalService.sendMessage(channel, Msges.NAN);
                         return;
                     }
 
                     table.dealCards(Integer.parseInt(arg1), 1, true, player);
-                    channel.createMessage("Dealt " + arg1 + " cards to everyone, one at a time.");
+                    PostalService.sendMessage(channel, "Dealt " + arg1 + " cards to everyone, one at a time.");
                 }
                 else if (arg3.equals("blank"))
                 {
                     if (!Utils.isInt(arg1))
                     {
-                        channel.createMessage(Msges.NAN);
+                        PostalService.sendMessage(channel, Msges.NAN);
                         return;
                     }
 
@@ -69,7 +70,7 @@ public class DealCommand implements ICommand {
                     if (Utils.isInt(arg2))
                     {
                         table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), true, player);
-                        channel.createMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time.");
+                        PostalService.sendMessage(channel, "Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time.");
                     }
                     else
                     {
@@ -84,12 +85,12 @@ public class DealCommand implements ICommand {
                             if (player1.getTable() == table)
                             {
                                 table.dealCardsToSinglePlayer(Integer.parseInt(arg1), player1);
-                                channel.createMessage("Dealt " + arg1 + " cards to " + userFromString.getDisplayName() + ".");
+                                PostalService.sendMessage(channel, "Dealt " + arg1 + " cards to " + userFromString.getDisplayName() + ".");
                             }
                         }
                         else
                         {
-                            channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+                            PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
                             return;
                         }
                     }
@@ -98,12 +99,12 @@ public class DealCommand implements ICommand {
                 {
                     if (!Utils.isInt(arg1) || !Utils.isInt(arg2))
                     {
-                        channel.createMessage(Msges.NAN);
+                        PostalService.sendMessage(channel, Msges.NAN);
                         return;
                     }
 
                     table.dealCards(Integer.parseInt(arg1), Integer.parseInt(arg2), Boolean.parseBoolean(arg3), player);
-                    channel.createMessage("Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ".");
+                    PostalService.sendMessage(channel, "Dealt " + arg1 + " cards to everyone, " + arg2 + " at a time. Dealer got cards = " + arg3 + ".");
                 }
 
                 // Update hands and table
@@ -115,12 +116,12 @@ public class DealCommand implements ICommand {
             }
             else
             {
-                channel.createMessage(Msges.NOT_DEALER);
+                PostalService.sendMessage(channel, Msges.NOT_DEALER);
                 return;
             }
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

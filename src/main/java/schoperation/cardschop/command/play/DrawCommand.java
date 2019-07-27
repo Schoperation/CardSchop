@@ -8,6 +8,7 @@ import schoperation.cardschop.card.Player;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class DrawCommand implements ICommand {
@@ -50,7 +51,7 @@ public class DrawCommand implements ICommand {
                 // Is there a card in the deck?
                 if(table.getDeck().getNumberOfCards() < 1)
                 {
-                    channel.createMessage(Msges.EMPTY_PILE);
+                    PostalService.sendMessage(channel, Msges.EMPTY_PILE);
                     return;
                 }
                 else
@@ -58,7 +59,7 @@ public class DrawCommand implements ICommand {
                     // Take a card from the deck and add it to the player's hand.
                     Card card = table.getDeck().getCards().remove(table.getDeck().getNumberOfCards() - 1);
                     player.addCard(card);
-                    channel.createMessage(player.getDisplayName() + " has drawn a card from the deck.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " has drawn a card from the deck.");
                 }
                 
                 // Update hand and table
@@ -76,29 +77,29 @@ public class DrawCommand implements ICommand {
                 {
                     Card card = table.getDeck().getCards().remove(table.getDeck().getNumberOfCards() - 1);
                     player.addCard(card);
-                    channel.createMessage(player.getDisplayName() + " has drawn a card from the deck.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " has drawn a card from the deck.");
                 }
                 else if (arg1.equals("middle"))
                 {
                     Card card = table.getMiddlePile().remove(table.getMiddlePile().size() - 1);
                     player.addCard(card);
-                    channel.createMessage(player.getDisplayName() + " has drawn a card from the middle pile.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " has drawn a card from the middle pile.");
                 }
                 else if (arg1.equals("pile"))
                 {
                     Card card = player.getPile().remove(player.getPile().size() - 1);
                     player.addCard(card);
-                    channel.createMessage(player.getDisplayName() + " has drawn a card from their personal pile.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " has drawn a card from their personal pile.");
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
                     Card card = player.getFront().remove(player.getFront().size() - 1);
                     player.addCard(card);
-                    channel.createMessage(player.getDisplayName() + " has drawn a card from the pile in front of them.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " has drawn a card from the pile in front of them.");
                 }
                 else
                 {
-                    channel.createMessage(Msges.INVALID_PLACE_DRAW);
+                    PostalService.sendMessage(channel, Msges.INVALID_PLACE_DRAW);
                     return;
                 }
 
@@ -119,7 +120,7 @@ public class DrawCommand implements ICommand {
                     amount = Integer.parseInt(arg2);
                 else
                 {
-                    channel.createMessage(Msges.NAN);
+                    PostalService.sendMessage(channel, Msges.NAN);
                     return;
                 }
 
@@ -135,7 +136,7 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from the deck.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " drew " + amount + " cards from the deck.");
                 }
                 else if (arg1.equals("middle"))
                 {
@@ -146,7 +147,7 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from the middle pile.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " drew " + amount + " cards from the middle pile.");
                 }
                 else if (arg1.equals("pile"))
                 {
@@ -157,7 +158,7 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from their personal pile.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " drew " + amount + " cards from their personal pile.");
                 }
                 else if (arg1.equals("infront") || arg1.equals("trick"))
                 {
@@ -168,11 +169,11 @@ public class DrawCommand implements ICommand {
                         i++;
                     }
 
-                    channel.createMessage(player.getDisplayName() + " drew " + amount + " cards from the pile in front of them.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " drew " + amount + " cards from the pile in front of them.");
                 }
                 else
                 {
-                    channel.createMessage(Msges.INVALID_PLACE_DRAW);
+                    PostalService.sendMessage(channel, Msges.INVALID_PLACE_DRAW);
                     return;
                 }
 
@@ -183,7 +184,7 @@ public class DrawCommand implements ICommand {
             }
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

@@ -9,6 +9,7 @@ import schoperation.cardschop.card.Card;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class GiveCommand implements ICommand {
@@ -45,7 +46,7 @@ public class GiveCommand implements ICommand {
             // Correct arguments?
             if (arg1.equals("blank"))
             {
-                channel.createMessage("Please provide arguments. The player should be mentioned. \nEx. " + Msges.PREFIX + "give @Person#1234 4  //Gives your fourth card to Person.");
+                PostalService.sendMessage(channel, "Please provide arguments. The player should be mentioned. \nEx. " + Msges.PREFIX + "give @Person#1234 4  //Gives your fourth card to Person.");
                 return;
             }
             else if (arg2.equals("blank"))
@@ -62,7 +63,7 @@ public class GiveCommand implements ICommand {
 
                     if (card == null || !givingPlayer.hasCard(card))
                     {
-                        channel.createMessage(Msges.INVALID_CARD);
+                        PostalService.sendMessage(channel, Msges.INVALID_CARD);
                         return;
                     }
 
@@ -74,7 +75,7 @@ public class GiveCommand implements ICommand {
 
                     if (cardInt > givingPlayer.getHand().size())
                     {
-                        channel.createMessage(Msges.INVALID_CARD);
+                        PostalService.sendMessage(channel, Msges.INVALID_CARD);
                         return;
                     }
 
@@ -89,13 +90,13 @@ public class GiveCommand implements ICommand {
 
             for (Player receivingPlayer : givingPlayer.getTable().getPlayers())
             {
-                if (receivingPlayer.getUser().asMember(guild.getId()).equals(userFromString))
+                if (receivingPlayer.getUser().getId().equals(userFromString.getId()))
                 {
                     // Found them.
                     // Remove the card from givingPlayer and add it to receivingPlayer's hand.
                     givingPlayer.removeCard(card);
                     receivingPlayer.addCard(card);
-                    channel.createMessage(givingPlayer.getDisplayName() + " gave a card to " + receivingPlayer.getDisplayName() + ".");
+                    PostalService.sendMessage(channel, givingPlayer.getDisplayName() + " gave a card to " + receivingPlayer.getDisplayName() + ".");
                     SeeCommand.seeHand(givingPlayer);
                     SeeCommand.seeHand(receivingPlayer);
                     givingPlayer.getTable().update(guild);
@@ -103,11 +104,11 @@ public class GiveCommand implements ICommand {
                 }
             }
 
-            channel.createMessage(userFromString.getDisplayName() + " is not part of this table!");
+            PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of this table!");
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

@@ -9,6 +9,7 @@ import schoperation.cardschop.card.Suit;
 import schoperation.cardschop.card.Table;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 import java.util.Iterator;
@@ -52,7 +53,7 @@ public class DeckCommand implements ICommand {
                 // First argument
                 if (arg1.equals("blank"))
                 {
-                    channel.createMessage("Please provide proper arguments. `" + Msges.PREFIX + "deck [operator] [card]`.");
+                    PostalService.sendMessage(channel, "Please provide proper arguments. `" + Msges.PREFIX + "deck [operator] [card]`.");
                     return;
                 }
                 else if (arg1.equals("add"))
@@ -60,21 +61,21 @@ public class DeckCommand implements ICommand {
                     // Second argument.
                     if (arg2.equals("blank"))
                     {
-                        channel.createMessage("Please provide proper arguments. `" + Msges.PREFIX + "deck [operator] [card]`.");
+                        PostalService.sendMessage(channel, "Please provide proper arguments. `" + Msges.PREFIX + "deck [operator] [card]`.");
                         return;
                     }
                     else if (arg2.equals("joker"))
                     {
                         // Add a single joker.
                         table.getDeck().getCards().add(new Card());
-                        channel.createMessage("The dealer added a single joker to the deck.");
+                        PostalService.sendMessage(channel, "The dealer added a single joker to the deck.");
                     }
                     else if (arg2.equals("jokers"))
                     {
                         // Add two jokers.
                         table.getDeck().getCards().add(new Card());
                         table.getDeck().getCards().add(new Card());
-                        channel.createMessage("The dealer added 2 jokers to the deck.");
+                        PostalService.sendMessage(channel, "The dealer added 2 jokers to the deck.");
                     }
 
                     // Different suits?
@@ -85,7 +86,7 @@ public class DeckCommand implements ICommand {
                         for (i = 2; i < 15; i++)
                             table.getDeck().getCards().add(new Card(Suit.CLUBS, i));
 
-                        channel.createMessage("The dealer added all 13 cards of clubs.");
+                        PostalService.sendMessage(channel, "The dealer added all 13 cards of clubs.");
                     }
                     else if (arg2.equals("diamonds"))
                     {
@@ -94,7 +95,7 @@ public class DeckCommand implements ICommand {
                         for (i = 2; i < 15; i++)
                             table.getDeck().getCards().add(new Card(Suit.DIAMONDS, i));
 
-                        channel.createMessage("The dealer added all 13 cards of diamonds.");
+                        PostalService.sendMessage(channel, "The dealer added all 13 cards of diamonds.");
                     }
                     else if (arg2.equals("hearts"))
                     {
@@ -103,7 +104,7 @@ public class DeckCommand implements ICommand {
                         for (i = 2; i < 15; i++)
                             table.getDeck().getCards().add(new Card(Suit.HEARTS, i));
 
-                        channel.createMessage("The dealer added all 13 cards of hearts.");
+                        PostalService.sendMessage(channel, "The dealer added all 13 cards of hearts.");
                     }
                     else if (arg2.equals("spades"))
                     {
@@ -112,13 +113,13 @@ public class DeckCommand implements ICommand {
                         for (i = 2; i < 15; i++)
                             table.getDeck().getCards().add(new Card(Suit.SPADES, i));
 
-                        channel.createMessage("The dealer added all 13 cards of spades.");
+                        PostalService.sendMessage(channel, "The dealer added all 13 cards of spades.");
                     }
                     else if (arg2.equals("deck"))
                     {
                         // Add another deck
                         table.getDeck().fill(false);
-                        channel.createMessage("The dealer added an entire deck to the existing one.");
+                        PostalService.sendMessage(channel, "The dealer added an entire deck to the existing one.");
                     }
 
                     // Try to parse it as an int, then a card
@@ -134,7 +135,7 @@ public class DeckCommand implements ICommand {
                             table.getDeck().getCards().add(new Card(Suit.HEARTS, rank));
                             table.getDeck().getCards().add(new Card(Suit.SPADES, rank));
 
-                            channel.createMessage("The dealer has added all " + rank + "s.");
+                            PostalService.sendMessage(channel, "The dealer has added all " + rank + "s.");
                         }
 
                         // Not an int. Maybe a face card/ace by itself.
@@ -145,7 +146,7 @@ public class DeckCommand implements ICommand {
                             table.getDeck().getCards().add(new Card(Suit.HEARTS, 14));
                             table.getDeck().getCards().add(new Card(Suit.SPADES, 14));
 
-                            channel.createMessage("The dealer has added all aces.");
+                            PostalService.sendMessage(channel, "The dealer has added all aces.");
                         }
                         else if (arg2.equals("king") || arg2.equals("kings") || arg2.equals("k"))
                         {
@@ -154,7 +155,7 @@ public class DeckCommand implements ICommand {
                             table.getDeck().getCards().add(new Card(Suit.HEARTS, 13));
                             table.getDeck().getCards().add(new Card(Suit.SPADES, 13));
 
-                            channel.createMessage("The dealer has added all kings.");
+                            PostalService.sendMessage(channel, "The dealer has added all kings.");
                         }
                         else if (arg2.equals("queen") || arg2.equals("queens") || arg2.equals("q"))
                         {
@@ -163,7 +164,7 @@ public class DeckCommand implements ICommand {
                             table.getDeck().getCards().add(new Card(Suit.HEARTS, 12));
                             table.getDeck().getCards().add(new Card(Suit.SPADES, 12));
 
-                            channel.createMessage("The dealer has added all queens.");
+                            PostalService.sendMessage(channel, "The dealer has added all queens.");
                         }
                         else if (arg2.equals("jack") || arg2.equals("jacks") || arg2.equals("j"))
                         {
@@ -172,7 +173,7 @@ public class DeckCommand implements ICommand {
                             table.getDeck().getCards().add(new Card(Suit.HEARTS, 11));
                             table.getDeck().getCards().add(new Card(Suit.SPADES, 11));
 
-                            channel.createMessage("The dealer has added all jacks.");
+                            PostalService.sendMessage(channel, "The dealer has added all jacks.");
                         }
 
                         // Parse it as a card then.
@@ -182,12 +183,12 @@ public class DeckCommand implements ICommand {
 
                             if (card == null)
                             {
-                                channel.createMessage(Msges.INVALID_CARD);
+                                PostalService.sendMessage(channel, Msges.INVALID_CARD);
                                 return;
                             }
 
                             table.getDeck().getCards().add(card);
-                            channel.createMessage("The dealer has added the " + card.getString() + ".");
+                            PostalService.sendMessage(channel, "The dealer has added the " + card.getString() + ".");
                         }
                     }
                 }
@@ -196,7 +197,7 @@ public class DeckCommand implements ICommand {
                     // Second argument.
                     if (arg2.equals("blank"))
                     {
-                        channel.createMessage("Please provide proper arguments. `" + Msges.PREFIX + "deck [operator] [card]`.");
+                        PostalService.sendMessage(channel, "Please provide proper arguments. `" + Msges.PREFIX + "deck [operator] [card]`.");
                         return;
                     }
                     else if (arg2.equals("joker"))
@@ -214,7 +215,7 @@ public class DeckCommand implements ICommand {
                             }
                         }
 
-                        channel.createMessage("The dealer removed a single joker from the deck.");
+                        PostalService.sendMessage(channel, "The dealer removed a single joker from the deck.");
                     }
                     else if (arg2.equals("jokers"))
                     {
@@ -228,7 +229,7 @@ public class DeckCommand implements ICommand {
                                 iterator.remove();
                         }
 
-                        channel.createMessage("The dealer removed all jokers from the deck.");
+                        PostalService.sendMessage(channel, "The dealer removed all jokers from the deck.");
                     }
 
                     // Different suits?
@@ -244,7 +245,7 @@ public class DeckCommand implements ICommand {
                                 iterator.remove();
                         }
 
-                        channel.createMessage("The dealer removed all cards of clubs.");
+                        PostalService.sendMessage(channel, "The dealer removed all cards of clubs.");
                     }
                     else if (arg2.equals("diamonds"))
                     {
@@ -258,7 +259,7 @@ public class DeckCommand implements ICommand {
                                 iterator.remove();
                         }
 
-                        channel.createMessage("The dealer removed all cards of diamonds.");
+                        PostalService.sendMessage(channel, "The dealer removed all cards of diamonds.");
                     }
                     else if (arg2.equals("hearts"))
                     {
@@ -272,7 +273,7 @@ public class DeckCommand implements ICommand {
                                 iterator.remove();
                         }
 
-                        channel.createMessage("The dealer removed all cards of hearts.");
+                        PostalService.sendMessage(channel, "The dealer removed all cards of hearts.");
                     }
                     else if (arg2.equals("spades"))
                     {
@@ -286,7 +287,7 @@ public class DeckCommand implements ICommand {
                                 iterator.remove();
                         }
 
-                        channel.createMessage("The dealer removed all cards of spades.");
+                        PostalService.sendMessage(channel, "The dealer removed all cards of spades.");
                     }
 
                     // Try to parse it as an int, then a card
@@ -306,7 +307,7 @@ public class DeckCommand implements ICommand {
                                     iterator.remove();
                             }
 
-                            channel.createMessage("The dealer has removed all " + rank + "s.");
+                            PostalService.sendMessage(channel, "The dealer has removed all " + rank + "s.");
                         }
 
                         // Not an int. Maybe a face card/ace by itself.
@@ -321,7 +322,7 @@ public class DeckCommand implements ICommand {
                                     iterator.remove();
                             }
 
-                            channel.createMessage("The dealer has removed all aces.");
+                            PostalService.sendMessage(channel, "The dealer has removed all aces.");
                         }
                         else if (arg2.equals("king") || arg2.equals("kings") || arg2.equals("k"))
                         {
@@ -334,7 +335,7 @@ public class DeckCommand implements ICommand {
                                     iterator.remove();
                             }
 
-                            channel.createMessage("The dealer has removed all kings.");
+                            PostalService.sendMessage(channel, "The dealer has removed all kings.");
                         }
                         else if (arg2.equals("queen") || arg2.equals("queens") || arg2.equals("q"))
                         {
@@ -347,7 +348,7 @@ public class DeckCommand implements ICommand {
                                     iterator.remove();
                             }
 
-                            channel.createMessage("The dealer has removed all queens.");
+                            PostalService.sendMessage(channel, "The dealer has removed all queens.");
                         }
                         else if (arg2.equals("jack") || arg2.equals("jacks") || arg2.equals("j"))
                         {
@@ -360,7 +361,7 @@ public class DeckCommand implements ICommand {
                                     iterator.remove();
                             }
 
-                            channel.createMessage("The dealer has removed all jacks.");
+                            PostalService.sendMessage(channel, "The dealer has removed all jacks.");
                         }
 
                         // Parse it as a card then.
@@ -370,7 +371,7 @@ public class DeckCommand implements ICommand {
 
                             if (card == null)
                             {
-                                channel.createMessage(Msges.INVALID_CARD);
+                                PostalService.sendMessage(channel, Msges.INVALID_CARD);
                                 return;
                             }
 
@@ -386,7 +387,7 @@ public class DeckCommand implements ICommand {
                                 }
                             }
 
-                            channel.createMessage("The dealer has removed the " + card.getString() + ".");
+                            PostalService.sendMessage(channel, "The dealer has removed the " + card.getString() + ".");
                         }
                     }
                 }
@@ -396,11 +397,11 @@ public class DeckCommand implements ICommand {
                     table.getDeck().getCards().clear();
                     table.getDeck().fill(false);
 
-                    channel.createMessage("The dealer reset the deck.");
+                    PostalService.sendMessage(channel, "The dealer reset the deck.");
                 }
                 else
                 {
-                    channel.createMessage("Invalid operator. Your options are: add, remove, and reset.");
+                    PostalService.sendMessage(channel, "Invalid operator. Your options are: add, remove, and reset.");
                     return;
                 }
 
@@ -410,12 +411,12 @@ public class DeckCommand implements ICommand {
             }
             else
             {
-                channel.createMessage(Msges.NOT_DEALER);
+                PostalService.sendMessage(channel, Msges.NOT_DEALER);
                 return;
             }
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

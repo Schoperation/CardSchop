@@ -6,6 +6,7 @@ import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class SortCommand implements ICommand {
@@ -40,13 +41,13 @@ public class SortCommand implements ICommand {
             else if (arg1.equals("bysuit"))
                 player.sortHand(2);
             else
-                channel.createMessage("Valid sorting methods are byrank and bysuit.");
+                PostalService.sendMessage(channel, "Valid sorting methods are byrank and bysuit.");
 
             SeeCommand.seeHand(player);
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

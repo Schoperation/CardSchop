@@ -3,13 +3,11 @@ package schoperation.cardschop.card;
 import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.MessageChannel;
-import discord4j.core.spec.MessageEditSpec;
-import reactor.core.publisher.Mono;
+import schoperation.cardschop.util.PostalService;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Table {
 
@@ -24,10 +22,10 @@ public class Table {
     private MessageChannel channel;
 
     // Message the table itself is printed on. Constantly edited. The command output will be put below the table.
-    private Mono<Message> message;
+    private Message message;
 
     // Divider message, for help with clearing.
-    private Mono<Message> divider;
+    private Message divider;
 
     // List of players
     private List<Player> players = new ArrayList<>();
@@ -48,10 +46,10 @@ public class Table {
     {
         this.name = n;
         this.channel = c;
-        this.message = this.channel.createMessage("k");
-        this.divider = this.channel.createMessage("------------------------------------------");
+        this.message = PostalService.sendAndReturnMessage(this.channel, "k");
+        this.divider = PostalService.sendAndReturnMessage(this.channel, "------------------------------------------");
         this.deck = new Deck(); // TODO eventually allow players to decide this deck?
-        this.update(this.message.block().getGuild().block());
+        this.update(this.message.getGuild().block());
     }
 
     public Player getDealer()
@@ -148,17 +146,17 @@ public class Table {
         Setting and getting the messages associated with the table.
      */
 
-    public Mono<Message> getTableMsg()
+    public Message getTableMsg()
     {
         return this.message;
     }
 
-    public Mono<Message> getDivider()
+    public Message getDivider()
     {
         return this.divider;
     }
 
-    public void setDivider(Mono<Message> msg)
+    public void setDivider(Message msg)
     {
         this.divider = msg;
         return;
@@ -389,13 +387,8 @@ public class Table {
         deckPos = charPosition[(element / 2) + 1] + 14 - (numSpace / 2);
         sb.replace(deckPos, deckPos + numSpace, Integer.toString(this.pot));
 
-
         // Edit message
-        Consumer<? super MessageEditSpec> consumer = (Consumer<MessageEditSpec>) messageEditSpec -> {
-            messageEditSpec.setContent(sb.toString());
-        };
-
-        this.message.block().edit(consumer);
+        PostalService.editMessage(this.message, sb.toString());
 
         return;
     }

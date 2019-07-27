@@ -6,6 +6,7 @@ import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class BetCommand implements ICommand {
@@ -34,14 +35,14 @@ public class BetCommand implements ICommand {
             // No arguments
             if (arg1.equals("blank"))
             {
-                channel.createMessage("Please provide an amount of chips you'd like to throw into the pot.");
+                PostalService.sendMessage(channel, "Please provide an amount of chips you'd like to throw into the pot.");
                 return;
             }
             else
             {
                 if (!Utils.isInt(arg1))
                 {
-                    channel.createMessage(Msges.NAN);
+                    PostalService.sendMessage(channel, Msges.NAN);
                     return;
                 }
 
@@ -50,14 +51,14 @@ public class BetCommand implements ICommand {
                 // Enough chips?
                 if (amount > player.getChips())
                 {
-                    channel.createMessage("Sorry, you're too poor to throw away that amount.");
+                    PostalService.sendMessage(channel, "Sorry, you're too poor to throw away that amount.");
                     return;
                 }
                 else
                 {
                     player.subtractChips(amount);
                     player.getTable().addToPot(amount);
-                    channel.createMessage(player.getDisplayName() + " threw " + amount + " chips into the pot.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " threw " + amount + " chips into the pot.");
                 }
             }
 
@@ -66,7 +67,7 @@ public class BetCommand implements ICommand {
             return;
         }
 
-        channel.createMessage(Msges.NO_TABLE);
+        PostalService.sendMessage(channel, Msges.NO_TABLE);
         return;
     }
 }

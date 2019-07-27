@@ -5,6 +5,7 @@ import discord4j.core.object.entity.MessageChannel;
 import discord4j.core.object.entity.User;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class LeaveCommand implements ICommand {
@@ -41,15 +42,15 @@ public class LeaveCommand implements ICommand {
             }
 
             // Delete PM
-            player.getPM().block().delete();
+            player.getPM().delete().subscribe();
 
             player.getTable().getPlayers().remove(player);
-            channel.createMessage(player.getDisplayName() + " has left the table.");
+            PostalService.sendMessage(channel, player.getDisplayName() + " has left the table.");
             player.getTable().update(guild);
             return;
         }
 
-        channel.createMessage(Msges.TABLE_NOT_FOUND);
+        PostalService.sendMessage(channel, Msges.TABLE_NOT_FOUND);
         return;
     }
 }

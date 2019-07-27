@@ -9,6 +9,7 @@ import discord4j.core.object.util.Snowflake;
 import schoperation.cardschop.card.Player;
 import schoperation.cardschop.command.ICommand;
 import schoperation.cardschop.util.Msges;
+import schoperation.cardschop.util.PostalService;
 import schoperation.cardschop.util.Utils;
 
 public class SetDealerCommand implements ICommand {
@@ -40,10 +41,10 @@ public class SetDealerCommand implements ICommand {
                 if (player.getUser().asMember(guild.getId()).block().getBasePermissions().block().contains(Permission.MANAGE_GUILD))
                 {
                     player.getTable().setDealer(player);
-                    channel.createMessage(player.getDisplayName() + " is now the dealer.");
+                    PostalService.sendMessage(channel, player.getDisplayName() + " is now the dealer.");
                 }
                 else
-                    channel.createMessage(Msges.NOT_DEALER);
+                    PostalService.sendMessage(channel, Msges.NOT_DEALER);
 
                 return;
             }
@@ -52,7 +53,7 @@ public class SetDealerCommand implements ICommand {
                 // Is this guy the dealer or a guy with Manage Server settings?
                 if (player.getTable().getDealer() != player || !player.getUser().asMember(guild.getId()).block().getBasePermissions().block().contains(Permission.MANAGE_GUILD))
                 {
-                    channel.createMessage(Msges.NOT_DEALER);
+                    PostalService.sendMessage(channel, Msges.NOT_DEALER);
                     return;
                 }
 
@@ -63,20 +64,20 @@ public class SetDealerCommand implements ICommand {
 
                 for (Player p : player.getTable().getPlayers())
                 {
-                    if (p.getUser().asMember(guild.getId()).equals(userFromString))
+                    if (p.getUser().getId().equals(userFromString.getId()))
                     {
                         player.getTable().setDealer(p);
-                        channel.createMessage(p.getDisplayName() + " is now the dealer.");
+                        PostalService.sendMessage(channel, p.getDisplayName() + " is now the dealer.");
                         return;
                     }
                 }
 
-                channel.createMessage(userFromString.getDisplayName() + " is not part of the table!");
+                PostalService.sendMessage(channel, userFromString.getDisplayName() + " is not part of the table!");
                 return;
             }
         }
         else
-            channel.createMessage(Msges.NO_TABLE);
+            PostalService.sendMessage(channel, Msges.NO_TABLE);
 
         return;
     }
